@@ -1,2 +1,2 @@
-# Bundesarchiv → FIAFcore
-Bundesarchiv data conformed to FIAFcore. 
+# FIAFcore [Bundesarchiv]
+Conformation of Bundesarchiv data to FIAFcore.
