@@ -24,8 +24,8 @@ def transform(xml_path):
     return graph
 
 
-def harmonise(graph_in):
-    turtle_string = graph_in.serialize(format="longturtle")
+def harmonise(graph):
+    turtle_string = graph.serialize(format="longturtle")
 
     turtle_string = turtle_string.replace(
         "<bundesarchiv://ontology/work>", "<https://ontology.fiafcore.org/Work>"
@@ -34,10 +34,10 @@ def harmonise(graph_in):
     return rdflib.Graph().parse(data=turtle_string, format="turtle")
 
 
-def authority(graph_in):
+def authority(graph):
     work_type = rdflib.URIRef("https://ontology.fiafcore.org/Work")
     work_ids = [
-        str(s) for s, p, o in graph_in.triples((None, rdflib.RDF.type, work_type))
+        str(s) for s, p, o in graph.triples((None, rdflib.RDF.type, work_type))
     ]
 
     atlas_user, atlas_pass = os.getenv("ATLAS_USER"), os.getenv("ATLAS_PASS")
