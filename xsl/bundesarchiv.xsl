@@ -20,15 +20,29 @@
         </rdf:RDF>
     </xsl:template>
 
-
     <xsl:template match="*">
         <xsl:apply-templates select="*"/>
     </xsl:template>
+
+    <!-- Works -->
 
     <xsl:template match="ba:Filmwerk">
 
         <rdf:Description rdf:about="bundesarchiv://resource/work/{@uuid}">
             <rdf:type rdf:resource="bundesarchiv://ontology/work"/>
+
+            <!-- Work Identifier -->
+
+            <fiaf:hasIdentifier>
+                <rdf:Description rdf:about="bundesarchiv://identifier/work/{@uuid}">
+                    <rdf:type rdf:resource="bundesarchiv://ontology/identifier"/>
+                    <fiaf:hasIdentifierValue>
+                        <xsl:value-of select="@uuid"/>
+                    </fiaf:hasIdentifierValue>
+                    <fiaf:hasIdentifierAuthority rdf:resource="bundesarchiv://ontology/authority/bundesarchiv"/>
+                </rdf:Description>
+            </fiaf:hasIdentifier>
+
         </rdf:Description>
 
     </xsl:template>
