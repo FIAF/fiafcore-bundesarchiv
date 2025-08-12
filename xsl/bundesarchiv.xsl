@@ -27,9 +27,15 @@
     <!-- Works -->
 
     <xsl:template match="ba:Filmwerk">
-
+        <xsl:variable name="filmwerk_title" select="ba:IDTitel"/>
         <rdf:Description rdf:about="bundesarchiv://resource/work/{@uuid}">
             <rdf:type rdf:resource="bundesarchiv://ontology/work"/>
+
+            <!-- Work Label -->
+
+            <rdfs:label>
+                <xsl:value-of select="$filmwerk_title"/>
+            </rdfs:label>
 
             <!-- Work Identifier -->
 
