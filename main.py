@@ -18,11 +18,15 @@ def transform(xml):
 
 
 def harmonise(graph):
-    turtle_string = graph.serialize(format="longturtle")
+    turtle_string = graph.serialize(format="turtle")
 
-    turtle_string = turtle_string.replace(
-        "<bundesarchiv://ontology/work>", "<https://ontology.fiafcore.org/Work>"
-    )
+    for a,b in [
+        ("<bundesarchiv://ontology/work>", "<https://ontology.fiafcore.org/Work>"),
+        ("<bundesarchiv://ontology/identifier>", "<https://ontology.fiafcore.org/Identifier>"),
+        ("<bundesarchiv://ontology/agent>", "<https://ontology.fiafcore.org/Agent>"),
+        ("<bundesarchiv://ontology/manifestation>", "<https://ontology.fiafcore.org/Manifestation>"),
+    ]:
+        turtle_string = turtle_string.replace(a, b)
 
     return rdflib.Graph().parse(data=turtle_string, format="turtle")
 
@@ -67,12 +71,17 @@ def main():
     # top level graph.
 
     graph = rdflib.Graph()
+    graph.bind("fiaf", rdflib.Namespace("https://ontology.fiafcore.org/"))
 
     # loop through xml files.
 
-    xml_path = pathlib.Path.cwd() / "xml_full"
+    xml_path = pathlib.Path.cwd() / "xml"
     xml = [x for x in xml_path.iterdir()]
     xml = [x for x in xml if x.suffix == ".xml"]
+
+    # testing restriction.
+
+    xml = [x for x in xml if "example" in x.name]
 
     for x in tqdm.tqdm(sorted(xml)):
         # transformation of source data.
@@ -93,9 +102,11 @@ def main():
 
     # write resulting rdf.
 
+    print(len(graph), "triples.")
+
     graph.serialize(
         destination=pathlib.Path.cwd() / "fiafcore_bundesarchiv.ttl",
-        format="longturtle",
+        format="turtle",
     )
 
 

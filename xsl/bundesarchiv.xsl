@@ -18,6 +18,7 @@
             xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
             xmlns:fiaf="https://ontology.fiafcore.org/">
             <xsl:apply-templates select="//ba:Filmwerk" />
+            <xsl:apply-templates select="//ba:Manifestation" />
         </rdf:RDF>
     </xsl:template>
 
@@ -30,8 +31,6 @@
     <xsl:template match="ba:Filmwerk">
         <xsl:variable name="filmwerk_title" select="ba:IDTitel" />
         <rdf:Description rdf:about="bundesarchiv://resource/work/{@uuid}">
-
-            <!-- fiafcore:Work -->
 
             <rdf:type rdf:resource="bundesarchiv://ontology/work" />
 
@@ -108,6 +107,8 @@
                 </rdf:Description>
             </fiaf:hasEvent>
 
+            <!-- fiafcore:hasForm -->
+
             <!-- fiafcore:hasGenre -->
 
             <xsl:for-each select="ba:Gattung">
@@ -115,8 +116,6 @@
                 <xsl:variable name="genre2" select="translate($genre1, '/', '')" />
                 <fiaf:hasGenre rdf:resource="bundesarchiv://vocabulary/genre/{$genre2}" />
             </xsl:for-each>
-
-            <!-- fiafcore:hasForm -->
 
             <!-- fiafcore:hasIdentifier -->
 
@@ -126,8 +125,7 @@
                     <fiaf:hasIdentifierValue>
                         <xsl:value-of select="@uuid" />
                     </fiaf:hasIdentifierValue>
-                    <fiaf:hasIdentifierAuthority
-                        rdf:resource="bundesarchiv://ontology/authority/bundesarchiv" />
+                    <fiaf:hasIdentifierAuthority rdf:resource="bundesarchiv://ontology/authority/bundesarchiv" />
                 </rdf:Description>
             </fiaf:hasIdentifier>
 
@@ -165,5 +163,31 @@
         </rdf:Description>
 
     </xsl:template>
+
+    <!-- Manifestations -->
+
+    <xsl:template match="ba:Manifestation">
+
+        <rdf:Description rdf:about="bundesarchiv://resource/manifestation/{@uuid}">
+
+            <rdf:type rdf:resource="bundesarchiv://ontology/manifestation" />
+
+
+
+            <!-- fiaf:hasColourCharacteristic -->
+            <!-- fiaf:hasEvent -->
+            <!-- fiaf:hasExtent -->
+            <!-- fiaf:hasFormat  -->
+            <!-- fiaf:hasIdentifier -->
+            <!-- fiaf:hasImageCharacteristic -->
+            <!-- fiaf:hasItem -->
+            <!-- fiaf:hasLanguageUsage -->
+            <!-- fiaf:hasSoundCharacteristic -->
+            <!-- fiaf:hasTitle -->
+
+
+        </rdf:Description>
+    </xsl:template>
+
 
 </xsl:stylesheet>
