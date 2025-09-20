@@ -42,14 +42,14 @@ A moving image Manifestation is the embodiment of a moving image Work or Variant
 | fiaf | local |
 | -- | -- |
 | rdf:type |  |
-| fiaf:hasColourCharacteristic |  |
+| fiaf:hasColourCharacteristic | ba:Farbe |
 | fiaf:hasEvent |  |
-| fiaf:hasExtent |  |
+| fiaf:hasExtent | ba:Gesamtlaenge |
 | fiaf:hasFormat |  |
-| fiaf:hasIdentifier |  |
+| fiaf:hasIdentifier | @uuid |
 | fiaf:hasImageCharacteristic |  |
-| fiaf:hasItem |  |
-| fiaf:hasLanguageUsage |  |
+| fiaf:hasItem | ba:Exemplar |
+| fiaf:hasLanguageUsage | ba:Sprache |
 | fiaf:hasSoundCharacteristic |  |
 | fiaf:hasTitle |  |
 
@@ -60,28 +60,28 @@ A moving image Item is the physical or digital product of a Manifestation of a W
 | fiaf | local |
 | -- | -- |
 | rdf:type |  |
-| fiaf:hasBase |  |
-| fiaf:hasBroadcastStandard |  |
-| fiaf:hasCarrier |  |
-| fiaf:hasColourCharacteristic |  |
+| fiaf:hasBase | ba:Aufbewahrungseinheit/ba:Traegers |
+| fiaf:hasBroadcastStandard | ba:SDHDFernsehnorm |
+| fiaf:hasCarrier | ba:Aufbewahrungseinheit |
+| fiaf:hasColourCharacteristic | ba:Aufbewahrungseinheit/ba:Farbe |
 | fiaf:hasEvent |  |
 | fiaf:hasExtent |  |
-| fiaf:hasFormat |  |
-| fiaf:hasFrameRate |  |
-| fiaf:hasHoldingInstitution |  |
-| fiaf:hasIdentifier |  |
-| fiaf:hasImageCharacteristic |  |
+| fiaf:hasFormat | ba:Filmbreite, ba:Videoformat, ba:Datenformat |
+| fiaf:hasFrameRate | ba:Bildfrequenz |
+| fiaf:hasHoldingInstitution | "Bundesarchiv" |
+| fiaf:hasIdentifier | @uuid |
+| fiaf:hasImageCharacteristic | ba:Aufbewahrungseinheit/ba:Bildseitenverhaeltnis |
 | fiaf:hasLineStandard |  |
 | fiaf:hasResolution |  |
 | fiaf:hasSoundCharacteristic |  |
 | fiaf:hasSourceDevice |  |
 | fiaf:hasSourceSoftware |  |
-| fiaf:hasStatus |  |
-| fiaf:hasStock |  |
+| fiaf:hasStatus | ba:ExemplarStatus |
+| fiaf:hasStock | ba:Aufbewahrungseinheit/ba:Rohfilmtyp |
 | fiaf:hasStream |  |
 | fiaf:hasTitle |  |
 | fiaf:hasTransferSpeed |  |
-| fiaf:isElement |  |
+| fiaf:isElement | ba:Aufbewahrungseinheit/ba:Materialart |
 
 **Mapping: Carrier**
 
@@ -91,7 +91,7 @@ A moving image Carrier is the discrete physical unit on which the moving image i
 | -- | -- |
 | rdf:type |  |
 | fiaf:hasEvent |  |
-| fiaf:hasIdentifier |  |
+| fiaf:hasIdentifier | @uuid |
 
 **Mapping: Event**
 
@@ -113,7 +113,7 @@ This describes the activity or role of the Agent in relation to the moving image
 
 | fiaf | local |
 | -- | -- |
-| rdf:type |  |
+| rdf:type | ba:Funktion/@Funktion |
 | fiaf:hasAgent |  |
 
 **Mapping: Agent**
@@ -122,8 +122,8 @@ Agents, whether for works/variants, manifestations, or items in moving images, a
 
 | fiaf | local |
 | -- | -- |
-| rdf:type |  |
-| fiaf:hasIdentifier |  |
+| rdf:type | ba:Person, ba:Koerperschaft |
+| fiaf:hasIdentifier | @uuid |
 
 
 TODO example input/output here?

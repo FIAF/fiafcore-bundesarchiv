@@ -20,11 +20,22 @@ def transform(xml):
 def harmonise(graph):
     turtle_string = graph.serialize(format="turtle")
 
-    for a,b in [
+    for a, b in [
         ("<bundesarchiv://ontology/work>", "<https://ontology.fiafcore.org/Work>"),
-        ("<bundesarchiv://ontology/identifier>", "<https://ontology.fiafcore.org/Identifier>"),
+        (
+            "<bundesarchiv://ontology/manifestation>",
+            "<https://ontology.fiafcore.org/Manifestation>",
+        ),
+        ("<bundesarchiv://ontology/item>", "<https://ontology.fiafcore.org/Item>"),
+        (
+            "<bundesarchiv://ontology/carrier>",
+            "<https://ontology.fiafcore.org/Carrier>",
+        ),
         ("<bundesarchiv://ontology/agent>", "<https://ontology.fiafcore.org/Agent>"),
-        ("<bundesarchiv://ontology/manifestation>", "<https://ontology.fiafcore.org/Manifestation>"),
+        (
+            "<bundesarchiv://ontology/identifier>",
+            "<https://ontology.fiafcore.org/Identifier>",
+        ),
     ]:
         turtle_string = turtle_string.replace(a, b)
 
@@ -81,7 +92,7 @@ def main():
 
     # testing restriction.
 
-    xml = [x for x in xml if "example" in x.name]
+    # xml = [x for x in xml if "example" in x.name]
 
     for x in tqdm.tqdm(sorted(xml)):
         # transformation of source data.
@@ -109,6 +120,9 @@ def main():
         format="turtle",
     )
 
+    # print test result.
+
+    # print(graph.serialize(format="turtle"))
 
 if __name__ == "__main__":
     main()
