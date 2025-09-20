@@ -1,8 +1,6 @@
 # FIAFcore [Bundesarchiv]
 Conformation of Bundesarchiv data to FIAFcore.
 
-*Template below*
-
 **Mapping: Work**
 
 A moving image Work comprises both the intellectual or artistic content and the process of realisation in a cinematographic medium.
