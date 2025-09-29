@@ -122,6 +122,3 @@ Agents, whether for works/variants, manifestations, or items in moving images, a
 | -- | -- |
 | rdf:type | ba:Person, ba:Koerperschaft |
 | fiaf:hasIdentifier | @uuid |
-
-
-TODO example input/output here?
