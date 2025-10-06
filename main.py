@@ -43,17 +43,23 @@ def harmonise(graph):
 
 
 def authority(graph):
-    work_type = rdflib.URIRef("https://ontology.fiafcore.org/Work")
-    work_ids = [str(s) for s, p, o in graph.triples((None, rdflib.RDF.type, work_type))]
 
-    atlas_user, atlas_pass = os.getenv("ATLAS_USER"), os.getenv("ATLAS_PASS")
-    uri = f"mongodb+srv://{atlas_user}:{atlas_pass}@fiafcore.wrscui9.mongodb.net/?retryWrites=true&w=majority&appName=fiafcore"
-    client = pymongo.MongoClient(uri)
-    database = client.get_database("fiafcore")
-    coll = database.get_collection("auth")
+    local_ids = list()
+    for entity_type in ['Work', 'Manifestation', 'Item', 'Carrier', 'Agent']:
+        local_ids += [str(s) for s, p, o in graph.triples((None, rdflib.RDF.type, rdflib.URIRef(f"https://ontology.fiafcore.org/{entity_type}")))]
+
+    # atlas_user, atlas_pass = os.getenv("ATLAS_USER"), os.getenv("ATLAS_PASS")
+    # uri = f"mongodb+srv://{atlas_user}:{atlas_pass}@fiafcore.wrscui9.mongodb.net/?retryWrites=true&w=majority&appName=fiafcore"
+    # client = pymongo.MongoClient(uri)
+    # database = client.get_database("fiafcore")
+    # coll = database.get_collection("auth")
+
+    client = pymongo.MongoClient("mongodb://localhost:27017")
+    db = client["fiafcore"]
+    coll = db.get_collection("auth")
 
     authority = dict()
-    for x in work_ids:
+    for x in local_ids:
         match = list(coll.find({"local": {"$elemMatch": {"$eq": x}}}))
 
         if len(match) > 1:
@@ -67,7 +73,7 @@ def authority(graph):
 
     client.close()
 
-    turtle_string = graph.serialize(format="longturtle")
+    turtle_string = graph.serialize(format="turtle")
     for k, v in authority.items():
         turtle_string = turtle_string.replace(f"<{k}>", f"<{v}>")
 
@@ -105,7 +111,7 @@ def main():
 
         # fiafcore authority ids for entities.
 
-        # g = authority(g)
+        g = authority(g)
 
         # aggregate output.
 
