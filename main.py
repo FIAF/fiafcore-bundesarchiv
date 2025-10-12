@@ -1,8 +1,6 @@
 from lxml import etree
-import dotenv
-import os
+import pandas
 import pathlib
-import pymongo
 import rdflib
 import tqdm
 import uuid
@@ -42,32 +40,27 @@ def harmonise(graph):
     return rdflib.Graph().parse(data=turtle_string, format="turtle")
 
 
-def authority(graph):
-    work_type = rdflib.URIRef("https://ontology.fiafcore.org/Work")
-    work_ids = [str(s) for s, p, o in graph.triples((None, rdflib.RDF.type, work_type))]
-
-    atlas_user, atlas_pass = os.getenv("ATLAS_USER"), os.getenv("ATLAS_PASS")
-    uri = f"mongodb+srv://{atlas_user}:{atlas_pass}@fiafcore.wrscui9.mongodb.net/?retryWrites=true&w=majority&appName=fiafcore"
-    client = pymongo.MongoClient(uri)
-    database = client.get_database("fiafcore")
-    coll = database.get_collection("auth")
+def authority(graph, df):
+    local_ids = list()
+    for entity_type in ["Work", "Manifestation", "Item", "Carrier", "Agent"]:
+        type_uri = rdflib.URIRef(f"https://ontology.fiafcore.org/{entity_type}")
+        local_ids += [
+            str(s) for s, p, o in graph.triples((None, rdflib.RDF.type, type_uri))
+        ]
 
     authority = dict()
-    for x in work_ids:
-        match = list(coll.find({"local": {"$elemMatch": {"$eq": x}}}))
-
+    for x in local_ids:
+        match = df.loc[df.local.isin([str(x)])]
         if len(match) > 1:
             raise Exception("This should not happen.")
         elif len(match) < 1:
             minted_id = f"https://resource.fiafcore.org/{str(uuid.uuid4())}"
-            coll.insert_one({"fiafcore": minted_id, "local": [x]})
             authority[x] = minted_id
+            df.loc[len(df)] = [(minted_id), (x)]
         else:
-            authority[x] = match[0]["fiafcore"]
+            authority[x] = match.iloc[0]["local"]
 
-    client.close()
-
-    turtle_string = graph.serialize(format="longturtle")
+    turtle_string = graph.serialize(format="turtle")
     for k, v in authority.items():
         turtle_string = turtle_string.replace(f"<{k}>", f"<{v}>")
 
@@ -75,9 +68,11 @@ def authority(graph):
 
 
 def main():
-    # load variables.
-
-    dotenv.load_dotenv()
+    auth_path = pathlib.Path.cwd() / "auth.parquet"
+    if not auth_path.exists():
+        auth_df = pandas.DataFrame(columns=["fiafcore", "local"])
+    else:
+        auth_df = pandas.read_parquet(auth_path)
 
     # top level graph.
 
@@ -90,7 +85,7 @@ def main():
     xml = [x for x in xml_path.iterdir()]
     xml = [x for x in xml if x.suffix == ".xml"]
 
-    # testing restriction.
+    # # testing restriction.
 
     # xml = [x for x in xml if "example" in x.name]
 
@@ -105,7 +100,7 @@ def main():
 
         # fiafcore authority ids for entities.
 
-        # g = authority(g)
+        g = authority(g, auth_df)
 
         # aggregate output.
 
@@ -115,14 +110,17 @@ def main():
 
     print(len(graph), "triples.")
 
+    # save authority parquet.
+
+    auth_df.to_parquet(auth_path)
+
+    # save graph.
+
     graph.serialize(
         destination=pathlib.Path.cwd() / "fiafcore_bundesarchiv.ttl",
         format="turtle",
     )
 
-    # print test result.
-
-    # print(graph.serialize(format="turtle"))
 
 if __name__ == "__main__":
     main()
