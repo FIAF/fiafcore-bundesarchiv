@@ -31,6 +31,14 @@ def harmonise(graph):
         ),
         ("<bundesarchiv://ontology/agent>", "<https://ontology.fiafcore.org/Agent>"),
         (
+            "<bundesarchiv://ontology/agent/person>",
+            "<https://ontology.fiafcore.org/PersonAgent>",
+        ),
+        (
+            "<bundesarchiv://ontology/agent/organisation>",
+            "<https://ontology.fiafcore.org/CorporateAgent>",
+        ),
+        (
             "<bundesarchiv://ontology/identifier>",
             "<https://ontology.fiafcore.org/Identifier>",
         ),
@@ -42,7 +50,15 @@ def harmonise(graph):
 
 def authority(graph, df):
     local_ids = list()
-    for entity_type in ["Work", "Manifestation", "Item", "Carrier", "Agent"]:
+    for entity_type in [
+        "Work",
+        "Manifestation",
+        "Item",
+        "Carrier",
+        "Agent",
+        "PersonAgent",
+        "CorporateAgent",
+    ]:
         type_uri = rdflib.URIRef(f"https://ontology.fiafcore.org/{entity_type}")
         local_ids += [
             str(s) for s, p, o in graph.triples((None, rdflib.RDF.type, type_uri))
@@ -59,7 +75,6 @@ def authority(graph, df):
             df.loc[len(df)] = [(minted_id), (x)]
         else:
             authority[x] = match.iloc[0]["fiafcore"]
-
 
     # print(authority)
 
