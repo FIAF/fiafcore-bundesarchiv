@@ -58,7 +58,10 @@ def authority(graph, df):
             authority[x] = minted_id
             df.loc[len(df)] = [(minted_id), (x)]
         else:
-            authority[x] = match.iloc[0]["local"]
+            authority[x] = match.iloc[0]["fiafcore"]
+
+
+    # print(authority)
 
     turtle_string = graph.serialize(format="turtle")
     for k, v in authority.items():
@@ -87,7 +90,7 @@ def main():
 
     # # testing restriction.
 
-    # xml = [x for x in xml if "example" in x.name]
+    xml = [x for x in xml if "example" in x.name]
 
     for x in tqdm.tqdm(sorted(xml)):
         # transformation of source data.

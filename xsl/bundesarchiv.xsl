@@ -367,7 +367,7 @@
     <!-- Carriers -->
 
     <xsl:template match="ba:Aufbewahrungseinheit">
-        <rdf:Description rdf:about="bundesarchiv://resource/carier/{@uuid}">
+        <rdf:Description rdf:about="bundesarchiv://resource/carrier/{@uuid}">
             <rdf:type rdf:resource="bundesarchiv://ontology/carrier" />
 
             <!-- fiaf:hasEvent -->
