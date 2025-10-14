@@ -18,8 +18,8 @@ A moving image Work comprises both the intellectual or artistic content and the 
 | rdf:type |  |
 | fiaf:hasCountry | ba:Ursprungsland |
 | fiaf:hasEvent (production) | ba:Credit |
-| fiaf:hasForm |  |
-| fiaf:hasGenre | ba:Gattung |
+| fiaf:hasForm | ba:Gattung |
+| fiaf:hasGenre | ba:Genre |
 | fiaf:hasIdentifier | @uuid |
 | fiaf:hasLanguageUsage |  |
 | fiaf:hasManifestation | ba:Manifestation |

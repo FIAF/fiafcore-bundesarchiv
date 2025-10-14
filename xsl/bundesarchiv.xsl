@@ -110,13 +110,20 @@
 
             <!-- fiafcore:hasForm -->
 
+            <xsl:for-each select="ba:Gattung">
+                <xsl:variable name="form1" select="translate(., ' ', '')" />
+                <xsl:variable name="form2" select="translate($form1, '/', '')" />
+                <fiaf:hasForm rdf:resource="bundesarchiv://vocabulary/form/{$form2}" />
+            </xsl:for-each>
+
             <!-- fiafcore:hasGenre -->
 
-            <xsl:for-each select="ba:Gattung">
+            <xsl:for-each select="ba:Genre">
                 <xsl:variable name="genre1" select="translate(., ' ', '')" />
                 <xsl:variable name="genre2" select="translate($genre1, '/', '')" />
                 <fiaf:hasGenre rdf:resource="bundesarchiv://vocabulary/genre/{$genre2}" />
             </xsl:for-each>
+
 
             <!-- fiafcore:hasIdentifier -->
 
@@ -319,10 +326,15 @@
 
             <!-- fiaf:hasImageCharacteristic  -->
 
-            <xsl:if test="ba:Aufbewahrungseinheit/ba:Bildseitenverhaeltnis">
-                <xsl:variable name="imagechar" select="translate(ba:Aufbewahrungseinheit/ba:Bildseitenverhaeltnis, ' ', '')"/>
-                <fiaf:hasImageCharacteristic rdf:resource="bundesarchiv://vocabulary/imagecharacteristic/{$imagechar}"/>
-            </xsl:if>
+            <!-- <xsl:if test="ba:Aufbewahrungseinheit/ba:Bildseitenverhaeltnis">
+                <xsl:variable name="imagechar1" select="translate(ba:Aufbewahrungseinheit/ba:Bildseitenverhaeltnis, ' ', '')"/>
+                <xsl:variable name="imagechar2" select="translate($imagechar1, '/', '')" />
+                <xsl:variable name="imagechar3" select="translate($imagechar2, '(', '')" />
+                <xsl:variable name="imagechar4" select="translate($imagechar3, ')', '')" />
+                <xsl:variable name="imagechar5" select="translate($imagechar4, ',', '')" />
+                <xsl:variable name="imagechar6" select="translate($imagechar5, ' ', '')" />
+                <fiaf:hasImageCharacteristic rdf:resource="bundesarchiv://vocabulary/imagecharacteristic/{$imagechar6}"/>
+            </xsl:if> -->
 
             <!-- fiaf:hasLineStandard  -->
 
