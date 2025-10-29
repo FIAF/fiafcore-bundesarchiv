@@ -177,6 +177,9 @@
     <xsl:template match="ba:Manifestation">
         <rdf:Description rdf:about="bundesarchiv://resource/manifestation/{@uuid}">
             <rdf:type rdf:resource="bundesarchiv://ontology/manifestation" />
+            <rdfs:label>
+                <xsl:value-of select="'Example Manifestation'"/>
+            </rdfs:label>
 
             <!-- fiaf:hasColourCharacteristic -->
 
