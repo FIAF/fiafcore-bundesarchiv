@@ -45,6 +45,16 @@ def harmonise(graph):
     ]:
         turtle_string = turtle_string.replace(a, b)
 
+    # base vocabulary.
+
+    for a,b in [
+        ("<bundesarchiv://vocabulary/base/Triazetatzellulose>", "<https://vocabulary.fiafcore.org/base/Acetate>"),
+        ("<bundesarchiv://vocabulary/base/Polyethylenterephtalat(Polyester)>", "<https://vocabulary.fiafcore.org/base/Polyester>"),
+        ("<bundesarchiv://vocabulary/base/Zellulosenitrat>", "<https://vocabulary.fiafcore.org/base/Nitrate>"),
+        ("<bundesarchiv://vocabulary/base/Acetatcellulose>", "<https://vocabulary.fiafcore.org/base/Acetate>"),
+    ]:
+        turtle_string = turtle_string.replace(a, b)
+
     return rdflib.Graph().parse(data=turtle_string, format="turtle")
 
 
@@ -105,7 +115,7 @@ def main():
 
     # # testing restriction.
 
-    xml = [x for x in xml if "example" in x.name]
+    # xml = [x for x in xml if "example" in x.name]
 
     for x in tqdm.tqdm(sorted(xml)):
         # transformation of source data.

@@ -30,22 +30,22 @@
 
     <!-- Works -->
 
-    <xsl:template match="ba:Filmwerk">
+    <!-- <xsl:template match="ba:Filmwerk">
         <xsl:variable name="filmwerk_title" select="ba:IDTitel" />
         <rdf:Description rdf:about="bundesarchiv://resource/work/{@uuid}">
-            <rdf:type rdf:resource="bundesarchiv://ontology/work" />
+            <rdf:type rdf:resource="bundesarchiv://ontology/work" /> -->
 
-            <!-- fiafcore:hasCountry -->
+    <!-- fiafcore:hasCountry -->
 
-            <xsl:for-each select="ba:Ursprungsland">
+    <!-- <xsl:for-each select="ba:Ursprungsland">
                 <xsl:variable name="country1" select="translate(., ' ', '')" />
                 <xsl:variable name="country2" select="translate($country1, '/', '')" />
                 <fiaf:hasCountry rdf:resource="bundesarchiv://vocabulary/country/{$country2}" />
-            </xsl:for-each>
+            </xsl:for-each> -->
 
-            <!-- fiafcore:hasEvent -->
+    <!-- fiafcore:hasEvent -->
 
-            <fiaf:hasEvent>
+    <!-- <fiaf:hasEvent>
                 <rdf:Description>
                     <rdf:type rdf:resource="bundesarchiv://ontology/event/production_event"/>
                     <xsl:if test="ba:ProdJahrVon">
@@ -106,28 +106,27 @@
                         </fiaf:hasActivity>
                     </xsl:for-each>
                 </rdf:Description>
-            </fiaf:hasEvent>
+            </fiaf:hasEvent> -->
 
-            <!-- fiafcore:hasForm -->
+    <!-- fiafcore:hasForm -->
 
-            <xsl:for-each select="ba:Gattung">
+    <!-- <xsl:for-each select="ba:Gattung">
                 <xsl:variable name="form1" select="translate(., ' ', '')" />
                 <xsl:variable name="form2" select="translate($form1, '/', '')" />
                 <fiaf:hasForm rdf:resource="bundesarchiv://vocabulary/form/{$form2}" />
-            </xsl:for-each>
+            </xsl:for-each> -->
 
-            <!-- fiafcore:hasGenre -->
+    <!-- fiafcore:hasGenre -->
 
-            <xsl:for-each select="ba:Genre">
+    <!-- <xsl:for-each select="ba:Genre">
                 <xsl:variable name="genre1" select="translate(., ' ', '')" />
                 <xsl:variable name="genre2" select="translate($genre1, '/', '')" />
                 <fiaf:hasGenre rdf:resource="bundesarchiv://vocabulary/genre/{$genre2}" />
-            </xsl:for-each>
+            </xsl:for-each> -->
 
+    <!-- fiafcore:hasIdentifier -->
 
-            <!-- fiafcore:hasIdentifier -->
-
-            <fiaf:hasIdentifier>
+    <!-- <fiaf:hasIdentifier>
                 <rdf:Description rdf:about="bundesarchiv://identifier/work/{@uuid}">
                     <rdf:type rdf:resource="bundesarchiv://ontology/identifier" />
                     <fiaf:hasIdentifierValue>
@@ -135,25 +134,25 @@
                     </fiaf:hasIdentifierValue>
                     <fiaf:hasIdentifierAuthority rdf:resource="bundesarchiv://ontology/authority/bundesarchiv" />
                 </rdf:Description>
-            </fiaf:hasIdentifier>
+            </fiaf:hasIdentifier> -->
 
-            <!-- fiafcore:hasLanguageUsage -->
+    <!-- fiafcore:hasLanguageUsage -->
 
-            <!-- fiafcore:hasManifestation -->
+    <!-- fiafcore:hasManifestation -->
 
-            <xsl:for-each select="ba:Manifestation">
+    <!-- <xsl:for-each select="ba:Manifestation">
                 <fiaf:hasManifestation>
                     <rdf:Description rdf:about="bundesarchiv://resource/manifestation/{@uuid}">
                         <rdf:type rdf:resource="bundesarchiv://ontology/manifestation" />
                     </rdf:Description>
                 </fiaf:hasManifestation>
-            </xsl:for-each>
+            </xsl:for-each> -->
 
-            <!-- fiafcore:hasSubject -->
+    <!-- fiafcore:hasSubject -->
 
-            <!-- fiafcore:hasTitle -->
+    <!-- fiafcore:hasTitle -->
 
-            <xsl:for-each select="ba:IDTitel">
+    <!-- <xsl:for-each select="ba:IDTitel">
                 <fiaf:hasTitle>
                     <rdf:Description>
                         <rdf:type rdf:resource="https://ontology.fiafcore.org/IdentifiyingTitle" />
@@ -162,37 +161,36 @@
                         </fiaf:hasTitleValue>
                     </rdf:Description>
                 </fiaf:hasTitle>
-            </xsl:for-each>
+            </xsl:for-each> -->
 
-            <!-- fiafcore:hasVariant -->
+    <!-- fiafcore:hasVariant -->
 
-            <!-- fiafcore:hasWork -->
+    <!-- fiafcore:hasWork -->
 
-        </rdf:Description>
-
-    </xsl:template>
+    <!-- </rdf:Description>
+    </xsl:template> -->
 
     <!-- Manifestations -->
 
-    <xsl:template match="ba:Manifestation">
+    <!-- <xsl:template match="ba:Manifestation">
         <rdf:Description rdf:about="bundesarchiv://resource/manifestation/{@uuid}">
             <rdf:type rdf:resource="bundesarchiv://ontology/manifestation" />
             <rdfs:label>
                 <xsl:value-of select="'Example Manifestation'"/>
-            </rdfs:label>
+            </rdfs:label> -->
 
-            <!-- fiaf:hasColourCharacteristic -->
+    <!-- fiaf:hasColourCharacteristic -->
 
-            <xsl:for-each select="ba:Farbe">
+    <!-- <xsl:for-each select="ba:Farbe">
                 <xsl:variable name="colorchar" select="translate(., ' ', '')" />
                 <fiaf:hasColourCharacteristic rdf:resource="bundesarchiv://vocabulary/colourcharacteristic/{$colorchar}" />
-            </xsl:for-each>
+            </xsl:for-each> -->
 
-            <!-- fiaf:hasEvent -->
+    <!-- fiaf:hasEvent -->
 
-            <!-- fiaf:hasExtent -->
+    <!-- fiaf:hasExtent -->
 
-            <xsl:if test="ba:Gesamtlaenge">
+    <!-- <xsl:if test="ba:Gesamtlaenge">
                 <fiaf:hasExtent>
                     <rdf:Description>
                         <rdf:type rdf:resource="bundesarchiv://ontology/extent/metres"/>
@@ -201,13 +199,13 @@
                         </fiaf:hasExtentValue>
                     </rdf:Description>
                 </fiaf:hasExtent>
-            </xsl:if>
+            </xsl:if> -->
 
-            <!-- fiaf:hasFormat  -->
+    <!-- fiaf:hasFormat  -->
 
-            <!-- fiaf:hasIdentifier -->
+    <!-- fiaf:hasIdentifier -->
 
-            <fiaf:hasIdentifier>
+    <!-- <fiaf:hasIdentifier>
                 <rdf:Description rdf:about="bundesarchiv://identifier/manifestation/{@uuid}">
                     <rdf:type rdf:resource="bundesarchiv://ontology/identifier" />
                     <fiaf:hasIdentifierValue>
@@ -215,23 +213,23 @@
                     </fiaf:hasIdentifierValue>
                     <fiaf:hasIdentifierAuthority rdf:resource="bundesarchiv://ontology/authority/bundesarchiv" />
                 </rdf:Description>
-            </fiaf:hasIdentifier>
+            </fiaf:hasIdentifier> -->
 
-            <!-- fiaf:hasImageCharacteristic -->
+    <!-- fiaf:hasImageCharacteristic -->
 
-            <!-- fiaf:hasItem -->
+    <!-- fiaf:hasItem -->
 
-            <xsl:for-each select="ba:Exemplar">
+    <!-- <xsl:for-each select="ba:Exemplar">
                 <fiaf:hasItem>
                     <rdf:Description rdf:about="bundesarchiv://resource/item/{@uuid}">
                         <rdf:type rdf:resource="bundesarchiv://ontology/item" />
                     </rdf:Description>
                 </fiaf:hasItem>
-            </xsl:for-each>
+            </xsl:for-each> -->
 
-            <!-- fiaf:hasLanguageUsage -->
+    <!-- fiaf:hasLanguageUsage -->
 
-            <xsl:if test="ba:Sprache">
+    <!-- <xsl:if test="ba:Sprache">
                 <fiaf:hasLanguageUsage>
                     <rdf:Description>
                         <rdf:type rdf:resource="bundesarchiv://vocabulary/languageusage/{ba:Sprache/@sprachgebrauch}"/>
@@ -239,14 +237,14 @@
                         <fiaf:hasLanguage rdf:resource="bundesarchiv://vocabulary/language/{$lang}"/>
                     </rdf:Description>
                 </fiaf:hasLanguageUsage>
-            </xsl:if>
+            </xsl:if> -->
 
-            <!-- fiaf:hasSoundCharacteristic -->
+    <!-- fiaf:hasSoundCharacteristic -->
 
-            <!-- fiaf:hasTitle -->
+    <!-- fiaf:hasTitle -->
 
-        </rdf:Description>
-    </xsl:template>
+    <!-- </rdf:Description>
+    </xsl:template> -->
 
     <!-- Items -->
 
@@ -258,32 +256,41 @@
 
             <xsl:if test="ba:Aufbewahrungseinheit/ba:Traeger">
                 <xsl:variable name="base" select="translate(ba:Aufbewahrungseinheit/ba:Traeger, ' ', '')"/>
-                <fiaf:hasBase rdf:resource="bundesarchiv://vocabulary/base/{$base}"/>
+                <xsl:choose>
+                    <xsl:when test="$base = 'keiner'"/>
+                    <xsl:when test="$base = 'Ozaphan'"/>
+                    <xsl:when test="$base = 'Bearbeitungsspeicher'"/>
+                    <xsl:when test="$base = 'Polycarbonat'"/>
+                    <xsl:when test="$base = 'Langzeitspeicher'"/>
+                    <xsl:otherwise>
+                        <fiaf:hasBase rdf:resource="bundesarchiv://vocabulary/base/{$base}"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:if>
 
             <!-- fiaf:hasBroadcastStandard  -->
 
-            <xsl:for-each select="ba:SDHDFernsehnorm">
+            <!-- <xsl:for-each select="ba:SDHDFernsehnorm">
                 <xsl:variable name="broadcaststandard" select="translate(., ' ', '')" />
                 <fiaf:hasBroadcastStandard rdf:resource="bundesarchiv://vocabulary/broadcaststandard/{$broadcaststandard}" />
-            </xsl:for-each>
+            </xsl:for-each> -->
 
             <!-- fiaf:hasCarrier -->
 
-            <xsl:for-each select="ba:Aufbewahrungseinheit">
+            <!-- <xsl:for-each select="ba:Aufbewahrungseinheit">
                 <fiaf:hasCarrier>
                     <rdf:Description rdf:about="bundesarchiv://resource/carrier/{@uuid}">
                         <rdf:type rdf:resource="bundesarchiv://ontology/carrier" />
                     </rdf:Description>
                 </fiaf:hasCarrier>
-            </xsl:for-each>
+            </xsl:for-each> -->
 
             <!-- fiaf:hasColourCharacteristic  -->
 
-            <xsl:if test="ba:Aufbewahrungseinheit/ba:Farbe">
+            <!-- <xsl:if test="ba:Aufbewahrungseinheit/ba:Farbe">
                 <xsl:variable name="itemcolour" select="translate(ba:Aufbewahrungseinheit/ba:Farbe, ' ', '')"/>
                 <fiaf:hasColourCharacteristic rdf:resource="bundesarchiv://vocabulary/colourcharacteristic/{$itemcolour}"/>
-            </xsl:if>
+            </xsl:if> -->
 
             <!-- fiaf:hasEvent  -->
 
@@ -291,7 +298,7 @@
 
             <!-- fiaf:hasFormat  -->
 
-            <xsl:if test="ba:Filmbreite">
+            <!-- <xsl:if test="ba:Filmbreite">
                 <xsl:variable name="format" select="translate(ba:Filmbreite, ' ', '')"/>
                 <fiaf:hasFormat rdf:resource="bundesarchiv://vocabulary/filmformat/{$format}"/>
             </xsl:if>
@@ -302,22 +309,22 @@
             <xsl:if test="ba:Datenformat">
                 <xsl:variable name="format" select="translate(ba:Datenformat, ' ', '')"/>
                 <fiaf:hasFormat rdf:resource="bundesarchiv://vocabulary/dataformat/{$format}"/>
-            </xsl:if>
+            </xsl:if> -->
 
             <!-- fiaf:hasFrameRate  -->
 
-            <xsl:if test="ba:Bildfrequenz">
+            <!-- <xsl:if test="ba:Bildfrequenz">
                 <xsl:variable name="fps" select="translate(ba:Bildfrequenz, ' ', '')"/>
                 <fiaf:hasFrameRate rdf:resource="bundesarchiv://ontology/fps/{$fps}"/>
-            </xsl:if>
+            </xsl:if> -->
 
             <!-- fiaf:hasHoldingInstitution  -->
 
-            <fiaf:hasHoldingInstitution rdf:resource="bundesarchiv://ontology/holdinginstitution/bundesarchiv"/>
+            <!-- <fiaf:hasHoldingInstitution rdf:resource="bundesarchiv://ontology/holdinginstitution/bundesarchiv"/> -->
 
             <!-- fiaf:hasIdentifier  -->
 
-            <fiaf:hasIdentifier>
+            <!-- <fiaf:hasIdentifier>
                 <rdf:Description rdf:about="bundesarchiv://identifier/item/{@uuid}">
                     <rdf:type rdf:resource="bundesarchiv://ontology/identifier" />
                     <fiaf:hasIdentifierValue>
@@ -325,7 +332,7 @@
                     </fiaf:hasIdentifierValue>
                     <fiaf:hasIdentifierAuthority rdf:resource="bundesarchiv://ontology/authority/bundesarchiv" />
                 </rdf:Description>
-            </fiaf:hasIdentifier>
+            </fiaf:hasIdentifier> -->
 
             <!-- fiaf:hasImageCharacteristic  -->
 
@@ -351,17 +358,17 @@
 
             <!-- fiaf:hasStatus  -->
 
-            <xsl:if test="ba:ExemplarStatus">
+            <!-- <xsl:if test="ba:ExemplarStatus">
                 <xsl:variable name="status" select="translate(ba:ExemplarStatus, ' ', '')"/>
                 <fiaf:hasStatus rdf:resource="bundesarchiv://vocabulary/status/{$status}"/>
-            </xsl:if>
+            </xsl:if> -->
 
             <!-- fiaf:hasStock  -->
 
-            <xsl:if test="ba:Aufbewahrungseinheit/ba:Rohfilmtyp">
+            <!-- <xsl:if test="ba:Aufbewahrungseinheit/ba:Rohfilmtyp">
                 <xsl:variable name="stock" select="translate(ba:Aufbewahrungseinheit/ba:Rohfilmtyp, ' ', '')"/>
                 <fiaf:hasStock rdf:resource="bundesarchiv://vocabulary/stock/{$stock}"/>
-            </xsl:if>
+            </xsl:if> -->
 
             <!-- fiaf:hasStream  -->
 
@@ -371,25 +378,25 @@
 
             <!-- fiaf:isElement  -->
 
-            <xsl:if test="ba:Aufbewahrungseinheit/ba:Materialart">
+            <!-- <xsl:if test="ba:Aufbewahrungseinheit/ba:Materialart">
                 <xsl:variable name="elem" select="translate(ba:Aufbewahrungseinheit/ba:Materialart, ' ', '')"/>
                 <fiaf:isElement rdf:resource="bundesarchiv://vocabulary/element/{$elem}"/>
-            </xsl:if>
+            </xsl:if> -->
 
         </rdf:Description>
     </xsl:template>
 
     <!-- Carriers -->
 
-    <xsl:template match="ba:Aufbewahrungseinheit">
+    <!-- <xsl:template match="ba:Aufbewahrungseinheit">
         <rdf:Description rdf:about="bundesarchiv://resource/carrier/{@uuid}">
-            <rdf:type rdf:resource="bundesarchiv://ontology/carrier" />
+            <rdf:type rdf:resource="bundesarchiv://ontology/carrier" /> -->
 
-            <!-- fiaf:hasEvent -->
+    <!-- fiaf:hasEvent -->
 
-            <!-- fiaf:hasIdentifier -->
+    <!-- fiaf:hasIdentifier -->
 
-            <fiaf:hasIdentifier>
+    <!-- <fiaf:hasIdentifier>
                 <rdf:Description rdf:about="bundesarchiv://identifier/carrier/{@uuid}">
                     <rdf:type rdf:resource="bundesarchiv://ontology/identifier" />
                     <fiaf:hasIdentifierValue>
@@ -397,9 +404,9 @@
                     </fiaf:hasIdentifierValue>
                     <fiaf:hasIdentifierAuthority rdf:resource="bundesarchiv://ontology/authority/bundesarchiv" />
                 </rdf:Description>
-            </fiaf:hasIdentifier>
+            </fiaf:hasIdentifier> -->
 
-        </rdf:Description>
-    </xsl:template>
+    <!-- </rdf:Description>
+    </xsl:template> -->
 
 </xsl:stylesheet>
