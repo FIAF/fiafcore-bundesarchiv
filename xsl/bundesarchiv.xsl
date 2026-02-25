@@ -30,10 +30,10 @@
 
     <!-- Works -->
 
-    <!-- <xsl:template match="ba:Filmwerk">
+    <xsl:template match="ba:Filmwerk">
         <xsl:variable name="filmwerk_title" select="ba:IDTitel" />
         <rdf:Description rdf:about="bundesarchiv://resource/work/{@uuid}">
-            <rdf:type rdf:resource="bundesarchiv://ontology/work" /> -->
+            <rdf:type rdf:resource="bundesarchiv://ontology/work" />
 
     <!-- fiafcore:hasCountry -->
 
@@ -167,8 +167,8 @@
 
     <!-- fiafcore:hasWork -->
 
-    <!-- </rdf:Description>
-    </xsl:template> -->
+        </rdf:Description>
+    </xsl:template>
 
     <!-- Manifestations -->
 
