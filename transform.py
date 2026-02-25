@@ -113,9 +113,9 @@ def main():
     xml = [x for x in xml_path.iterdir()]
     xml = [x for x in xml if x.suffix == ".xml"]
 
-    # # testing restriction.
+    # testing restriction.
 
-    # xml = [x for x in xml if "example" in x.name]
+    xml = [x for x in xml if "example" in x.name]
 
     for x in tqdm.tqdm(sorted(xml)):
         # transformation of source data.
