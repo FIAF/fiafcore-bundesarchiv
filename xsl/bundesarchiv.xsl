@@ -28,12 +28,38 @@
         <xsl:apply-templates select="*" />
     </xsl:template>
 
-    <!-- Works -->
+    <!-- fiafcore:Work -->
 
     <xsl:template match="ba:Filmwerk">
-        <xsl:variable name="filmwerk_title" select="ba:IDTitel" />
         <rdf:Description rdf:about="bundesarchiv://resource/work/{@uuid}">
-            <rdf:type rdf:resource="bundesarchiv://ontology/work" />
+
+        <xsl:if test="not(ba:Filmart)">
+            <rdf:type rdf:resource="https://dev.fiafcore.org/Work" />
+        </xsl:if>
+        <xsl:if test="ba:Filmart">
+            <xsl:variable name="work_type" select="ba:Filmart" />
+            <xsl:choose>
+                <xsl:when test="$work_type = 'Unbekannt'" />
+                <xsl:when test="$work_type = 'Documentation'" />
+                <xsl:when test="$work_type = 'Dokumentarfilm'">
+                    <rdf:type rdf:resource="https://dev.fiafcore.org/MonographicWork" />
+                </xsl:when>
+                <xsl:when test="$work_type = 'Spielfilm'">
+                    <rdf:type rdf:resource="https://dev.fiafcore.org/MonographicWork" />
+                </xsl:when>
+                <xsl:when test="$work_type = 'Film'">
+                    <rdf:type rdf:resource="https://dev.fiafcore.org/MonographicWork" />
+                </xsl:when>
+                <xsl:when test="$work_type = 'Serie / Reihe'">
+                    <rdf:type rdf:resource="https://dev.fiafcore.org/SerialWork" />
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:message terminate="yes">
+                        Error: Unexpected value "<xsl:value-of select="$work_type"/>".
+                    </xsl:message>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:if>
 
     <!-- fiafcore:hasCountry -->
 
@@ -248,13 +274,13 @@
 
     <!-- Items -->
 
-    <xsl:template match="ba:Exemplar">
+    <!-- <xsl:template match="ba:Exemplar">
         <rdf:Description rdf:about="bundesarchiv://resource/item/{@uuid}">
-            <rdf:type rdf:resource="bundesarchiv://ontology/item" />
+            <rdf:type rdf:resource="bundesarchiv://ontology/item" /> -->
 
             <!-- fiaf:hasBase -->
 
-            <xsl:if test="ba:Aufbewahrungseinheit/ba:Traeger">
+            <!-- <xsl:if test="ba:Aufbewahrungseinheit/ba:Traeger">
                 <xsl:variable name="base" select="translate(ba:Aufbewahrungseinheit/ba:Traeger, ' ', '')"/>
                 <xsl:choose>
                     <xsl:when test="$base = 'keiner'"/>
@@ -266,7 +292,7 @@
                         <fiaf:hasBase rdf:resource="bundesarchiv://vocabulary/base/{$base}"/>
                     </xsl:otherwise>
                 </xsl:choose>
-            </xsl:if>
+            </xsl:if> -->
 
             <!-- fiaf:hasBroadcastStandard  -->
 
@@ -383,8 +409,8 @@
                 <fiaf:isElement rdf:resource="bundesarchiv://vocabulary/element/{$elem}"/>
             </xsl:if> -->
 
-        </rdf:Description>
-    </xsl:template>
+        <!-- </rdf:Description>
+    </xsl:template> -->
 
     <!-- Carriers -->
 
