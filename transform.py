@@ -1,12 +1,29 @@
-from lxml import etree
+
 import pandas
 import pathlib
 import rdflib
 import tqdm
 import uuid
+from lxml import etree
 
+def subclasses(parent):
+
+    fiafcore_path = 'https://raw.githubusercontent.com/FIAF/fiafcore/refs/heads/develop/fiafcore.ttl'
+    fiafcore = rdflib.Graph().parse(fiafcore_path)
+    query = """
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        SELECT ?subClass
+        WHERE {
+            ?subClass rdfs:subClassOf+ <"""+parent+"""> .
+        }
+    """
+    result = [row.subClass for row in fiafcore.query(query)]
+    result.append(rdflib.URIRef(parent))
+
+    return result
 
 def transform(xml):
+
     data = etree.parse(str(xml))
     xsl_file = etree.parse(str(pathlib.Path.cwd() / "xsl" / "bundesarchiv.xsl"))
     transform = etree.XSLT(xsl_file)
@@ -14,79 +31,26 @@ def transform(xml):
 
     return rdflib.Graph().parse(data=str(result), format="xml")
 
+def authority(graph, df, types):
 
-def harmonise(graph):
-    turtle_string = graph.serialize(format="turtle")
-
-    for a, b in [
-        ("<bundesarchiv://ontology/work>", "<https://ontology.fiafcore.org/Work>"),
-        (
-            "<bundesarchiv://ontology/manifestation>",
-            "<https://ontology.fiafcore.org/Manifestation>",
-        ),
-        ("<bundesarchiv://ontology/item>", "<https://ontology.fiafcore.org/Item>"),
-        (
-            "<bundesarchiv://ontology/carrier>",
-            "<https://ontology.fiafcore.org/Carrier>",
-        ),
-        ("<bundesarchiv://ontology/agent>", "<https://ontology.fiafcore.org/Agent>"),
-        (
-            "<bundesarchiv://ontology/agent/person>",
-            "<https://ontology.fiafcore.org/PersonAgent>",
-        ),
-        (
-            "<bundesarchiv://ontology/agent/organisation>",
-            "<https://ontology.fiafcore.org/CorporateAgent>",
-        ),
-        (
-            "<bundesarchiv://ontology/identifier>",
-            "<https://ontology.fiafcore.org/Identifier>",
-        ),
-    ]:
-        turtle_string = turtle_string.replace(a, b)
-
-    # base vocabulary.
-
-    for a,b in [
-        ("<bundesarchiv://vocabulary/base/Triazetatzellulose>", "<https://vocabulary.fiafcore.org/base/Acetate>"),
-        ("<bundesarchiv://vocabulary/base/Polyethylenterephtalat(Polyester)>", "<https://vocabulary.fiafcore.org/base/Polyester>"),
-        ("<bundesarchiv://vocabulary/base/Zellulosenitrat>", "<https://vocabulary.fiafcore.org/base/Nitrate>"),
-        ("<bundesarchiv://vocabulary/base/Acetatcellulose>", "<https://vocabulary.fiafcore.org/base/Acetate>"),
-    ]:
-        turtle_string = turtle_string.replace(a, b)
-
-    return rdflib.Graph().parse(data=turtle_string, format="turtle")
-
-
-def authority(graph, df):
     local_ids = list()
-    for entity_type in [
-        "Work",
-        "Manifestation",
-        "Item",
-        "Carrier",
-        "Agent",
-        "PersonAgent",
-        "CorporateAgent",
-    ]:
-        type_uri = rdflib.URIRef(f"https://ontology.fiafcore.org/{entity_type}")
+    for t in types:
+        t = rdflib.URIRef(str(t).replace('ontology', 'dev'))
         local_ids += [
-            str(s) for s, p, o in graph.triples((None, rdflib.RDF.type, type_uri))
+            str(s) for s, p, o in graph.triples((None, rdflib.RDF.type, t))
         ]
 
     authority = dict()
     for x in local_ids:
         match = df.loc[df.local.isin([str(x)])]
         if len(match) > 1:
-            raise Exception("This should not happen.")
+            raise Exception("This should never happen.")
         elif len(match) < 1:
-            minted_id = f"https://resource.fiafcore.org/{str(uuid.uuid4())}"
+            minted_id = f"https://dev.fiafcore.org/{str(uuid.uuid4())}"
             authority[x] = minted_id
             df.loc[len(df)] = [(minted_id), (x)]
         else:
             authority[x] = match.iloc[0]["fiafcore"]
-
-    # print(authority)
 
     turtle_string = graph.serialize(format="turtle")
     for k, v in authority.items():
@@ -94,47 +58,47 @@ def authority(graph, df):
 
     return rdflib.Graph().parse(data=turtle_string, format="turtle")
 
-
 def main():
+
     auth_path = pathlib.Path.cwd() / "auth.parquet"
     if not auth_path.exists():
         auth_df = pandas.DataFrame(columns=["fiafcore", "local"])
     else:
         auth_df = pandas.read_parquet(auth_path)
 
+    # gather resource types.
+
+    resource_types = list()
+    resource_types += subclasses('https://ontology.fiafcore.org/Agent')
+    resource_types += subclasses('https://ontology.fiafcore.org/Work')
+
     # top level graph.
 
     graph = rdflib.Graph()
-    graph.bind("fiaf", rdflib.Namespace("https://ontology.fiafcore.org/"))
+    graph.bind("fiaf", rdflib.Namespace("https://dev.fiafcore.org/"))
 
     # loop through xml files.
 
     xml_path = pathlib.Path.cwd() / "xml"
     xml = [x for x in xml_path.iterdir()]
     xml = [x for x in xml if x.suffix == ".xml"]
-
-    # testing restriction.
-
-    xml = [x for x in xml if "example" in x.name]
+    # xml = [x for x in xml if "example" in x.name] # testing restriction.
 
     for x in tqdm.tqdm(sorted(xml)):
+
         # transformation of source data.
 
         g = transform(x)
 
-        # harmonise vocabulary and ontology terms.
-
-        g = harmonise(g)
-
         # fiafcore authority ids for entities.
 
-        g = authority(g, auth_df)
+        g = authority(g, auth_df, resource_types)
 
         # aggregate output.
 
         graph += g
 
-    # write resulting rdf.
+    # count of total triples.
 
     print(len(graph), "triples.")
 
@@ -148,7 +112,6 @@ def main():
         destination=pathlib.Path.cwd() / "fiafcore_bundesarchiv.ttl",
         format="turtle",
     )
-
 
 if __name__ == "__main__":
     main()
