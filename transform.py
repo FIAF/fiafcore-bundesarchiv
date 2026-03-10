@@ -40,6 +40,11 @@ def authority(graph, df, types):
             str(s) for s, p, o in graph.triples((None, rdflib.RDF.type, t))
         ]
 
+
+    # for x in local_ids:
+    #     if '0055b857' in str(x):
+    #         raise Exception('@@@')
+
     authority = dict()
     for x in local_ids:
         match = df.loc[df.local.isin([str(x)])]
@@ -71,6 +76,7 @@ def main():
     resource_types = list()
     resource_types += subclasses('https://ontology.fiafcore.org/Agent')
     resource_types += subclasses('https://ontology.fiafcore.org/Work')
+    resource_types += subclasses('https://ontology.fiafcore.org/Manifestation')
 
     # top level graph.
 
