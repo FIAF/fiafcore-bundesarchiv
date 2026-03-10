@@ -7,7 +7,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-    xmlns:fiaf="https://ontology.fiafcore.org/"
+    xmlns:fiaf="https://dev.fiafcore.org/"
     xmlns:ba="http://www.bundesarchiv.de/schemas/de-barch/fw-view-1.0"
     xmlns:oai="http://www.openarchives.org/OAI/2.0/" exclude-result-prefixes="oai ba">
 
@@ -16,7 +16,7 @@
     <xsl:template match="/">
         <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
             xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-            xmlns:fiaf="https://ontology.fiafcore.org/">
+            xmlns:fiaf="https://dev.fiafcore.org/">
             <xsl:apply-templates select="//ba:Filmwerk" />
             <xsl:apply-templates select="//ba:Manifestation" />
             <xsl:apply-templates select="//ba:Exemplar" />
@@ -39,8 +39,12 @@
         <xsl:if test="ba:Filmart">
             <xsl:variable name="work_type" select="ba:Filmart" />
             <xsl:choose>
-                <xsl:when test="$work_type = 'Unbekannt'" />
-                <xsl:when test="$work_type = 'Documentation'" />
+                <xsl:when test="$work_type = 'Unbekannt'">
+                    <rdf:type rdf:resource="https://dev.fiafcore.org/Work" />
+                </xsl:when>
+                <xsl:when test="$work_type = 'Documentation'">
+                    <rdf:type rdf:resource="https://dev.fiafcore.org/Work" />
+                </xsl:when>
                 <xsl:when test="$work_type = 'Dokumentarfilm'">
                     <rdf:type rdf:resource="https://dev.fiafcore.org/MonographicWork" />
                 </xsl:when>
@@ -61,7 +65,7 @@
             </xsl:choose>
         </xsl:if>
 
-    <!-- fiafcore:hasCountry -->
+        <!-- fiafcore:hasCountry -->
 
     <!-- <xsl:for-each select="ba:Ursprungsland">
                 <xsl:variable name="country1" select="translate(., ' ', '')" />
@@ -164,15 +168,13 @@
 
     <!-- fiafcore:hasLanguageUsage -->
 
-    <!-- fiafcore:hasManifestation -->
+        <!-- fiafcore:hasManifestation -->
 
-    <!-- <xsl:for-each select="ba:Manifestation">
-                <fiaf:hasManifestation>
-                    <rdf:Description rdf:about="bundesarchiv://resource/manifestation/{@uuid}">
-                        <rdf:type rdf:resource="bundesarchiv://ontology/manifestation" />
-                    </rdf:Description>
-                </fiaf:hasManifestation>
-            </xsl:for-each> -->
+        <xsl:for-each select="ba:Manifestation">
+            <fiaf:hasManifestation>
+                <rdf:Description rdf:about="bundesarchiv://resource/manifestation/{@uuid}" />
+            </fiaf:hasManifestation>
+        </xsl:for-each>
 
     <!-- fiafcore:hasSubject -->
 
@@ -196,14 +198,46 @@
         </rdf:Description>
     </xsl:template>
 
-    <!-- Manifestations -->
+    <!-- fiafcore:Manifestation -->
 
-    <!-- <xsl:template match="ba:Manifestation">
+    <xsl:template match="ba:Manifestation">
         <rdf:Description rdf:about="bundesarchiv://resource/manifestation/{@uuid}">
-            <rdf:type rdf:resource="bundesarchiv://ontology/manifestation" />
-            <rdfs:label>
-                <xsl:value-of select="'Example Manifestation'"/>
-            </rdfs:label> -->
+
+            <xsl:if test="not(ba:Manifestationstyp)">
+                <rdf:type rdf:resource="https://dev.fiafcore.org/Manifestation" />
+            </xsl:if>
+            <xsl:if test="ba:Manifestationstyp">
+                <xsl:variable name="manifestation_type" select="ba:Manifestationstyp" />
+                <xsl:choose>
+                    <xsl:when test="$manifestation_type = 'Standardmanifestation'">
+                        <rdf:type rdf:resource="https://dev.fiafcore.org/Manifestation" />
+                    </xsl:when>
+                    <xsl:when test="$manifestation_type = 'Migrationsmanifestation'">
+                        <rdf:type rdf:resource="https://dev.fiafcore.org/Manifestation" />
+                    </xsl:when>
+                    <xsl:when test="$manifestation_type = 'Weitere Manifestation'">
+                        <rdf:type rdf:resource="https://dev.fiafcore.org/Manifestation" />
+                    </xsl:when>
+                    <xsl:when test="$manifestation_type = 'Herstellungsprozess (Pre-Release)'">
+                        <rdf:type rdf:resource="https://dev.fiafcore.org/PreReleaseManifestation" />
+                    </xsl:when>
+                    <xsl:when test="$manifestation_type = 'Kinofassung (Theatrical distribution)'">
+                        <rdf:type rdf:resource="https://dev.fiafcore.org/TheatricalManifestation" />
+                    </xsl:when>
+                    <xsl:when test="$manifestation_type = 'Unidentifizierte Manifestation'">
+                        <rdf:type rdf:resource="https://dev.fiafcore.org/Manifestation" />
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:message terminate="yes">
+                            Error: Unexpected value "<xsl:value-of select="$manifestation_type"/>".
+                        </xsl:message>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:if>
+
+            <!-- <rdfs:label> -->
+                <!-- <xsl:value-of select="'Example Manifestation'"/> -->
+            <!-- </rdfs:label> -->
 
     <!-- fiaf:hasColourCharacteristic -->
 
@@ -269,8 +303,8 @@
 
     <!-- fiaf:hasTitle -->
 
-    <!-- </rdf:Description>
-    </xsl:template> -->
+        </rdf:Description>
+    </xsl:template>
 
     <!-- Items -->
 
