@@ -77,6 +77,8 @@ def main():
     resource_types += subclasses('https://ontology.fiafcore.org/Agent')
     resource_types += subclasses('https://ontology.fiafcore.org/Work')
     resource_types += subclasses('https://ontology.fiafcore.org/Manifestation')
+    resource_types += subclasses('https://ontology.fiafcore.org/Item')
+
 
     # top level graph.
 

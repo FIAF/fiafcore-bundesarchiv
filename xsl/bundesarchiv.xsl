@@ -277,15 +277,13 @@
 
     <!-- fiaf:hasImageCharacteristic -->
 
-    <!-- fiaf:hasItem -->
+        <!-- fiaf:hasItem -->
 
-    <!-- <xsl:for-each select="ba:Exemplar">
-                <fiaf:hasItem>
-                    <rdf:Description rdf:about="bundesarchiv://resource/item/{@uuid}">
-                        <rdf:type rdf:resource="bundesarchiv://ontology/item" />
-                    </rdf:Description>
-                </fiaf:hasItem>
-            </xsl:for-each> -->
+        <xsl:for-each select="ba:Exemplar">
+            <fiaf:hasItem>
+                <rdf:Description rdf:about="bundesarchiv://resource/item/{@uuid}" />
+            </fiaf:hasItem>
+        </xsl:for-each>
 
     <!-- fiaf:hasLanguageUsage -->
 
@@ -308,9 +306,9 @@
 
     <!-- Items -->
 
-    <!-- <xsl:template match="ba:Exemplar">
+    <xsl:template match="ba:Exemplar"> -->
         <rdf:Description rdf:about="bundesarchiv://resource/item/{@uuid}">
-            <rdf:type rdf:resource="bundesarchiv://ontology/item" /> -->
+            <rdf:type rdf:resource="https://dev.fiafcore.org/Item" />
 
             <!-- fiaf:hasBase -->
 
@@ -443,8 +441,8 @@
                 <fiaf:isElement rdf:resource="bundesarchiv://vocabulary/element/{$elem}"/>
             </xsl:if> -->
 
-        <!-- </rdf:Description>
-    </xsl:template> -->
+        </rdf:Description>
+    </xsl:template>
 
     <!-- Carriers -->
 
