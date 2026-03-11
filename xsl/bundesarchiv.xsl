@@ -421,10 +421,37 @@
 
             <!-- fiaf:hasStock  -->
 
-            <!-- <xsl:if test="ba:Aufbewahrungseinheit/ba:Rohfilmtyp">
-                <xsl:variable name="stock" select="translate(ba:Aufbewahrungseinheit/ba:Rohfilmtyp, ' ', '')"/>
-                <fiaf:hasStock rdf:resource="bundesarchiv://vocabulary/stock/{$stock}"/>
-            </xsl:if> -->
+            <xsl:if test="ba:Aufbewahrungseinheit/ba:Rohfilmtyp">
+                <xsl:variable name="stock" select="translate(ba:Aufbewahrungseinheit/ba:Rohfilmtyp, ' ', '_')"/>
+                <xsl:choose>
+                    <xsl:when test="$stock = 'DP_31'" />
+                    <xsl:when test="$stock = 'PF2'" />
+                    <xsl:when test="$stock = 'DN_21'" />
+                    <xsl:when test="$stock = '2374'" />
+                    <xsl:when test="$stock = 'PF2_V2'" />
+                    <xsl:when test="$stock = 'ST_8'" />
+                    <xsl:when test="$stock = 'Keiner'" />
+                    <xsl:when test="$stock = 'TF_12d'" />
+                    <xsl:when test="$stock = '2234'" />
+                    <xsl:when test="$stock = '2366'" />
+                    <xsl:when test="$stock = 'CP_30'" />
+                    <xsl:when test="$stock = 'Sonstige'" />
+                    <xsl:when test="$stock = 'Kodak'">
+                        <fiaf:hasStock rdf:resource="https://dev.fiafcore.org/Kodak" />
+                    </xsl:when>
+                    <xsl:when test="$stock = 'Orwo'">
+                        <fiaf:hasStock rdf:resource="https://dev.fiafcore.org/Orwo" />
+                    </xsl:when>
+                    <xsl:when test="$stock = 'Agfa'">
+                        <fiaf:hasStock rdf:resource="https://dev.fiafcore.org/Agfa" />
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:message terminate="yes">
+                            Error: Unexpected value "<xsl:value-of select="$stock"/>".
+                        </xsl:message>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:if>
 
             <!-- fiaf:hasStream  -->
 
