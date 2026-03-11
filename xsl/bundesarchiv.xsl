@@ -335,13 +335,11 @@
 
             <!-- fiaf:hasCarrier -->
 
-            <!-- <xsl:for-each select="ba:Aufbewahrungseinheit">
+            <xsl:for-each select="ba:Aufbewahrungseinheit">
                 <fiaf:hasCarrier>
-                    <rdf:Description rdf:about="bundesarchiv://resource/carrier/{@uuid}">
-                        <rdf:type rdf:resource="bundesarchiv://ontology/carrier" />
-                    </rdf:Description>
+                    <rdf:Description rdf:about="bundesarchiv://resource/carrier/{@uuid}" />
                 </fiaf:hasCarrier>
-            </xsl:for-each> -->
+            </xsl:for-each>
 
             <!-- fiaf:hasColourCharacteristic  -->
 
@@ -446,9 +444,9 @@
 
     <!-- Carriers -->
 
-    <!-- <xsl:template match="ba:Aufbewahrungseinheit">
+    <xsl:template match="ba:Aufbewahrungseinheit"> -->
         <rdf:Description rdf:about="bundesarchiv://resource/carrier/{@uuid}">
-            <rdf:type rdf:resource="bundesarchiv://ontology/carrier" /> -->
+            <rdf:type rdf:resource="https://dev.fiafcore.org/Carrier" />
 
     <!-- fiaf:hasEvent -->
 
@@ -464,7 +462,7 @@
                 </rdf:Description>
             </fiaf:hasIdentifier> -->
 
-    <!-- </rdf:Description>
-    </xsl:template> -->
+        </rdf:Description>
+    </xsl:template>
 
 </xsl:stylesheet>
