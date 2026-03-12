@@ -312,19 +312,33 @@
 
             <!-- fiaf:hasBase -->
 
-            <!-- <xsl:if test="ba:Aufbewahrungseinheit/ba:Traeger">
-                <xsl:variable name="base" select="translate(ba:Aufbewahrungseinheit/ba:Traeger, ' ', '')"/>
+            <xsl:if test="ba:Aufbewahrungseinheit/ba:Traeger">
+                <xsl:variable name="base" select="translate(ba:Aufbewahrungseinheit/ba:Traeger, ' ', '_')"/>
                 <xsl:choose>
-                    <xsl:when test="$base = 'keiner'"/>
-                    <xsl:when test="$base = 'Ozaphan'"/>
-                    <xsl:when test="$base = 'Bearbeitungsspeicher'"/>
-                    <xsl:when test="$base = 'Polycarbonat'"/>
-                    <xsl:when test="$base = 'Langzeitspeicher'"/>
+                    <xsl:when test="$base = 'keiner'" />
+                    <xsl:when test="$base = 'Bearbeitungsspeicher'" />
+                    <xsl:when test="$base = 'Ozaphan'" />
+                    <xsl:when test="$base = 'Polycarbonat'" />
+                    <xsl:when test="$base = 'Langzeitspeicher'" />
+                    <xsl:when test="$base = 'Triazetatzellulose'">
+                        <fiaf:hasBase rdf:resource="https://dev.fiafcore.org/Acetate" />
+                    </xsl:when>
+                    <xsl:when test="$base = 'Polyethylenterephtalat_(Polyester)'">
+                        <fiaf:hasBase rdf:resource="https://dev.fiafcore.org/Polyester" />
+                    </xsl:when>
+                    <xsl:when test="$base = 'Zellulosenitrat'">
+                        <fiaf:hasBase rdf:resource="https://dev.fiafcore.org/Nitrate" />
+                    </xsl:when>
+                    <xsl:when test="$base = 'Acetatcellulose'">
+                        <fiaf:hasBase rdf:resource="https://dev.fiafcore.org/Acetate" />
+                    </xsl:when>
                     <xsl:otherwise>
-                        <fiaf:hasBase rdf:resource="bundesarchiv://vocabulary/base/{$base}"/>
+                        <xsl:message terminate="yes">
+                            Error: Unexpected value "<xsl:value-of select="$base"/>".
+                        </xsl:message>
                     </xsl:otherwise>
                 </xsl:choose>
-            </xsl:if> -->
+            </xsl:if>
 
             <!-- fiaf:hasBroadcastStandard  -->
 
