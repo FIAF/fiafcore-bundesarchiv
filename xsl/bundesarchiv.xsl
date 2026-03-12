@@ -368,18 +368,98 @@
 
             <!-- fiaf:hasFormat  -->
 
-            <!-- <xsl:if test="ba:Filmbreite">
-                <xsl:variable name="format" select="translate(ba:Filmbreite, ' ', '')"/>
-                <fiaf:hasFormat rdf:resource="bundesarchiv://vocabulary/filmformat/{$format}"/>
+            <xsl:if test="ba:Container">
+                <xsl:variable name="format" select="translate(ba:Container, ' ', '_')"/>
+                  <xsl:choose>
+                  <xsl:when test="$format = 'TIFF'" />
+                  <xsl:when test="$format = 'WAVE'" />
+                  <xsl:when test="$format = 'OHNE_Container'" />
+                  <xsl:when test="$format = 'VOB'" />
+                  <xsl:when test="$format = 'WebM'" />
+                  <xsl:when test="$format = 'MPEG-2'" />
+                  <xsl:when test="$format = 'Unbekannt'" />
+                  <xsl:when test="$format = 'DCP'" />
+                  <xsl:when test="$format = 'Kodak_Cineon_Format'" />
+                  <xsl:when test="$format = 'Open_EXR'" />
+                  <xsl:when test="$format = 'MP4'">
+                      <fiaf:hasFormat rdf:resource="https://dev.fiafcore.org/MP4" />
+                  </xsl:when>
+                  <xsl:when test="$format = 'MXF_OP-1a'">
+                      <fiaf:hasFormat rdf:resource="https://dev.fiafcore.org/MXF" />
+                  </xsl:when>
+                  <xsl:when test="$format = 'AVI'">
+                      <fiaf:hasFormat rdf:resource="https://dev.fiafcore.org/AVI" />
+                  </xsl:when>
+                  <xsl:when test="$format = 'MXF_OP-Atom'">
+                      <fiaf:hasFormat rdf:resource="https://dev.fiafcore.org/MXF" />
+                  </xsl:when>
+                  <xsl:when test="$format = 'DPX'">
+                      <fiaf:hasFormat rdf:resource="https://dev.fiafcore.org/DPX" />
+                  </xsl:when>
+                  <xsl:when test="$format = 'MOV'">
+                      <fiaf:hasFormat rdf:resource="https://dev.fiafcore.org/MOV" />
+                  </xsl:when>
+                  <xsl:when test="$format = 'MXF'">
+                      <fiaf:hasFormat rdf:resource="https://dev.fiafcore.org/MXF" />
+                  </xsl:when>
+                  <xsl:otherwise>
+                      <xsl:message terminate="yes">
+                          Error: Unexpected value "<xsl:value-of select="$format"/>".
+                      </xsl:message>
+                  </xsl:otherwise>
+              </xsl:choose>
             </xsl:if>
-            <xsl:if test="ba:Videoformat">
-                <xsl:variable name="format" select="translate(ba:Videoformat, ' ', '')"/>
-                <fiaf:hasFormat rdf:resource="bundesarchiv://vocabulary/videoformat/{$format}"/>
+
+            <xsl:if test="ba:Filmbreite">
+                <xsl:variable name="format" select="translate(ba:Filmbreite, ' ', '_')"/>
+                  <xsl:choose>
+                  <xsl:when test="$format = '6,25_mm'" />
+                  <xsl:when test="$format = 'Unbekannt'" />
+                  <xsl:when test="$format = '35_+_16_mm'" />
+                  <xsl:when test="$format = '35-8_mm'" />
+                  <xsl:when test="$format = '42_mm'" />
+                  <xsl:when test="$format = 'Nicht_standardisiert'" />
+                  <xsl:when test="$format = '35-16_mm'" />
+                  <xsl:when test="$format = '35_mm'">
+                      <fiaf:hasFormat rdf:resource="https://dev.fiafcore.org/35mmFilm" />
+                  </xsl:when>
+                  <xsl:when test="$format = '16_mm'">
+                      <fiaf:hasFormat rdf:resource="https://dev.fiafcore.org/16mmFilm" />
+                  </xsl:when>
+                  <xsl:when test="$format = '16_mm_neue_Norm'">
+                      <fiaf:hasFormat rdf:resource="https://dev.fiafcore.org/16mmFilm" />
+                  </xsl:when>
+                  <xsl:when test="$format = '16_mm_alte_Norm'">
+                      <fiaf:hasFormat rdf:resource="https://dev.fiafcore.org/16mmFilm" />
+                  </xsl:when>
+                  <xsl:when test="$format = '8_mm'">
+                      <fiaf:hasFormat rdf:resource="https://dev.fiafcore.org/8mmFilm" />
+                  </xsl:when>
+                  <xsl:when test="$format = 'S_16_mm'">
+                      <fiaf:hasFormat rdf:resource="https://dev.fiafcore.org/Super16mmFilm" />
+                  </xsl:when>
+                  <xsl:when test="$format = '17,5_mm'">
+                      <fiaf:hasFormat rdf:resource="https://dev.fiafcore.org/17.5mmFilm" />
+                  </xsl:when>
+                  <xsl:when test="$format = '9,5_mm'">
+                      <fiaf:hasFormat rdf:resource="https://dev.fiafcore.org/9.5mmFilm" />
+                  </xsl:when>
+                  <xsl:when test="$format = '70_mm'">
+                      <fiaf:hasFormat rdf:resource="https://dev.fiafcore.org/70mmFilm" />
+                  </xsl:when>
+                  <xsl:when test="$format = 'Normal_8_mm'">
+                      <fiaf:hasFormat rdf:resource="https://dev.fiafcore.org/8mmFilm" />
+                  </xsl:when>
+                  <xsl:when test="$format = 'Super_8_mm'">
+                      <fiaf:hasFormat rdf:resource="https://dev.fiafcore.org/Super8mmFilm" />
+                  </xsl:when>
+                  <xsl:otherwise>
+                      <xsl:message terminate="yes">
+                          Error: Unexpected value "<xsl:value-of select="$format"/>".
+                      </xsl:message>
+                  </xsl:otherwise>
+              </xsl:choose>
             </xsl:if>
-            <xsl:if test="ba:Datenformat">
-                <xsl:variable name="format" select="translate(ba:Datenformat, ' ', '')"/>
-                <fiaf:hasFormat rdf:resource="bundesarchiv://vocabulary/dataformat/{$format}"/>
-            </xsl:if> -->
 
             <!-- fiaf:hasFrameRate  -->
 
