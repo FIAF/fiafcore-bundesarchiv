@@ -414,10 +414,26 @@
 
             <!-- fiaf:hasStatus  -->
 
-            <!-- <xsl:if test="ba:ExemplarStatus">
-                <xsl:variable name="status" select="translate(ba:ExemplarStatus, ' ', '')"/>
-                <fiaf:hasStatus rdf:resource="bundesarchiv://vocabulary/status/{$status}"/>
-            </xsl:if> -->
+            <xsl:if test="ba:ExemplarStatus">
+                <xsl:variable name="status" select="translate(ba:ExemplarStatus, ' ', '_')"/>
+                  <xsl:choose>
+                  <xsl:when test="$status = 'Unbekannt'" />
+                  <xsl:when test="$status = 'Benutzungsstück'">
+                      <fiaf:hasStatus rdf:resource="https://dev.fiafcore.org/Access" />
+                  </xsl:when>
+                  <xsl:when test="$status = 'Sicherungsstück'">
+                      <fiaf:hasStatus rdf:resource="https://dev.fiafcore.org/Preservation" />
+                  </xsl:when>
+                  <xsl:when test="$status = 'Digitales_Sicherungsstück'">
+                      <fiaf:hasStatus rdf:resource="https://dev.fiafcore.org/Preservation" />
+                  </xsl:when>
+                  <xsl:otherwise>
+                      <xsl:message terminate="yes">
+                          Error: Unexpected value "<xsl:value-of select="$status"/>".
+                      </xsl:message>
+                  </xsl:otherwise>
+              </xsl:choose>
+            </xsl:if>
 
             <!-- fiaf:hasStock  -->
 
