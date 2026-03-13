@@ -67,11 +67,324 @@
 
         <!-- fiafcore:hasCountry -->
 
-    <!-- <xsl:for-each select="ba:Ursprungsland">
-                <xsl:variable name="country1" select="translate(., ' ', '')" />
-                <xsl:variable name="country2" select="translate($country1, '/', '')" />
-                <fiaf:hasCountry rdf:resource="bundesarchiv://vocabulary/country/{$country2}" />
-            </xsl:for-each> -->
+        <xsl:if test="ba:Ursprungsland">
+            <xsl:for-each select="ba:Ursprungsland">
+                <xsl:variable name="country" select="translate(., ' ', ' ')" />
+                <xsl:choose>
+                    <xsl:when test="$country = 'Amerika'" />
+                    <xsl:when test="$country = 'unklar'" />
+                    <xsl:when test="$country = 'Kosovo'" />
+                    <xsl:when test="$country = 'Unbekannt'" />
+                    <xsl:when test="$country = 'Jugoslawien'" />
+                    <xsl:when test="$country = 'Union der Sozialistischen Sowjetrepubliken'" />
+                    <xsl:when test="$country = 'Deutsches Reich (bis 1945)'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Bundesrepublik Deutschland'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Deutsche Demokratische Republik (1949-1990)'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Vereinigte Staaten von Amerika'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/UnitedStatesOfAmerica" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Frankreich'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/France" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Österreich'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Austria" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Italien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Italy" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Vereinigtes Königreich von Großbritannien und Nordirland'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/UnitedKingdomOfGreatBritainAndNorthernIreland" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Schweiz'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Switzerland" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Deutschland, sowjetische Besatzungszone (1945-1949)'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Dänemark'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Denmark" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Tschechoslowakei (-1993)'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Czechia" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Schweden'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Sweden" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Ungarn'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Hungary" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Deutschland, französische Besatzungszone (1945-1949)'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Polen'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Poland" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Niederlande'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/NetherlandsKingdomOfThe" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Norwegen'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Norway" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Belgien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Belgium" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Spanien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Spain" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Bulgarien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Bulgaria" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Japan'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Japan" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Russische Föderation'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/RussianFederation" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Israel'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Israel" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Kanada'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Canada" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Deutschland, amerikanische Besatzungszone (1945-1949)'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Finnland'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Finland" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Berlin West (1949-1990)'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Deutschland, britische Besatzungszone (1945-1949)'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Tschechische Republik (ab 1993)'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Czechia" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Rumänien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Romania" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Kroatien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Croatia" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Luxemburg'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Luxembourg" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Irland, Republik'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Ireland" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Türkei'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Turkiye" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Kuba'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Cuba" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'China, Volksrepublik'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/China" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Argentinien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Argentina" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Griechenland'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Greenland" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Island'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Iceland" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Australien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Australia" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Palästinensische Autonomiegebiete'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/PalestineStateOf" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Mexiko'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Mexico" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Indien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/India" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Ukraine'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Ukraine" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Chile'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Chile" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Slowenien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Slovenia" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Südafrika, Republik'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/SouthAfrica" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Korea, Republik'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/KoreaRepublicOf" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Bolivien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/BoliviaPlurinationalStateOf" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Estland'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Estonia" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Kasachstan'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Kazakhstan" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Kolumbien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Colombia" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Kamerun'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Cameroon" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Iran'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/IranIslamicRepublicOf" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Portugal'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Portugal" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Uruguay'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Uruguay" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Weißrussland'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Belarus" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Georgien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Georgia" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Brasilien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Brazil" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Zypern, Republik'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Cyprus" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Vietnam'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/VietNam" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Afghanistan'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Afghanistan" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Albanien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Albania" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Burkina Faso'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/BurkinaFaso" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Deutschland - Alliierte Besatzung (1945-1949)'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Guinea, Republik'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Guinea" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Neuseeland'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/NewZealand" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Ägypten'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Egypt" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Algerien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Algeria" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Deutschland, westliche Besatzungszonen (1945-1949)'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Katar'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Qatar" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Syrien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/SyrianArabRepublic" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Thailand'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Thailand" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Lettland'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Latvia" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Marokko'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Morocco" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Peru'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Peru" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Philippinen'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Philippines" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Litauen'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Lithuania" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Saudi-Arabien, Königreich'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/SaudiArabia" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Kenia'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Kenya" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Äthiopien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Ethiopia" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Nepal'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Nepal" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Mongolei'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Mongolia" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Slowakei (ab 1993)'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Slovakia" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Bosnien und Herzegowina'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/BosniaAndHerzegovina" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Kirgisistan'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Kyrgyzstan" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Monaco'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Monaco" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Vereinigte Arabische Emirate'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/UnitedArabEmirates" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Ecuador'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Ecuador" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Libanon'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Lebanon" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Ghana, Republik'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Ghana" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Serbien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Serbia" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Hongkong'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/HongKong" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Indonesien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Indonesia" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Tunesien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Tunisia" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Irak'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Iraq" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Jordanien'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Jordan" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Niger'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Niger" />
+                    </xsl:when>
+                    <xsl:when test="$country = 'Taiwan'">
+                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/TaiwanProvinceOfChina" />
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:message terminate="yes">
+                            Error: Unexpected value "<xsl:value-of select="$country"/>".
+                        </xsl:message>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:for-each>
+        </xsl:if>
 
     <!-- fiafcore:hasEvent -->
 
