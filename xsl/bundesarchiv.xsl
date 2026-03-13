@@ -140,11 +140,110 @@
 
     <!-- fiafcore:hasForm -->
 
-    <!-- <xsl:for-each select="ba:Gattung">
-                <xsl:variable name="form1" select="translate(., ' ', '')" />
-                <xsl:variable name="form2" select="translate($form1, '/', '')" />
-                <fiaf:hasForm rdf:resource="bundesarchiv://vocabulary/form/{$form2}" />
-            </xsl:for-each> -->
+    <xsl:if test="ba:Gattung">
+        <xsl:for-each select="ba:Gattung">
+            <xsl:variable name="form" select="translate(., ' ', '_')" />
+            <xsl:choose>
+                <xsl:when test="$form = 'Wochenschau'" />
+                <xsl:when test="$form = 'NichtSpielfilm'" />
+                <xsl:when test="$form = 'Animationsfilm'" />
+                <xsl:when test="$form = 'Lehr-,_Unterrichts-_und_Informationsfilm'" />
+                <xsl:when test="$form = 'Werbefilm'" />
+                <xsl:when test="$form = 'Kulturfilm'" />
+                <xsl:when test="$form = 'Reportage'" />
+                <xsl:when test="$form = 'unbekannt'" />
+                <xsl:when test="$form = 'Dokumentarfilm_(Nichtspielfilm)'" />
+                <xsl:when test="$form = 'Fernsehfilm'" />
+                <xsl:when test="$form = 'Populärwiss._Film'" />
+                <xsl:when test="$form = 'Medizinfilm'" />
+                <xsl:when test="$form = 'Periodika'" />
+                <xsl:when test="$form = 'Magazin'" />
+                <xsl:when test="$form = 'Experimentalfilm'" />
+                <xsl:when test="$form = 'Nichtnarrativer_Film'" />
+                <xsl:when test="$form = 'Porträtfilm'" />
+                <xsl:when test="$form = 'Aufklärungsfilm'" />
+                <xsl:when test="$form = 'Sach-_und_Ereignisdokument'" />
+                <xsl:when test="$form = 'Privatfilm'" />
+                <xsl:when test="$form = 'Literaturverfilmung'" />
+                <xsl:when test="$form = 'Industriefilm'" />
+                <xsl:when test="$form = 'Lustspiel'" />
+                <xsl:when test="$form = 'Kinderfilm'" />
+                <xsl:when test="$form = 'Biografischer_Film'" />
+                <xsl:when test="$form = 'Unterrichtsfilm'" />
+                <xsl:when test="$form = 'Städte-_u.Landschaftsfilm'" />
+                <xsl:when test="$form = 'Propagandafilm'" />
+                <xsl:when test="$form = 'Expeditionsfilm'" />
+                <xsl:when test="$form = 'Interview'" />
+                <xsl:when test="$form = 'Komödie'" />
+                <xsl:when test="$form = 'Sportfilm'" />
+                <xsl:when test="$form = 'Naturfilm'" />
+                <xsl:when test="$form = 'Spot'" />
+                <xsl:when test="$form = 'Wahlfilm'" />
+                <xsl:when test="$form = 'Episodenfilm'" />
+                <xsl:when test="$form = 'Abenteuerfilm'" />
+                <xsl:when test="$form = 'Kriminalfilm'" />
+                <xsl:when test="$form = 'Operettenfilm'" />
+                <xsl:when test="$form = 'Politisch-geogr._Film'" />
+                <xsl:when test="$form = 'Militärfilm'" />
+                <xsl:when test="$form = 'Satire'" />
+                <xsl:when test="$form = 'Länderfilm'" />
+                <xsl:when test="$form = 'Autorenfilm'" />
+                <xsl:when test="$form = 'Heimatfilm'" />
+                <xsl:when test="$form = 'Dokumentarfilm'" />
+                <xsl:when test="$form = 'Land-/Forstwirtschaftsfilm'" />
+                <xsl:when test="$form = 'Kriegsfilm'" />
+                <xsl:when test="$form = 'Historischer_Film'" />
+                <xsl:when test="$form = 'Biologischer_Film'" />
+                <xsl:when test="$form = 'Gegenwartsfilm'" />
+                <xsl:when test="$form = 'Feuilleton'" />
+                <xsl:when test="$form = 'Kunstfilm'" />
+                <xsl:when test="$form = 'Verkehrsfilm'" />
+                <xsl:when test="$form = 'Ballettfilm'" />
+                <xsl:when test="$form = 'Märchenfilm'" />
+                <xsl:when test="$form = 'Philosophischer_Film'" />
+                <xsl:when test="$form = 'Hist._Ausstattungsfilm'" />
+                <xsl:when test="$form = 'Frauenfilm'" />
+                <xsl:when test="$form = 'Szenische_Dokumentation'" />
+                <xsl:when test="$form = 'Gangsterfilm'" />
+                <xsl:when test="$form = 'Spionagefilm'" />
+                <xsl:when test="$form = 'Arztfilm'" />
+                <xsl:when test="$form = 'Melodram'" />
+                <xsl:when test="$form = 'Opernfilm'" />
+                <xsl:when test="$form = 'Zirkusfilm'" />
+                <xsl:when test="$form = 'Horrorfilm'" />
+                <xsl:when test="$form = 'Politthriller'" />
+                <xsl:when test="$form = 'Fotofilm'" />
+                <xsl:when test="$form = 'Tragödie'" />
+                <xsl:when test="$form = 'Fersehspiel'" />
+                <xsl:when test="$form = 'Science_Fiction'" />
+                <xsl:when test="$form = 'Revuefilm'" />
+                <xsl:when test="$form = 'Parodie'" />
+                <xsl:when test="$form = 'Spielfilm'">
+                    <fiaf:hasForm rdf:resource="https://dev.fiafcore.org/FeatureFilm" />
+                </xsl:when>
+                <xsl:when test="$form = 'Serie'">
+                    <fiaf:hasForm rdf:resource="https://dev.fiafcore.org/Series" />
+                </xsl:when>
+                <xsl:when test="$form = 'Trailer'">
+                    <fiaf:hasForm rdf:resource="https://dev.fiafcore.org/Trailer" />
+                </xsl:when>
+                <xsl:when test="$form = 'Amateurfilm'">
+                    <fiaf:hasForm rdf:resource="https://dev.fiafcore.org/AmateurFilm" />
+                </xsl:when>
+                <xsl:when test="$form = 'Kompilationsfilm'">
+                    <fiaf:hasForm rdf:resource="https://dev.fiafcore.org/CompilationFilm" />
+                </xsl:when>
+                <xsl:when test="$form = 'Kurzspielfilm'">
+                    <fiaf:hasForm rdf:resource="https://dev.fiafcore.org/ShortFilm" />
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:message terminate="yes">
+                        Error: Unexpected value "<xsl:value-of select="$form"/>".
+                    </xsl:message>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:for-each>
+    </xsl:if>
 
     <!-- fiafcore:hasGenre -->
 
