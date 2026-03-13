@@ -928,10 +928,29 @@
 
             <!-- fiaf:hasBroadcastStandard  -->
 
-            <!-- <xsl:for-each select="ba:SDHDFernsehnorm">
-                <xsl:variable name="broadcaststandard" select="translate(., ' ', '')" />
-                <fiaf:hasBroadcastStandard rdf:resource="bundesarchiv://vocabulary/broadcaststandard/{$broadcaststandard}" />
-            </xsl:for-each> -->
+            <xsl:if test="ba:SDHDFernsehnorm">
+                <xsl:variable name="broadcast" select="ba:SDHDFernsehnorm"/>
+                <xsl:choose>
+                    <xsl:when test="$broadcast = 'keine'" />
+                    <xsl:when test="$broadcast = 'unbekannt'" />
+                    <xsl:when test="$broadcast = 'HDTV System 2, 1080i/25'" />
+                    <xsl:when test="$broadcast = 'HDTV System 3, 1080p/25'" />
+                    <xsl:when test="$broadcast = 'SDTV PAL'">
+                        <fiaf:hasBroadcastStandard rdf:resource="https://dev.fiafcore.org/PAL" />
+                    </xsl:when>
+                    <xsl:when test="$broadcast = 'SDTV NTSC'">
+                        <fiaf:hasBroadcastStandard rdf:resource="https://dev.fiafcore.org/NTSC" />
+                    </xsl:when>
+                    <xsl:when test="$broadcast = 'SDTV SECAM'">
+                        <fiaf:hasBroadcastStandard rdf:resource="https://dev.fiafcore.org/SECAM" />
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:message terminate="yes">
+                            Error: Unexpected value "<xsl:value-of select="$broadcast"/>".
+                        </xsl:message>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:if>
 
             <!-- fiaf:hasCarrier -->
 
