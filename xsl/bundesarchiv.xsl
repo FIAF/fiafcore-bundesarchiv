@@ -781,10 +781,6 @@
                 </fiaf:hasTitle>
             </xsl:for-each> -->
 
-    <!-- fiafcore:hasVariant -->
-
-    <!-- fiafcore:hasWork -->
-
         </rdf:Description>
     </xsl:template>
 
