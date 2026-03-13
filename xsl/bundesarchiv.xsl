@@ -148,11 +148,189 @@
 
     <!-- fiafcore:hasGenre -->
 
-    <!-- <xsl:for-each select="ba:Genre">
-                <xsl:variable name="genre1" select="translate(., ' ', '')" />
-                <xsl:variable name="genre2" select="translate($genre1, '/', '')" />
-                <fiaf:hasGenre rdf:resource="bundesarchiv://vocabulary/genre/{$genre2}" />
-            </xsl:for-each> -->
+    <xsl:if test="ba:Genre">
+        <xsl:for-each select="ba:Genre">
+            <xsl:variable name="genre" select="translate(., ' ', '_')" />
+            <xsl:choose>
+                <xsl:when test="$genre = 'Wochenschau'" />
+                <xsl:when test="$genre = 'Wochenschau_(Segment/Sujet/Ausschnitt)'" />
+                <xsl:when test="$genre = 'Sach-_und_Ereignisdokument'" />
+                <xsl:when test="$genre = 'Trailer'" />
+                <xsl:when test="$genre = 'Trickart:_Puppentrick'" />
+                <xsl:when test="$genre = 'Reportage'" />
+                <xsl:when test="$genre = 'Amateurfilm'" />
+                <xsl:when test="$genre = 'Fernsehfilm'" />
+                <xsl:when test="$genre = 'Periodika'" />
+                <xsl:when test="$genre = 'Trickart:_Legetrick/Flachfigurenfilm'" />
+                <xsl:when test="$genre = 'Lustspiel'" />
+                <xsl:when test="$genre = 'Spot'" />
+                <xsl:when test="$genre = 'Privatfilm'" />
+                <xsl:when test="$genre = 'Trickart:_Silhouettentrick'" />
+                <xsl:when test="$genre = 'Trickart:_Sach-/Realtrick'" />
+                <xsl:when test="$genre = 'Portraitfilm'" />
+                <xsl:when test="$genre = 'Personendokument'" />
+                <xsl:when test="$genre = 'Monatsschau'" />
+                <xsl:when test="$genre = 'Historischer_Film'" />
+                <xsl:when test="$genre = 'Land-/Forstwirtschadtsfilm'" />
+                <xsl:when test="$genre = 'Wahlfilm'" />
+                <xsl:when test="$genre = 'Biografischer_Film'" />
+                <xsl:when test="$genre = 'Trickart:_Realaufnahmen_im_Trickfilm'" />
+                <xsl:when test="$genre = 'Expeditionsfilm'" />
+                <xsl:when test="$genre = 'Länderfilm'" />
+                <xsl:when test="$genre = 'Naturfilm'" />
+                <xsl:when test="$genre = 'Politisch-geogr._Film'" />
+                <xsl:when test="$genre = 'Medizinfilm'" />
+                <xsl:when test="$genre = 'Kompilationsfilm'" />
+                <xsl:when test="$genre = 'Gegenwartsfilm'" />
+                <xsl:when test="$genre = 'Dokumentarischer_Spielfilm'" />
+                <xsl:when test="$genre = 'Trickart:_Drahtfigurentrick'" />
+                <xsl:when test="$genre = 'Interview'" />
+                <xsl:when test="$genre = 'Kunstfilm'" />
+                <xsl:when test="$genre = 'Trickart:_Plasteline-/Knettrick/Claymation'" />
+                <xsl:when test="$genre = 'Melodram'" />
+                <xsl:when test="$genre = 'Szenische_Dokumentation'" />
+                <xsl:when test="$genre = 'Jugendfilm'" />
+                <xsl:when test="$genre = 'Abenteuerfilm'" />
+                <xsl:when test="$genre = 'Tanzfilm'" />
+                <xsl:when test="$genre = 'Ethnografischer_Film'" />
+                <xsl:when test="$genre = 'Trickart:_Computeranimation'" />
+                <xsl:when test="$genre = 'Religionsfilm'" />
+                <xsl:when test="$genre = 'Tragödie'" />
+                <xsl:when test="$genre = 'Verkehrsfilm'" />
+                <xsl:when test="$genre = 'Operettenfilm'" />
+                <xsl:when test="$genre = 'Umweltfilm'" />
+                <xsl:when test="$genre = 'Zirkusfilm'" />
+                <xsl:when test="$genre = 'Heimatfilm'" />
+                <xsl:when test="$genre = 'Detektivfilm'" />
+                <xsl:when test="$genre = 'Trickart:_Sonstige_Trickarten'" />
+                <xsl:when test="$genre = 'Western'" />
+                <xsl:when test="$genre = 'Slapstick'" />
+                <xsl:when test="$genre = 'Biologischer_Film'" />
+                <xsl:when test="$genre = 'Bergfilm'" />
+                <xsl:when test="$genre = 'Thriller'" />
+                <xsl:when test="$genre = 'Trickart:_Mischtrick'" />
+                <xsl:when test="$genre = 'Musicalfilm'" />
+                <xsl:when test="$genre = 'Ballettfilm'" />
+                <xsl:when test="$genre = 'Feuilleton'" />
+                <xsl:when test="$genre = 'Opernfilm'" />
+                <xsl:when test="$genre = 'Antikriegsfilm'" />
+                <xsl:when test="$genre = 'Fantasyfilm'" />
+                <xsl:when test="$genre = 'Trickart:_Fototrick'" />
+                <xsl:when test="$genre = 'Frauenfilm'" />
+                <xsl:when test="$genre = 'Arztfilm'" />
+                <xsl:when test="$genre = 'Experimentalfilm'" />
+                <xsl:when test="$genre = 'Forschungsfilm'" />
+                <xsl:when test="$genre = 'Trickart:_Reliefanimation/Zeichentrick'" />
+                <xsl:when test="$genre = 'Sensationsfilm'" />
+                <xsl:when test="$genre = 'Gerichtsfilm'" />
+                <xsl:when test="$genre = 'Parodie'" />
+                <xsl:when test="$genre = 'Trickart:_Collagentrick'" />
+                <xsl:when test="$genre = 'Spionagefilm'" />
+                <xsl:when test="$genre = 'Revuefilm'" />
+                <xsl:when test="$genre = 'Science_Fiction'" />
+                <xsl:when test="$genre = 'Tragikomödie'" />
+                <xsl:when test="$genre = 'Horrofilm'" />
+                <xsl:when test="$genre = 'Magazin'" />
+                <xsl:when test="$genre = 'Erotischer_Film'" />
+                <xsl:when test="$genre = 'Trickart:_Pixilation'" />
+                <xsl:when test="$genre = 'Fotofilm'" />
+                <xsl:when test="$genre = 'Hist._Ausstattungsfilm'" />
+                <xsl:when test="$genre = 'Polithriller'" />
+                <xsl:when test="$genre = 'Indianerfilm'" />
+                <xsl:when test="$genre = 'Phantastischer_Film'" />
+                <xsl:when test="$genre = 'Gangsterfilm'" />
+                <xsl:when test="$genre = 'Gefilmtes_Theater'" />
+                <xsl:when test="$genre = 'Marionettenfilm'" />
+                <xsl:when test="$genre = 'Unterrichtsfilm'" />
+                <xsl:when test="$genre = 'Trickart:_Sandanimation'" />
+                <xsl:when test="$genre = 'Mischfilm_(Kombination_aus_Real-_u._Trickfilm)'" />
+                <xsl:when test="$genre = 'Surrealistischer_Film'" />
+                <xsl:when test="$genre = 'Trickart:_Scherenschnitt'" />
+                <xsl:when test="$genre = 'Actionfilm'" />
+                <xsl:when test="$genre = 'Absoluter_Film'" />
+                <xsl:when test="$genre = 'Abstrakter_Film'" />
+                <xsl:when test="$genre = 'Singspiel'" />
+                <xsl:when test="$genre = 'Computerfilm'" />
+                <xsl:when test="$genre = 'Discofilm'" />
+                <xsl:when test="$genre = 'Trickart:_Nonkameratrick/Direct_Animation'" />
+                <xsl:when test="$genre = 'Trickart:_Modelltrick'" />
+                <xsl:when test="$genre = 'Revolutionsfilm'" />
+                <xsl:when test="$genre = 'Road_Movie'" />
+                <xsl:when test="$genre = 'Stabpuppenfilm'" />
+                <xsl:when test="$genre = 'Materialfilm'" />
+                <xsl:when test="$genre = 'Trickart:_Folienanimation'" />
+                <xsl:when test="$genre = 'Expressionistischer_Film'" />
+                <xsl:when test="$genre = 'Philosophischer_Film'" />
+                <xsl:when test="$genre = 'Fernsehspiel'" />
+                <xsl:when test="$genre = 'Partisanenfilm'" />
+                <xsl:when test="$genre = 'Trickart:_Zeichentrick'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Animation" />
+                </xsl:when>
+                <xsl:when test="$genre = 'Kinderfilm'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Childrens" />
+                </xsl:when>
+                <xsl:when test="$genre = 'Städte-_u._Landschaftsfilm'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/CityAndLandscape" />
+                </xsl:when>
+                <xsl:when test="$genre = 'Kulturfilm'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Cultural" />
+                </xsl:when>
+                <xsl:when test="$genre = 'Propagandafilm'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Propaganda" />
+                </xsl:when>
+                <xsl:when test="$genre = 'Literaturverfilmung'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/LiteraryAdaptation" />
+                </xsl:when>
+                <xsl:when test="$genre = 'Komödie'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Comedy" />
+                </xsl:when>
+                <xsl:when test="$genre = 'Industriefilm'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Industrial" />
+                </xsl:when>
+                <xsl:when test="$genre = 'Drama'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Drama" />
+                </xsl:when>
+                <xsl:when test="$genre = 'Tierfilm'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Animal" />
+                </xsl:when>
+                <xsl:when test="$genre = 'Satire'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Satire" />
+                </xsl:when>
+                <xsl:when test="$genre = 'Märchenfilm'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/FairyTale" />
+                </xsl:when>
+                <xsl:when test="$genre = 'Militärfilm'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Military" />
+                </xsl:when>
+                <xsl:when test="$genre = 'Kriegsfilm'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/War" />
+                </xsl:when>
+                <xsl:when test="$genre = 'Populärwissenschaftlicher_Film'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/PopularScience" />
+                </xsl:when>
+                <xsl:when test="$genre = 'Sportfilm'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Sports" />
+                </xsl:when>
+                <xsl:when test="$genre = 'Kriminalfilm'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Crime" />
+                </xsl:when>
+                <xsl:when test="$genre = 'Handpuppenfilm'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/HandPuppet" />
+                </xsl:when>
+                <xsl:when test="$genre = 'Technikfilm'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Technical" />
+                </xsl:when>
+                <xsl:when test="$genre = 'Aufklärungsfilm'">
+                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Educational" />
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:message terminate="yes">
+                        Error: Unexpected value "<xsl:value-of select="$genre"/>".
+                    </xsl:message>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:for-each>
+    </xsl:if>
 
     <!-- fiafcore:hasIdentifier -->
 
