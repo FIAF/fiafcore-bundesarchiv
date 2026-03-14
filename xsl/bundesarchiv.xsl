@@ -1088,6 +1088,8 @@
 
             <!-- fiaf:hasSoundCharacteristic -->
 
+            <!-- Provided dataset may not contain this data. -->
+
             <!-- fiaf:hasTitle -->
 
             <xsl:if test="ba:Filmtitel">
@@ -1693,6 +1695,8 @@
             </xsl:if>
 
             <!-- fiaf:hasSoundCharacteristic  -->
+
+            <!-- Provided dataset may not contain this data. -->
 
             <!-- fiaf:hasStatus  -->
 
