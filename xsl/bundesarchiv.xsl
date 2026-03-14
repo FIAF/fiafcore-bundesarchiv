@@ -746,15 +746,19 @@
 
             <!-- fiafcore:hasIdentifier -->
 
-            <!-- <fiaf:hasIdentifier>
-                        <rdf:Description rdf:about="bundesarchiv://identifier/work/{@uuid}">
-                            <rdf:type rdf:resource="bundesarchiv://ontology/identifier" />
-                            <fiaf:hasIdentifierValue>
-                                <xsl:value-of select="@uuid" />
-                            </fiaf:hasIdentifierValue>
-                            <fiaf:hasIdentifierAuthority rdf:resource="bundesarchiv://ontology/authority/bundesarchiv" />
+            <fiaf:hasIdentifier>
+                <rdf:Description rdf:about="bundesarchiv://identifier/work/{@uuid}">
+                    <rdf:type rdf:resource="https://dev.fiafcore.org/Identifier" />
+                    <fiaf:hasIdentifierValue>
+                        <xsl:value-of select="@uuid" />
+                    </fiaf:hasIdentifierValue>
+                    <fiaf:hasIdentifierAuthority>
+                        <rdf:Description rdf:about="bundesarchiv://resource/agent/bundesarchiv">
+                            <rdf:type rdf:resource="https://dev.fiafcore.org/Organisation" />
                         </rdf:Description>
-                    </fiaf:hasIdentifier> -->
+                    </fiaf:hasIdentifierAuthority>
+                </rdf:Description>
+            </fiaf:hasIdentifier>
 
             <!-- fiafcore:hasManifestation -->
 
@@ -821,268 +825,268 @@
                 <!-- <xsl:value-of select="'Example Manifestation'"/> -->
             <!-- </rdfs:label> -->
 
-    <!-- fiaf:hasColourCharacteristic -->
+            <!-- fiaf:hasColourCharacteristic -->
 
-    <!-- <xsl:for-each select="ba:Farbe">
-                <xsl:variable name="colorchar" select="translate(., ' ', '')" />
-                <fiaf:hasColourCharacteristic rdf:resource="bundesarchiv://vocabulary/colourcharacteristic/{$colorchar}" />
-            </xsl:for-each> -->
+            <!-- <xsl:for-each select="ba:Farbe">
+                        <xsl:variable name="colorchar" select="translate(., ' ', '')" />
+                        <fiaf:hasColourCharacteristic rdf:resource="bundesarchiv://vocabulary/colourcharacteristic/{$colorchar}" />
+                    </xsl:for-each> -->
 
-    <!-- fiaf:hasEvent -->
+            <!-- fiaf:hasEvent -->
 
-    <!-- fiaf:hasExtent -->
+            <!-- fiaf:hasExtent -->
 
-    <!-- <xsl:if test="ba:Gesamtlaenge">
-                <fiaf:hasExtent>
-                    <rdf:Description>
-                        <rdf:type rdf:resource="bundesarchiv://ontology/extent/metres"/>
-                        <fiaf:hasExtentValue>
-                            <xsl:value-of select="ba:Gesamtlaenge"/>
-                        </fiaf:hasExtentValue>
-                    </rdf:Description>
-                </fiaf:hasExtent>
-            </xsl:if> -->
+            <!-- <xsl:if test="ba:Gesamtlaenge">
+                        <fiaf:hasExtent>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="bundesarchiv://ontology/extent/metres"/>
+                                <fiaf:hasExtentValue>
+                                    <xsl:value-of select="ba:Gesamtlaenge"/>
+                                </fiaf:hasExtentValue>
+                            </rdf:Description>
+                        </fiaf:hasExtent>
+                    </xsl:if> -->
 
-    <!-- fiaf:hasFormat  -->
+            <!-- fiafcore:hasIdentifier -->
 
-    <!-- fiaf:hasIdentifier -->
-
-    <!-- <fiaf:hasIdentifier>
+            <fiaf:hasIdentifier>
                 <rdf:Description rdf:about="bundesarchiv://identifier/manifestation/{@uuid}">
-                    <rdf:type rdf:resource="bundesarchiv://ontology/identifier" />
+                    <rdf:type rdf:resource="https://dev.fiafcore.org/Identifier" />
                     <fiaf:hasIdentifierValue>
                         <xsl:value-of select="@uuid" />
                     </fiaf:hasIdentifierValue>
-                    <fiaf:hasIdentifierAuthority rdf:resource="bundesarchiv://ontology/authority/bundesarchiv" />
+                    <fiaf:hasIdentifierAuthority>
+                        <rdf:Description rdf:about="bundesarchiv://resource/agent/bundesarchiv">
+                            <rdf:type rdf:resource="https://dev.fiafcore.org/Organisation" />
+                        </rdf:Description>
+                    </fiaf:hasIdentifierAuthority>
                 </rdf:Description>
-            </fiaf:hasIdentifier> -->
+            </fiaf:hasIdentifier>
 
-    <!-- fiaf:hasImageCharacteristic -->
+            <!-- fiaf:hasItem -->
 
-        <!-- fiaf:hasItem -->
+            <xsl:for-each select="ba:Exemplar">
+                <fiaf:hasItem>
+                    <rdf:Description rdf:about="bundesarchiv://resource/item/{@uuid}" />
+                </fiaf:hasItem>
+            </xsl:for-each>
 
-        <xsl:for-each select="ba:Exemplar">
-            <fiaf:hasItem>
-                <rdf:Description rdf:about="bundesarchiv://resource/item/{@uuid}" />
-            </fiaf:hasItem>
-        </xsl:for-each>
+            <!-- fiaf:hasLanguageUsage -->
 
-    <!-- fiaf:hasLanguageUsage -->
+            <xsl:if test="ba:Sprache">
+                <xsl:for-each select="ba:Sprache">
+                    <fiaf:hasLanguageUsage>
+                        <rdf:Description>
+                            <xsl:choose>
+                                <xsl:when test="not(@sprachgebrauch) or @sprachgebrauch = ''">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/LanguageUsage" />
+                                </xsl:when>
+                                <xsl:when test="@sprachgebrauch = 'Haupttitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/LanguageUsage" />
+                                </xsl:when>
+                                <xsl:when test="@sprachgebrauch = 'Kommentarton'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/LanguageUsage" />
+                                </xsl:when>
+                                <xsl:when test="@sprachgebrauch = 'Audio'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/LanguageUsage" />
+                                </xsl:when>
+                                <xsl:when test="@sprachgebrauch = 'unbekannt'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/LanguageUsage" />
+                                </xsl:when>
+                                <xsl:when test="@sprachgebrauch = 'Synchronisation'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/LanguageUsage" />
+                                </xsl:when>
+                                <xsl:when test="@sprachgebrauch = 'Blitztitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/LanguageUsage" />
+                                </xsl:when>
+                                <xsl:when test="@sprachgebrauch = 'Sprache'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/SpokenLanguage" />
+                                </xsl:when>
+                                <xsl:when test="@sprachgebrauch = 'Sprache'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/SpokenLanguage" />
+                                </xsl:when>
+                                <xsl:when test="@sprachgebrauch = 'Zwischentitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Intertitles" />
+                                </xsl:when>
+                                <xsl:when test="@sprachgebrauch = 'Vorspann'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Credits" />
+                                </xsl:when>
+                                <xsl:when test="@sprachgebrauch = 'Untertitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Subtitles" />
+                                </xsl:when>
+                                <xsl:when test="@sprachgebrauch = 'Abspann'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Credits" />
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:message terminate="yes">
+                                        Error: Unexpected value "<xsl:value-of select="@sprachgebrauch"/>".
+                                    </xsl:message>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <xsl:choose>
+                                <xsl:when test="not(@sprache) or @sprache = ''" />
+                                <xsl:when test="@sprache = 'Obersorbisch'" />
+                                <xsl:when test="@sprache = 'Südamerikanisch'" />
+                                <xsl:when test="@sprache = 'Nicht zu entscheiden'" />
+                                <xsl:when test="@sprache = 'Laute / Geräusche'" />
+                                <xsl:when test="@sprache = 'Einzelne andere Sprachen'" />
+                                <xsl:when test="@sprache = 'Mehrere Sprachen'" />
+                                <xsl:when test="@sprache = 'Stumm'" />
+                                <xsl:when test="@sprache = 'Sorbisch (Andere)'" />
+                                <xsl:when test="@sprache = 'Musik'" />
+                                <xsl:when test="@sprache = 'Ohne'" />
+                                <xsl:when test="@sprache = 'Geräusche/ Musik'" />
+                                <xsl:when test="@sprache = 'unbekannt'" />
+                                <xsl:when test="@sprache = 'Deutsch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/German" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Spanisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Spanish" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Englisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/English" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Französisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/French" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Russisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Russian" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Niederländisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Dutch" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Portugiesisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Portuguese" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Italienisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Italian" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Türkisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Turkish" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Griechisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Greek" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Afrikaans'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Afrikaans" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Arabisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Arabic" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Polnisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Polish" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Tschechisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Czech" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Ungarisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Hungarian" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Amerikanisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/English" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Dänisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Danish" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Schwedisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Swedish" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Lettisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Latvian" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Brasilianisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Portuguese" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Ukrainisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Ukrainian" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Japanisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Japanese" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Hebräisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Hebrew" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Rumänisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Romanian" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Bosnisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Bosnian" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Slowakisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Slovak" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Isländisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Icelandic" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Bulgarisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Bulgarian" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Serbokroatisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Serbian" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Persisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Persian" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Kroatisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Croatian" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Jiddisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Yiddish" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Thaisprachen'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Thai" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Amharisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Amharic" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Norwegisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Norwegian" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Hindi oder Indoarisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Hindi" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Finnisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Finnish" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Serbisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Serbian" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Baskisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Basque" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Belorussisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Belarusian" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Swahili (= Suaheli, Kisuaheli)'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Swahili" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Estnisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Estonian" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Indonesisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Indonesian" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Chinesisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Chinese" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Vietnamesisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Vietnamese" />
+                                </xsl:when>
+                                <xsl:when test="@sprache = 'Litauisch'">
+                                    <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Lithuanian" />
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:message terminate="yes">
+                                        Error: Unexpected value "<xsl:value-of select="@sprache"/>".
+                                    </xsl:message>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </rdf:Description>
+                    </fiaf:hasLanguageUsage>
+                </xsl:for-each>
+            </xsl:if>
 
-    <xsl:if test="ba:Sprache">
-        <xsl:for-each select="ba:Sprache">
-            <fiaf:hasLanguageUsage>
-                <rdf:Description>
-                    <xsl:choose>
-                        <xsl:when test="not(@sprachgebrauch) or @sprachgebrauch = ''">
-                            <rdf:type rdf:resource="https://dev.fiafcore.org/LanguageUsage" />
-                        </xsl:when>
-                        <xsl:when test="@sprachgebrauch = 'Haupttitel'">
-                            <rdf:type rdf:resource="https://dev.fiafcore.org/LanguageUsage" />
-                        </xsl:when>
-                        <xsl:when test="@sprachgebrauch = 'Kommentarton'">
-                            <rdf:type rdf:resource="https://dev.fiafcore.org/LanguageUsage" />
-                        </xsl:when>
-                        <xsl:when test="@sprachgebrauch = 'Audio'">
-                            <rdf:type rdf:resource="https://dev.fiafcore.org/LanguageUsage" />
-                        </xsl:when>
-                        <xsl:when test="@sprachgebrauch = 'unbekannt'">
-                            <rdf:type rdf:resource="https://dev.fiafcore.org/LanguageUsage" />
-                        </xsl:when>
-                        <xsl:when test="@sprachgebrauch = 'Synchronisation'">
-                            <rdf:type rdf:resource="https://dev.fiafcore.org/LanguageUsage" />
-                        </xsl:when>
-                        <xsl:when test="@sprachgebrauch = 'Blitztitel'">
-                            <rdf:type rdf:resource="https://dev.fiafcore.org/LanguageUsage" />
-                        </xsl:when>
-                        <xsl:when test="@sprachgebrauch = 'Sprache'">
-                            <rdf:type rdf:resource="https://dev.fiafcore.org/SpokenLanguage" />
-                        </xsl:when>
-                        <xsl:when test="@sprachgebrauch = 'Sprache'">
-                            <rdf:type rdf:resource="https://dev.fiafcore.org/SpokenLanguage" />
-                        </xsl:when>
-                        <xsl:when test="@sprachgebrauch = 'Zwischentitel'">
-                            <rdf:type rdf:resource="https://dev.fiafcore.org/Intertitles" />
-                        </xsl:when>
-                        <xsl:when test="@sprachgebrauch = 'Vorspann'">
-                            <rdf:type rdf:resource="https://dev.fiafcore.org/Credits" />
-                        </xsl:when>
-                        <xsl:when test="@sprachgebrauch = 'Untertitel'">
-                            <rdf:type rdf:resource="https://dev.fiafcore.org/Subtitles" />
-                        </xsl:when>
-                        <xsl:when test="@sprachgebrauch = 'Abspann'">
-                            <rdf:type rdf:resource="https://dev.fiafcore.org/Credits" />
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:message terminate="yes">
-                                Error: Unexpected value "<xsl:value-of select="@sprachgebrauch"/>".
-                            </xsl:message>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                    <xsl:choose>
-                        <xsl:when test="not(@sprache) or @sprache = ''" />
-                        <xsl:when test="@sprache = 'Obersorbisch'" />
-                        <xsl:when test="@sprache = 'Südamerikanisch'" />
-                        <xsl:when test="@sprache = 'Nicht zu entscheiden'" />
-                        <xsl:when test="@sprache = 'Laute / Geräusche'" />
-                        <xsl:when test="@sprache = 'Einzelne andere Sprachen'" />
-                        <xsl:when test="@sprache = 'Mehrere Sprachen'" />
-                        <xsl:when test="@sprache = 'Stumm'" />
-                        <xsl:when test="@sprache = 'Sorbisch (Andere)'" />
-                        <xsl:when test="@sprache = 'Musik'" />
-                        <xsl:when test="@sprache = 'Ohne'" />
-                        <xsl:when test="@sprache = 'Geräusche/ Musik'" />
-                        <xsl:when test="@sprache = 'unbekannt'" />
-                        <xsl:when test="@sprache = 'Deutsch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/German" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Spanisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Spanish" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Englisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/English" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Französisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/French" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Russisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Russian" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Niederländisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Dutch" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Portugiesisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Portuguese" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Italienisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Italian" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Türkisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Turkish" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Griechisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Greek" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Afrikaans'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Afrikaans" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Arabisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Arabic" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Polnisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Polish" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Tschechisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Czech" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Ungarisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Hungarian" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Amerikanisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/English" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Dänisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Danish" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Schwedisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Swedish" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Lettisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Latvian" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Brasilianisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Portuguese" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Ukrainisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Ukrainian" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Japanisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Japanese" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Hebräisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Hebrew" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Rumänisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Romanian" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Bosnisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Bosnian" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Slowakisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Slovak" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Isländisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Icelandic" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Bulgarisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Bulgarian" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Serbokroatisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Serbian" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Persisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Persian" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Kroatisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Croatian" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Jiddisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Yiddish" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Thaisprachen'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Thai" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Amharisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Amharic" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Norwegisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Norwegian" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Hindi oder Indoarisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Hindi" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Finnisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Finnish" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Serbisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Serbian" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Baskisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Basque" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Belorussisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Belarusian" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Swahili (= Suaheli, Kisuaheli)'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Swahili" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Estnisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Estonian" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Indonesisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Indonesian" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Chinesisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Chinese" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Vietnamesisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Vietnamese" />
-                        </xsl:when>
-                        <xsl:when test="@sprache = 'Litauisch'">
-                            <fiaf:hasLanguage rdf:resource="https://dev.fiafcore.org/Lithuanian" />
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:message terminate="yes">
-                                Error: Unexpected value "<xsl:value-of select="@sprache"/>".
-                            </xsl:message>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </rdf:Description>
-            </fiaf:hasLanguageUsage>
-        </xsl:for-each>
-    </xsl:if>
-
-    <!-- fiaf:hasSoundCharacteristic -->
+            <!-- fiaf:hasSoundCharacteristic -->
 
             <!-- fiaf:hasTitle -->
 
@@ -1366,40 +1370,29 @@
               </xsl:choose>
             </xsl:if>
 
-            <!-- fiaf:hasFrameRate  -->
-
-            <!-- <xsl:if test="ba:Bildfrequenz">
-                <xsl:variable name="fps" select="translate(ba:Bildfrequenz, ' ', '')"/>
-                <fiaf:hasFrameRate rdf:resource="bundesarchiv://ontology/fps/{$fps}"/>
-            </xsl:if> -->
-
             <!-- fiaf:hasHoldingInstitution  -->
 
-            <!-- <fiaf:hasHoldingInstitution rdf:resource="bundesarchiv://ontology/holdinginstitution/bundesarchiv"/> -->
+            <fiaf:hasHoldingInstitution>
+                <rdf:Description rdf:about="bundesarchiv://resource/agent/bundesarchiv">
+                    <rdf:type rdf:resource="https://dev.fiafcore.org/Organisation" />
+                </rdf:Description>
+            </fiaf:hasHoldingInstitution>
 
-            <!-- fiaf:hasIdentifier  -->
+            <!-- fiafcore:hasIdentifier -->
 
-            <!-- <fiaf:hasIdentifier>
+            <fiaf:hasIdentifier>
                 <rdf:Description rdf:about="bundesarchiv://identifier/item/{@uuid}">
-                    <rdf:type rdf:resource="bundesarchiv://ontology/identifier" />
+                    <rdf:type rdf:resource="https://dev.fiafcore.org/Identifier" />
                     <fiaf:hasIdentifierValue>
                         <xsl:value-of select="@uuid" />
                     </fiaf:hasIdentifierValue>
-                    <fiaf:hasIdentifierAuthority rdf:resource="bundesarchiv://ontology/authority/bundesarchiv" />
+                    <fiaf:hasIdentifierAuthority>
+                        <rdf:Description rdf:about="bundesarchiv://resource/agent/bundesarchiv">
+                            <rdf:type rdf:resource="https://dev.fiafcore.org/Organisation" />
+                        </rdf:Description>
+                    </fiaf:hasIdentifierAuthority>
                 </rdf:Description>
-            </fiaf:hasIdentifier> -->
-
-            <!-- fiaf:hasImageCharacteristic  -->
-
-            <!-- <xsl:if test="ba:Aufbewahrungseinheit/ba:Bildseitenverhaeltnis">
-                <xsl:variable name="imagechar1" select="translate(ba:Aufbewahrungseinheit/ba:Bildseitenverhaeltnis, ' ', '')"/>
-                <xsl:variable name="imagechar2" select="translate($imagechar1, '/', '')" />
-                <xsl:variable name="imagechar3" select="translate($imagechar2, '(', '')" />
-                <xsl:variable name="imagechar4" select="translate($imagechar3, ')', '')" />
-                <xsl:variable name="imagechar5" select="translate($imagechar4, ',', '')" />
-                <xsl:variable name="imagechar6" select="translate($imagechar5, ' ', '')" />
-                <fiaf:hasImageCharacteristic rdf:resource="bundesarchiv://vocabulary/imagecharacteristic/{$imagechar6}"/>
-            </xsl:if> -->
+            </fiaf:hasIdentifier>
 
             <!-- fiaf:hasLanguage  -->
 
@@ -1699,15 +1692,7 @@
                 </xsl:for-each>
             </xsl:if>
 
-            <!-- fiaf:hasLineStandard  -->
-
-            <!-- fiaf:hasResolution  -->
-
             <!-- fiaf:hasSoundCharacteristic  -->
-
-            <!-- fiaf:hasSourceDevice  -->
-
-            <!-- fiaf:hasSourceSoftware  -->
 
             <!-- fiaf:hasStatus  -->
 
@@ -1765,12 +1750,6 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:if>
-
-            <!-- fiaf:hasStream  -->
-
-            <!-- fiaf:hasTitle  -->
-
-            <!-- fiaf:hasTransferSpeed  -->
 
             <!-- fiaf:isElement  -->
 
@@ -1922,25 +1901,27 @@
         </rdf:Description>
     </xsl:template>
 
-    <!-- Carriers -->
+    <!-- fiafcore:Carrier -->
 
     <xsl:template match="ba:Aufbewahrungseinheit"> -->
         <rdf:Description rdf:about="bundesarchiv://resource/carrier/{@uuid}">
             <rdf:type rdf:resource="https://dev.fiafcore.org/Carrier" />
 
-    <!-- fiaf:hasEvent -->
+            <!-- fiafcore:hasIdentifier -->
 
-    <!-- fiaf:hasIdentifier -->
-
-    <!-- <fiaf:hasIdentifier>
+            <fiaf:hasIdentifier>
                 <rdf:Description rdf:about="bundesarchiv://identifier/carrier/{@uuid}">
-                    <rdf:type rdf:resource="bundesarchiv://ontology/identifier" />
+                    <rdf:type rdf:resource="https://dev.fiafcore.org/Identifier" />
                     <fiaf:hasIdentifierValue>
                         <xsl:value-of select="@uuid" />
                     </fiaf:hasIdentifierValue>
-                    <fiaf:hasIdentifierAuthority rdf:resource="bundesarchiv://ontology/authority/bundesarchiv" />
+                    <fiaf:hasIdentifierAuthority>
+                        <rdf:Description rdf:about="bundesarchiv://resource/agent/bundesarchiv">
+                            <rdf:type rdf:resource="https://dev.fiafcore.org/Organisation" />
+                        </rdf:Description>
+                    </fiaf:hasIdentifierAuthority>
                 </rdf:Description>
-            </fiaf:hasIdentifier> -->
+            </fiaf:hasIdentifier>
 
         </rdf:Description>
     </xsl:template>
