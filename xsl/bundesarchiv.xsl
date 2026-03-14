@@ -33,753 +33,749 @@
     <xsl:template match="ba:Filmwerk">
         <rdf:Description rdf:about="bundesarchiv://resource/work/{@uuid}">
 
-        <xsl:if test="not(ba:Filmart)">
-            <rdf:type rdf:resource="https://dev.fiafcore.org/Work" />
-        </xsl:if>
-        <xsl:if test="ba:Filmart">
-            <xsl:variable name="work_type" select="ba:Filmart" />
-            <xsl:choose>
-                <xsl:when test="$work_type = 'Unbekannt'">
-                    <rdf:type rdf:resource="https://dev.fiafcore.org/Work" />
-                </xsl:when>
-                <xsl:when test="$work_type = 'Documentation'">
-                    <rdf:type rdf:resource="https://dev.fiafcore.org/Work" />
-                </xsl:when>
-                <xsl:when test="$work_type = 'Dokumentarfilm'">
-                    <rdf:type rdf:resource="https://dev.fiafcore.org/MonographicWork" />
-                </xsl:when>
-                <xsl:when test="$work_type = 'Spielfilm'">
-                    <rdf:type rdf:resource="https://dev.fiafcore.org/MonographicWork" />
-                </xsl:when>
-                <xsl:when test="$work_type = 'Film'">
-                    <rdf:type rdf:resource="https://dev.fiafcore.org/MonographicWork" />
-                </xsl:when>
-                <xsl:when test="$work_type = 'Serie / Reihe'">
-                    <rdf:type rdf:resource="https://dev.fiafcore.org/SerialWork" />
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:message terminate="yes">
-                        Error: Unexpected value "<xsl:value-of select="$work_type"/>".
-                    </xsl:message>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:if>
-
-        <!-- fiafcore:hasCountry -->
-
-        <xsl:if test="ba:Ursprungsland">
-            <xsl:for-each select="ba:Ursprungsland">
-                <xsl:variable name="country" select="translate(., ' ', ' ')" />
+            <xsl:if test="not(ba:Filmart)">
+                <rdf:type rdf:resource="https://dev.fiafcore.org/Work" />
+            </xsl:if>
+            <xsl:if test="ba:Filmart">
+                <xsl:variable name="work_type" select="ba:Filmart" />
                 <xsl:choose>
-                    <xsl:when test="$country = 'Amerika'" />
-                    <xsl:when test="$country = 'unklar'" />
-                    <xsl:when test="$country = 'Kosovo'" />
-                    <xsl:when test="$country = 'Unbekannt'" />
-                    <xsl:when test="$country = 'Jugoslawien'" />
-                    <xsl:when test="$country = 'Union der Sozialistischen Sowjetrepubliken'" />
-                    <xsl:when test="$country = 'Deutsches Reich (bis 1945)'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                    <xsl:when test="$work_type = 'Unbekannt'">
+                        <rdf:type rdf:resource="https://dev.fiafcore.org/Work" />
                     </xsl:when>
-                    <xsl:when test="$country = 'Bundesrepublik Deutschland'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                    <xsl:when test="$work_type = 'Documentation'">
+                        <rdf:type rdf:resource="https://dev.fiafcore.org/Work" />
                     </xsl:when>
-                    <xsl:when test="$country = 'Deutsche Demokratische Republik (1949-1990)'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                    <xsl:when test="$work_type = 'Dokumentarfilm'">
+                        <rdf:type rdf:resource="https://dev.fiafcore.org/MonographicWork" />
                     </xsl:when>
-                    <xsl:when test="$country = 'Vereinigte Staaten von Amerika'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/UnitedStatesOfAmerica" />
+                    <xsl:when test="$work_type = 'Spielfilm'">
+                        <rdf:type rdf:resource="https://dev.fiafcore.org/MonographicWork" />
                     </xsl:when>
-                    <xsl:when test="$country = 'Frankreich'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/France" />
+                    <xsl:when test="$work_type = 'Film'">
+                        <rdf:type rdf:resource="https://dev.fiafcore.org/MonographicWork" />
                     </xsl:when>
-                    <xsl:when test="$country = 'Österreich'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Austria" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Italien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Italy" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Vereinigtes Königreich von Großbritannien und Nordirland'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/UnitedKingdomOfGreatBritainAndNorthernIreland" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Schweiz'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Switzerland" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Deutschland, sowjetische Besatzungszone (1945-1949)'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Dänemark'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Denmark" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Tschechoslowakei (-1993)'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Czechia" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Schweden'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Sweden" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Ungarn'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Hungary" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Deutschland, französische Besatzungszone (1945-1949)'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Polen'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Poland" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Niederlande'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/NetherlandsKingdomOfThe" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Norwegen'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Norway" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Belgien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Belgium" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Spanien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Spain" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Bulgarien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Bulgaria" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Japan'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Japan" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Russische Föderation'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/RussianFederation" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Israel'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Israel" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Kanada'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Canada" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Deutschland, amerikanische Besatzungszone (1945-1949)'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Finnland'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Finland" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Berlin West (1949-1990)'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Deutschland, britische Besatzungszone (1945-1949)'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Tschechische Republik (ab 1993)'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Czechia" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Rumänien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Romania" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Kroatien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Croatia" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Luxemburg'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Luxembourg" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Irland, Republik'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Ireland" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Türkei'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Turkiye" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Kuba'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Cuba" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'China, Volksrepublik'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/China" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Argentinien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Argentina" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Griechenland'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Greenland" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Island'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Iceland" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Australien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Australia" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Palästinensische Autonomiegebiete'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/PalestineStateOf" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Mexiko'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Mexico" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Indien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/India" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Ukraine'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Ukraine" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Chile'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Chile" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Slowenien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Slovenia" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Südafrika, Republik'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/SouthAfrica" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Korea, Republik'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/KoreaRepublicOf" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Bolivien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/BoliviaPlurinationalStateOf" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Estland'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Estonia" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Kasachstan'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Kazakhstan" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Kolumbien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Colombia" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Kamerun'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Cameroon" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Iran'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/IranIslamicRepublicOf" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Portugal'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Portugal" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Uruguay'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Uruguay" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Weißrussland'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Belarus" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Georgien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Georgia" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Brasilien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Brazil" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Zypern, Republik'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Cyprus" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Vietnam'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/VietNam" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Afghanistan'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Afghanistan" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Albanien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Albania" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Burkina Faso'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/BurkinaFaso" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Deutschland - Alliierte Besatzung (1945-1949)'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Guinea, Republik'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Guinea" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Neuseeland'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/NewZealand" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Ägypten'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Egypt" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Algerien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Algeria" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Deutschland, westliche Besatzungszonen (1945-1949)'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Katar'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Qatar" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Syrien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/SyrianArabRepublic" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Thailand'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Thailand" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Lettland'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Latvia" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Marokko'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Morocco" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Peru'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Peru" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Philippinen'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Philippines" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Litauen'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Lithuania" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Saudi-Arabien, Königreich'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/SaudiArabia" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Kenia'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Kenya" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Äthiopien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Ethiopia" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Nepal'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Nepal" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Mongolei'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Mongolia" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Slowakei (ab 1993)'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Slovakia" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Bosnien und Herzegowina'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/BosniaAndHerzegovina" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Kirgisistan'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Kyrgyzstan" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Monaco'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Monaco" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Vereinigte Arabische Emirate'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/UnitedArabEmirates" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Ecuador'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Ecuador" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Libanon'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Lebanon" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Ghana, Republik'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Ghana" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Serbien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Serbia" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Hongkong'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/HongKong" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Indonesien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Indonesia" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Tunesien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Tunisia" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Irak'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Iraq" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Jordanien'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Jordan" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Niger'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Niger" />
-                    </xsl:when>
-                    <xsl:when test="$country = 'Taiwan'">
-                        <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/TaiwanProvinceOfChina" />
+                    <xsl:when test="$work_type = 'Serie / Reihe'">
+                        <rdf:type rdf:resource="https://dev.fiafcore.org/SerialWork" />
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:message terminate="yes">
-                            Error: Unexpected value "<xsl:value-of select="$country"/>".
+                            Error: Unexpected value "<xsl:value-of select="$work_type"/>".
                         </xsl:message>
                     </xsl:otherwise>
                 </xsl:choose>
+            </xsl:if>
+
+            <!-- fiafcore:hasCountry -->
+
+            <xsl:if test="ba:Ursprungsland">
+                <xsl:for-each select="ba:Ursprungsland">
+                    <xsl:variable name="country" select="translate(., ' ', ' ')" />
+                    <xsl:choose>
+                        <xsl:when test="$country = 'Amerika'" />
+                        <xsl:when test="$country = 'unklar'" />
+                        <xsl:when test="$country = 'Kosovo'" />
+                        <xsl:when test="$country = 'Unbekannt'" />
+                        <xsl:when test="$country = 'Jugoslawien'" />
+                        <xsl:when test="$country = 'Union der Sozialistischen Sowjetrepubliken'" />
+                        <xsl:when test="$country = 'Deutsches Reich (bis 1945)'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Bundesrepublik Deutschland'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Deutsche Demokratische Republik (1949-1990)'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Vereinigte Staaten von Amerika'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/UnitedStatesOfAmerica" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Frankreich'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/France" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Österreich'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Austria" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Italien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Italy" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Vereinigtes Königreich von Großbritannien und Nordirland'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/UnitedKingdomOfGreatBritainAndNorthernIreland" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Schweiz'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Switzerland" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Deutschland, sowjetische Besatzungszone (1945-1949)'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Dänemark'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Denmark" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Tschechoslowakei (-1993)'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Czechia" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Schweden'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Sweden" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Ungarn'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Hungary" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Deutschland, französische Besatzungszone (1945-1949)'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Polen'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Poland" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Niederlande'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/NetherlandsKingdomOfThe" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Norwegen'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Norway" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Belgien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Belgium" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Spanien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Spain" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Bulgarien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Bulgaria" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Japan'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Japan" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Russische Föderation'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/RussianFederation" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Israel'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Israel" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Kanada'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Canada" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Deutschland, amerikanische Besatzungszone (1945-1949)'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Finnland'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Finland" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Berlin West (1949-1990)'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Deutschland, britische Besatzungszone (1945-1949)'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Tschechische Republik (ab 1993)'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Czechia" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Rumänien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Romania" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Kroatien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Croatia" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Luxemburg'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Luxembourg" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Irland, Republik'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Ireland" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Türkei'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Turkiye" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Kuba'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Cuba" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'China, Volksrepublik'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/China" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Argentinien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Argentina" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Griechenland'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Greenland" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Island'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Iceland" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Australien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Australia" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Palästinensische Autonomiegebiete'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/PalestineStateOf" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Mexiko'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Mexico" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Indien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/India" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Ukraine'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Ukraine" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Chile'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Chile" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Slowenien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Slovenia" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Südafrika, Republik'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/SouthAfrica" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Korea, Republik'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/KoreaRepublicOf" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Bolivien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/BoliviaPlurinationalStateOf" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Estland'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Estonia" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Kasachstan'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Kazakhstan" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Kolumbien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Colombia" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Kamerun'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Cameroon" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Iran'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/IranIslamicRepublicOf" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Portugal'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Portugal" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Uruguay'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Uruguay" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Weißrussland'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Belarus" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Georgien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Georgia" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Brasilien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Brazil" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Zypern, Republik'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Cyprus" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Vietnam'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/VietNam" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Afghanistan'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Afghanistan" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Albanien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Albania" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Burkina Faso'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/BurkinaFaso" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Deutschland - Alliierte Besatzung (1945-1949)'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Guinea, Republik'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Guinea" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Neuseeland'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/NewZealand" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Ägypten'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Egypt" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Algerien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Algeria" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Deutschland, westliche Besatzungszonen (1945-1949)'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Germany" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Katar'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Qatar" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Syrien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/SyrianArabRepublic" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Thailand'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Thailand" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Lettland'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Latvia" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Marokko'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Morocco" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Peru'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Peru" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Philippinen'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Philippines" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Litauen'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Lithuania" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Saudi-Arabien, Königreich'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/SaudiArabia" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Kenia'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Kenya" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Äthiopien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Ethiopia" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Nepal'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Nepal" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Mongolei'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Mongolia" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Slowakei (ab 1993)'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Slovakia" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Bosnien und Herzegowina'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/BosniaAndHerzegovina" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Kirgisistan'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Kyrgyzstan" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Monaco'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Monaco" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Vereinigte Arabische Emirate'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/UnitedArabEmirates" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Ecuador'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Ecuador" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Libanon'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Lebanon" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Ghana, Republik'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Ghana" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Serbien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Serbia" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Hongkong'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/HongKong" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Indonesien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Indonesia" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Tunesien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Tunisia" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Irak'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Iraq" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Jordanien'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Jordan" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Niger'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/Niger" />
+                        </xsl:when>
+                        <xsl:when test="$country = 'Taiwan'">
+                            <fiaf:hasCountry rdf:resource="https://dev.fiafcore.org/TaiwanProvinceOfChina" />
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:message terminate="yes">
+                                Error: Unexpected value "<xsl:value-of select="$country"/>".
+                            </xsl:message>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
+            </xsl:if>
+
+            <!-- fiafcore:hasEvent -->
+
+            <!-- <fiaf:hasEvent>
+                        <rdf:Description>
+                            <rdf:type rdf:resource="bundesarchiv://ontology/event/production_event"/>
+                            <xsl:if test="ba:ProdJahrVon">
+                                <fiaf:hasEventDate>
+                                    <xsl:value-of select="ba:ProdJahrVon"/>
+                                </fiaf:hasEventDate>
+                            </xsl:if>
+                            <xsl:for-each select="ba:Credit/ba:Koerperschaft">
+                                <fiaf:hasActivity>
+                                    <rdf:Description>
+                                        <xsl:variable name="funk1" select="translate(ba:Funktion/@Funktion, ' ', '')"/>
+                                        <xsl:variable name="funk2" select="translate($funk1, '/', '')"/>
+                                        <rdf:type rdf:resource="bundesarchiv://ontology/activity/{$funk2}"/>
+                                        <fiaf:hasAgent>
+                                            <rdf:Description rdf:about="bundesarchiv://resource/agent/{@uuid}">
+                                                <rdf:type rdf:resource="bundesarchiv://ontology/agent/organisation"/>
+                                                <rdfs:label>
+                                                    <xsl:value-of select="@Koerperschaftsname"/>
+                                                </rdfs:label>
+                                                <fiaf:hasIdentifier>
+                                                    <rdf:Description rdf:about="bundesarchiv://identifier/agent/{@uuid}">
+                                                        <rdf:type rdf:resource="bundesarchiv://ontology/identifier"/>
+                                                        <fiaf:hasIdentifierValue>
+                                                            <xsl:value-of select="@uuid"/>
+                                                        </fiaf:hasIdentifierValue>
+                                                        <fiaf:hasIdentifierAuthority rdf:resource="bundesarchiv://ontology/authority/bundesarchiv"/>
+                                                    </rdf:Description>
+                                                </fiaf:hasIdentifier>
+                                            </rdf:Description>
+                                        </fiaf:hasAgent>
+                                    </rdf:Description>
+                                </fiaf:hasActivity>
+                            </xsl:for-each>
+                            <xsl:for-each select="ba:Credit/ba:Person">
+                                <fiaf:hasActivity>
+                                    <rdf:Description>
+                                        <xsl:variable name="funk1" select="translate(ba:Funktion/@Funktion, ' ', '')"/>
+                                        <xsl:variable name="funk2" select="translate($funk1, '/', '')"/>
+                                        <rdf:type rdf:resource="bundesarchiv://ontology/activity/{$funk2}"/>
+                                        <fiaf:hasAgent>
+                                            <rdf:Description rdf:about="bundesarchiv://resource/agent/{@uuid}">
+                                                <rdf:type rdf:resource="bundesarchiv://ontology/agent/person"/>
+                                                <rdfs:label>
+                                                    <xsl:value-of select="concat(@Vorname, ' ', @Nachname)"/>
+                                                </rdfs:label>
+                                                <fiaf:hasIdentifier>
+                                                    <rdf:Description rdf:about="bundesarchiv://identifier/agent/{@uuid}">
+                                                        <rdf:type rdf:resource="bundesarchiv://ontology/identifier"/>
+                                                        <fiaf:hasIdentifierValue>
+                                                            <xsl:value-of select="@uuid"/>
+                                                        </fiaf:hasIdentifierValue>
+                                                        <fiaf:hasIdentifierAuthority rdf:resource="bundesarchiv://ontology/authority/bundesarchiv"/>
+                                                    </rdf:Description>
+                                                </fiaf:hasIdentifier>
+                                            </rdf:Description>
+                                        </fiaf:hasAgent>
+                                    </rdf:Description>
+                                </fiaf:hasActivity>
+                            </xsl:for-each>
+                        </rdf:Description>
+                    </fiaf:hasEvent> -->
+
+            <!-- fiafcore:hasForm -->
+
+            <xsl:if test="ba:Gattung">
+                <xsl:for-each select="ba:Gattung">
+                    <xsl:variable name="form" select="translate(., ' ', '_')" />
+                    <xsl:choose>
+                        <xsl:when test="$form = 'Wochenschau'" />
+                        <xsl:when test="$form = 'NichtSpielfilm'" />
+                        <xsl:when test="$form = 'Animationsfilm'" />
+                        <xsl:when test="$form = 'Lehr-,_Unterrichts-_und_Informationsfilm'" />
+                        <xsl:when test="$form = 'Werbefilm'" />
+                        <xsl:when test="$form = 'Kulturfilm'" />
+                        <xsl:when test="$form = 'Reportage'" />
+                        <xsl:when test="$form = 'unbekannt'" />
+                        <xsl:when test="$form = 'Dokumentarfilm_(Nichtspielfilm)'" />
+                        <xsl:when test="$form = 'Fernsehfilm'" />
+                        <xsl:when test="$form = 'Populärwiss._Film'" />
+                        <xsl:when test="$form = 'Medizinfilm'" />
+                        <xsl:when test="$form = 'Periodika'" />
+                        <xsl:when test="$form = 'Magazin'" />
+                        <xsl:when test="$form = 'Experimentalfilm'" />
+                        <xsl:when test="$form = 'Nichtnarrativer_Film'" />
+                        <xsl:when test="$form = 'Porträtfilm'" />
+                        <xsl:when test="$form = 'Aufklärungsfilm'" />
+                        <xsl:when test="$form = 'Sach-_und_Ereignisdokument'" />
+                        <xsl:when test="$form = 'Privatfilm'" />
+                        <xsl:when test="$form = 'Literaturverfilmung'" />
+                        <xsl:when test="$form = 'Industriefilm'" />
+                        <xsl:when test="$form = 'Lustspiel'" />
+                        <xsl:when test="$form = 'Kinderfilm'" />
+                        <xsl:when test="$form = 'Biografischer_Film'" />
+                        <xsl:when test="$form = 'Unterrichtsfilm'" />
+                        <xsl:when test="$form = 'Städte-_u.Landschaftsfilm'" />
+                        <xsl:when test="$form = 'Propagandafilm'" />
+                        <xsl:when test="$form = 'Expeditionsfilm'" />
+                        <xsl:when test="$form = 'Interview'" />
+                        <xsl:when test="$form = 'Komödie'" />
+                        <xsl:when test="$form = 'Sportfilm'" />
+                        <xsl:when test="$form = 'Naturfilm'" />
+                        <xsl:when test="$form = 'Spot'" />
+                        <xsl:when test="$form = 'Wahlfilm'" />
+                        <xsl:when test="$form = 'Episodenfilm'" />
+                        <xsl:when test="$form = 'Abenteuerfilm'" />
+                        <xsl:when test="$form = 'Kriminalfilm'" />
+                        <xsl:when test="$form = 'Operettenfilm'" />
+                        <xsl:when test="$form = 'Politisch-geogr._Film'" />
+                        <xsl:when test="$form = 'Militärfilm'" />
+                        <xsl:when test="$form = 'Satire'" />
+                        <xsl:when test="$form = 'Länderfilm'" />
+                        <xsl:when test="$form = 'Autorenfilm'" />
+                        <xsl:when test="$form = 'Heimatfilm'" />
+                        <xsl:when test="$form = 'Dokumentarfilm'" />
+                        <xsl:when test="$form = 'Land-/Forstwirtschaftsfilm'" />
+                        <xsl:when test="$form = 'Kriegsfilm'" />
+                        <xsl:when test="$form = 'Historischer_Film'" />
+                        <xsl:when test="$form = 'Biologischer_Film'" />
+                        <xsl:when test="$form = 'Gegenwartsfilm'" />
+                        <xsl:when test="$form = 'Feuilleton'" />
+                        <xsl:when test="$form = 'Kunstfilm'" />
+                        <xsl:when test="$form = 'Verkehrsfilm'" />
+                        <xsl:when test="$form = 'Ballettfilm'" />
+                        <xsl:when test="$form = 'Märchenfilm'" />
+                        <xsl:when test="$form = 'Philosophischer_Film'" />
+                        <xsl:when test="$form = 'Hist._Ausstattungsfilm'" />
+                        <xsl:when test="$form = 'Frauenfilm'" />
+                        <xsl:when test="$form = 'Szenische_Dokumentation'" />
+                        <xsl:when test="$form = 'Gangsterfilm'" />
+                        <xsl:when test="$form = 'Spionagefilm'" />
+                        <xsl:when test="$form = 'Arztfilm'" />
+                        <xsl:when test="$form = 'Melodram'" />
+                        <xsl:when test="$form = 'Opernfilm'" />
+                        <xsl:when test="$form = 'Zirkusfilm'" />
+                        <xsl:when test="$form = 'Horrorfilm'" />
+                        <xsl:when test="$form = 'Politthriller'" />
+                        <xsl:when test="$form = 'Fotofilm'" />
+                        <xsl:when test="$form = 'Tragödie'" />
+                        <xsl:when test="$form = 'Fersehspiel'" />
+                        <xsl:when test="$form = 'Science_Fiction'" />
+                        <xsl:when test="$form = 'Revuefilm'" />
+                        <xsl:when test="$form = 'Parodie'" />
+                        <xsl:when test="$form = 'Spielfilm'">
+                            <fiaf:hasForm rdf:resource="https://dev.fiafcore.org/FeatureFilm" />
+                        </xsl:when>
+                        <xsl:when test="$form = 'Serie'">
+                            <fiaf:hasForm rdf:resource="https://dev.fiafcore.org/Series" />
+                        </xsl:when>
+                        <xsl:when test="$form = 'Trailer'">
+                            <fiaf:hasForm rdf:resource="https://dev.fiafcore.org/Trailer" />
+                        </xsl:when>
+                        <xsl:when test="$form = 'Amateurfilm'">
+                            <fiaf:hasForm rdf:resource="https://dev.fiafcore.org/AmateurFilm" />
+                        </xsl:when>
+                        <xsl:when test="$form = 'Kompilationsfilm'">
+                            <fiaf:hasForm rdf:resource="https://dev.fiafcore.org/CompilationFilm" />
+                        </xsl:when>
+                        <xsl:when test="$form = 'Kurzspielfilm'">
+                            <fiaf:hasForm rdf:resource="https://dev.fiafcore.org/ShortFilm" />
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:message terminate="yes">
+                                Error: Unexpected value "<xsl:value-of select="$form"/>".
+                            </xsl:message>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
+            </xsl:if>
+
+            <!-- fiafcore:hasGenre -->
+
+            <xsl:if test="ba:Genre">
+                <xsl:for-each select="ba:Genre">
+                    <xsl:variable name="genre" select="translate(., ' ', '_')" />
+                    <xsl:choose>
+                        <xsl:when test="$genre = 'Wochenschau'" />
+                        <xsl:when test="$genre = 'Wochenschau_(Segment/Sujet/Ausschnitt)'" />
+                        <xsl:when test="$genre = 'Sach-_und_Ereignisdokument'" />
+                        <xsl:when test="$genre = 'Trailer'" />
+                        <xsl:when test="$genre = 'Trickart:_Puppentrick'" />
+                        <xsl:when test="$genre = 'Reportage'" />
+                        <xsl:when test="$genre = 'Amateurfilm'" />
+                        <xsl:when test="$genre = 'Fernsehfilm'" />
+                        <xsl:when test="$genre = 'Periodika'" />
+                        <xsl:when test="$genre = 'Trickart:_Legetrick/Flachfigurenfilm'" />
+                        <xsl:when test="$genre = 'Lustspiel'" />
+                        <xsl:when test="$genre = 'Spot'" />
+                        <xsl:when test="$genre = 'Privatfilm'" />
+                        <xsl:when test="$genre = 'Trickart:_Silhouettentrick'" />
+                        <xsl:when test="$genre = 'Trickart:_Sach-/Realtrick'" />
+                        <xsl:when test="$genre = 'Portraitfilm'" />
+                        <xsl:when test="$genre = 'Personendokument'" />
+                        <xsl:when test="$genre = 'Monatsschau'" />
+                        <xsl:when test="$genre = 'Historischer_Film'" />
+                        <xsl:when test="$genre = 'Land-/Forstwirtschadtsfilm'" />
+                        <xsl:when test="$genre = 'Wahlfilm'" />
+                        <xsl:when test="$genre = 'Biografischer_Film'" />
+                        <xsl:when test="$genre = 'Trickart:_Realaufnahmen_im_Trickfilm'" />
+                        <xsl:when test="$genre = 'Expeditionsfilm'" />
+                        <xsl:when test="$genre = 'Länderfilm'" />
+                        <xsl:when test="$genre = 'Naturfilm'" />
+                        <xsl:when test="$genre = 'Politisch-geogr._Film'" />
+                        <xsl:when test="$genre = 'Medizinfilm'" />
+                        <xsl:when test="$genre = 'Kompilationsfilm'" />
+                        <xsl:when test="$genre = 'Gegenwartsfilm'" />
+                        <xsl:when test="$genre = 'Dokumentarischer_Spielfilm'" />
+                        <xsl:when test="$genre = 'Trickart:_Drahtfigurentrick'" />
+                        <xsl:when test="$genre = 'Interview'" />
+                        <xsl:when test="$genre = 'Kunstfilm'" />
+                        <xsl:when test="$genre = 'Trickart:_Plasteline-/Knettrick/Claymation'" />
+                        <xsl:when test="$genre = 'Melodram'" />
+                        <xsl:when test="$genre = 'Szenische_Dokumentation'" />
+                        <xsl:when test="$genre = 'Jugendfilm'" />
+                        <xsl:when test="$genre = 'Abenteuerfilm'" />
+                        <xsl:when test="$genre = 'Tanzfilm'" />
+                        <xsl:when test="$genre = 'Ethnografischer_Film'" />
+                        <xsl:when test="$genre = 'Trickart:_Computeranimation'" />
+                        <xsl:when test="$genre = 'Religionsfilm'" />
+                        <xsl:when test="$genre = 'Tragödie'" />
+                        <xsl:when test="$genre = 'Verkehrsfilm'" />
+                        <xsl:when test="$genre = 'Operettenfilm'" />
+                        <xsl:when test="$genre = 'Umweltfilm'" />
+                        <xsl:when test="$genre = 'Zirkusfilm'" />
+                        <xsl:when test="$genre = 'Heimatfilm'" />
+                        <xsl:when test="$genre = 'Detektivfilm'" />
+                        <xsl:when test="$genre = 'Trickart:_Sonstige_Trickarten'" />
+                        <xsl:when test="$genre = 'Western'" />
+                        <xsl:when test="$genre = 'Slapstick'" />
+                        <xsl:when test="$genre = 'Biologischer_Film'" />
+                        <xsl:when test="$genre = 'Bergfilm'" />
+                        <xsl:when test="$genre = 'Thriller'" />
+                        <xsl:when test="$genre = 'Trickart:_Mischtrick'" />
+                        <xsl:when test="$genre = 'Musicalfilm'" />
+                        <xsl:when test="$genre = 'Ballettfilm'" />
+                        <xsl:when test="$genre = 'Feuilleton'" />
+                        <xsl:when test="$genre = 'Opernfilm'" />
+                        <xsl:when test="$genre = 'Antikriegsfilm'" />
+                        <xsl:when test="$genre = 'Fantasyfilm'" />
+                        <xsl:when test="$genre = 'Trickart:_Fototrick'" />
+                        <xsl:when test="$genre = 'Frauenfilm'" />
+                        <xsl:when test="$genre = 'Arztfilm'" />
+                        <xsl:when test="$genre = 'Experimentalfilm'" />
+                        <xsl:when test="$genre = 'Forschungsfilm'" />
+                        <xsl:when test="$genre = 'Trickart:_Reliefanimation/Zeichentrick'" />
+                        <xsl:when test="$genre = 'Sensationsfilm'" />
+                        <xsl:when test="$genre = 'Gerichtsfilm'" />
+                        <xsl:when test="$genre = 'Parodie'" />
+                        <xsl:when test="$genre = 'Trickart:_Collagentrick'" />
+                        <xsl:when test="$genre = 'Spionagefilm'" />
+                        <xsl:when test="$genre = 'Revuefilm'" />
+                        <xsl:when test="$genre = 'Science_Fiction'" />
+                        <xsl:when test="$genre = 'Tragikomödie'" />
+                        <xsl:when test="$genre = 'Horrofilm'" />
+                        <xsl:when test="$genre = 'Magazin'" />
+                        <xsl:when test="$genre = 'Erotischer_Film'" />
+                        <xsl:when test="$genre = 'Trickart:_Pixilation'" />
+                        <xsl:when test="$genre = 'Fotofilm'" />
+                        <xsl:when test="$genre = 'Hist._Ausstattungsfilm'" />
+                        <xsl:when test="$genre = 'Polithriller'" />
+                        <xsl:when test="$genre = 'Indianerfilm'" />
+                        <xsl:when test="$genre = 'Phantastischer_Film'" />
+                        <xsl:when test="$genre = 'Gangsterfilm'" />
+                        <xsl:when test="$genre = 'Gefilmtes_Theater'" />
+                        <xsl:when test="$genre = 'Marionettenfilm'" />
+                        <xsl:when test="$genre = 'Unterrichtsfilm'" />
+                        <xsl:when test="$genre = 'Trickart:_Sandanimation'" />
+                        <xsl:when test="$genre = 'Mischfilm_(Kombination_aus_Real-_u._Trickfilm)'" />
+                        <xsl:when test="$genre = 'Surrealistischer_Film'" />
+                        <xsl:when test="$genre = 'Trickart:_Scherenschnitt'" />
+                        <xsl:when test="$genre = 'Actionfilm'" />
+                        <xsl:when test="$genre = 'Absoluter_Film'" />
+                        <xsl:when test="$genre = 'Abstrakter_Film'" />
+                        <xsl:when test="$genre = 'Singspiel'" />
+                        <xsl:when test="$genre = 'Computerfilm'" />
+                        <xsl:when test="$genre = 'Discofilm'" />
+                        <xsl:when test="$genre = 'Trickart:_Nonkameratrick/Direct_Animation'" />
+                        <xsl:when test="$genre = 'Trickart:_Modelltrick'" />
+                        <xsl:when test="$genre = 'Revolutionsfilm'" />
+                        <xsl:when test="$genre = 'Road_Movie'" />
+                        <xsl:when test="$genre = 'Stabpuppenfilm'" />
+                        <xsl:when test="$genre = 'Materialfilm'" />
+                        <xsl:when test="$genre = 'Trickart:_Folienanimation'" />
+                        <xsl:when test="$genre = 'Expressionistischer_Film'" />
+                        <xsl:when test="$genre = 'Philosophischer_Film'" />
+                        <xsl:when test="$genre = 'Fernsehspiel'" />
+                        <xsl:when test="$genre = 'Partisanenfilm'" />
+                        <xsl:when test="$genre = 'Trickart:_Zeichentrick'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Animation" />
+                        </xsl:when>
+                        <xsl:when test="$genre = 'Kinderfilm'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Childrens" />
+                        </xsl:when>
+                        <xsl:when test="$genre = 'Städte-_u._Landschaftsfilm'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/CityAndLandscape" />
+                        </xsl:when>
+                        <xsl:when test="$genre = 'Kulturfilm'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Cultural" />
+                        </xsl:when>
+                        <xsl:when test="$genre = 'Propagandafilm'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Propaganda" />
+                        </xsl:when>
+                        <xsl:when test="$genre = 'Literaturverfilmung'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/LiteraryAdaptation" />
+                        </xsl:when>
+                        <xsl:when test="$genre = 'Komödie'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Comedy" />
+                        </xsl:when>
+                        <xsl:when test="$genre = 'Industriefilm'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Industrial" />
+                        </xsl:when>
+                        <xsl:when test="$genre = 'Drama'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Drama" />
+                        </xsl:when>
+                        <xsl:when test="$genre = 'Tierfilm'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Animal" />
+                        </xsl:when>
+                        <xsl:when test="$genre = 'Satire'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Satire" />
+                        </xsl:when>
+                        <xsl:when test="$genre = 'Märchenfilm'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/FairyTale" />
+                        </xsl:when>
+                        <xsl:when test="$genre = 'Militärfilm'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Military" />
+                        </xsl:when>
+                        <xsl:when test="$genre = 'Kriegsfilm'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/War" />
+                        </xsl:when>
+                        <xsl:when test="$genre = 'Populärwissenschaftlicher_Film'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/PopularScience" />
+                        </xsl:when>
+                        <xsl:when test="$genre = 'Sportfilm'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Sports" />
+                        </xsl:when>
+                        <xsl:when test="$genre = 'Kriminalfilm'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Crime" />
+                        </xsl:when>
+                        <xsl:when test="$genre = 'Handpuppenfilm'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/HandPuppet" />
+                        </xsl:when>
+                        <xsl:when test="$genre = 'Technikfilm'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Technical" />
+                        </xsl:when>
+                        <xsl:when test="$genre = 'Aufklärungsfilm'">
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Educational" />
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:message terminate="yes">
+                                Error: Unexpected value "<xsl:value-of select="$genre"/>".
+                            </xsl:message>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
+            </xsl:if>
+
+            <!-- fiafcore:hasIdentifier -->
+
+            <!-- <fiaf:hasIdentifier>
+                        <rdf:Description rdf:about="bundesarchiv://identifier/work/{@uuid}">
+                            <rdf:type rdf:resource="bundesarchiv://ontology/identifier" />
+                            <fiaf:hasIdentifierValue>
+                                <xsl:value-of select="@uuid" />
+                            </fiaf:hasIdentifierValue>
+                            <fiaf:hasIdentifierAuthority rdf:resource="bundesarchiv://ontology/authority/bundesarchiv" />
+                        </rdf:Description>
+                    </fiaf:hasIdentifier> -->
+
+            <!-- fiafcore:hasManifestation -->
+
+            <xsl:for-each select="ba:Manifestation">
+                <fiaf:hasManifestation>
+                    <rdf:Description rdf:about="bundesarchiv://resource/manifestation/{@uuid}" />
+                </fiaf:hasManifestation>
             </xsl:for-each>
-        </xsl:if>
 
-    <!-- fiafcore:hasEvent -->
+            <!-- fiafcore:hasTitle -->
 
-    <!-- <fiaf:hasEvent>
-                <rdf:Description>
-                    <rdf:type rdf:resource="bundesarchiv://ontology/event/production_event"/>
-                    <xsl:if test="ba:ProdJahrVon">
-                        <fiaf:hasEventDate>
-                            <xsl:value-of select="ba:ProdJahrVon"/>
-                        </fiaf:hasEventDate>
-                    </xsl:if>
-                    <xsl:for-each select="ba:Credit/ba:Koerperschaft">
-                        <fiaf:hasActivity>
-                            <rdf:Description>
-                                <xsl:variable name="funk1" select="translate(ba:Funktion/@Funktion, ' ', '')"/>
-                                <xsl:variable name="funk2" select="translate($funk1, '/', '')"/>
-                                <rdf:type rdf:resource="bundesarchiv://ontology/activity/{$funk2}"/>
-                                <fiaf:hasAgent>
-                                    <rdf:Description rdf:about="bundesarchiv://resource/agent/{@uuid}">
-                                        <rdf:type rdf:resource="bundesarchiv://ontology/agent/organisation"/>
-                                        <rdfs:label>
-                                            <xsl:value-of select="@Koerperschaftsname"/>
-                                        </rdfs:label>
-                                        <fiaf:hasIdentifier>
-                                            <rdf:Description rdf:about="bundesarchiv://identifier/agent/{@uuid}">
-                                                <rdf:type rdf:resource="bundesarchiv://ontology/identifier"/>
-                                                <fiaf:hasIdentifierValue>
-                                                    <xsl:value-of select="@uuid"/>
-                                                </fiaf:hasIdentifierValue>
-                                                <fiaf:hasIdentifierAuthority rdf:resource="bundesarchiv://ontology/authority/bundesarchiv"/>
-                                            </rdf:Description>
-                                        </fiaf:hasIdentifier>
-                                    </rdf:Description>
-                                </fiaf:hasAgent>
-                            </rdf:Description>
-                        </fiaf:hasActivity>
-                    </xsl:for-each>
-                    <xsl:for-each select="ba:Credit/ba:Person">
-                        <fiaf:hasActivity>
-                            <rdf:Description>
-                                <xsl:variable name="funk1" select="translate(ba:Funktion/@Funktion, ' ', '')"/>
-                                <xsl:variable name="funk2" select="translate($funk1, '/', '')"/>
-                                <rdf:type rdf:resource="bundesarchiv://ontology/activity/{$funk2}"/>
-                                <fiaf:hasAgent>
-                                    <rdf:Description rdf:about="bundesarchiv://resource/agent/{@uuid}">
-                                        <rdf:type rdf:resource="bundesarchiv://ontology/agent/person"/>
-                                        <rdfs:label>
-                                            <xsl:value-of select="concat(@Vorname, ' ', @Nachname)"/>
-                                        </rdfs:label>
-                                        <fiaf:hasIdentifier>
-                                            <rdf:Description rdf:about="bundesarchiv://identifier/agent/{@uuid}">
-                                                <rdf:type rdf:resource="bundesarchiv://ontology/identifier"/>
-                                                <fiaf:hasIdentifierValue>
-                                                    <xsl:value-of select="@uuid"/>
-                                                </fiaf:hasIdentifierValue>
-                                                <fiaf:hasIdentifierAuthority rdf:resource="bundesarchiv://ontology/authority/bundesarchiv"/>
-                                            </rdf:Description>
-                                        </fiaf:hasIdentifier>
-                                    </rdf:Description>
-                                </fiaf:hasAgent>
-                            </rdf:Description>
-                        </fiaf:hasActivity>
-                    </xsl:for-each>
-                </rdf:Description>
-            </fiaf:hasEvent> -->
-
-    <!-- fiafcore:hasForm -->
-
-    <xsl:if test="ba:Gattung">
-        <xsl:for-each select="ba:Gattung">
-            <xsl:variable name="form" select="translate(., ' ', '_')" />
-            <xsl:choose>
-                <xsl:when test="$form = 'Wochenschau'" />
-                <xsl:when test="$form = 'NichtSpielfilm'" />
-                <xsl:when test="$form = 'Animationsfilm'" />
-                <xsl:when test="$form = 'Lehr-,_Unterrichts-_und_Informationsfilm'" />
-                <xsl:when test="$form = 'Werbefilm'" />
-                <xsl:when test="$form = 'Kulturfilm'" />
-                <xsl:when test="$form = 'Reportage'" />
-                <xsl:when test="$form = 'unbekannt'" />
-                <xsl:when test="$form = 'Dokumentarfilm_(Nichtspielfilm)'" />
-                <xsl:when test="$form = 'Fernsehfilm'" />
-                <xsl:when test="$form = 'Populärwiss._Film'" />
-                <xsl:when test="$form = 'Medizinfilm'" />
-                <xsl:when test="$form = 'Periodika'" />
-                <xsl:when test="$form = 'Magazin'" />
-                <xsl:when test="$form = 'Experimentalfilm'" />
-                <xsl:when test="$form = 'Nichtnarrativer_Film'" />
-                <xsl:when test="$form = 'Porträtfilm'" />
-                <xsl:when test="$form = 'Aufklärungsfilm'" />
-                <xsl:when test="$form = 'Sach-_und_Ereignisdokument'" />
-                <xsl:when test="$form = 'Privatfilm'" />
-                <xsl:when test="$form = 'Literaturverfilmung'" />
-                <xsl:when test="$form = 'Industriefilm'" />
-                <xsl:when test="$form = 'Lustspiel'" />
-                <xsl:when test="$form = 'Kinderfilm'" />
-                <xsl:when test="$form = 'Biografischer_Film'" />
-                <xsl:when test="$form = 'Unterrichtsfilm'" />
-                <xsl:when test="$form = 'Städte-_u.Landschaftsfilm'" />
-                <xsl:when test="$form = 'Propagandafilm'" />
-                <xsl:when test="$form = 'Expeditionsfilm'" />
-                <xsl:when test="$form = 'Interview'" />
-                <xsl:when test="$form = 'Komödie'" />
-                <xsl:when test="$form = 'Sportfilm'" />
-                <xsl:when test="$form = 'Naturfilm'" />
-                <xsl:when test="$form = 'Spot'" />
-                <xsl:when test="$form = 'Wahlfilm'" />
-                <xsl:when test="$form = 'Episodenfilm'" />
-                <xsl:when test="$form = 'Abenteuerfilm'" />
-                <xsl:when test="$form = 'Kriminalfilm'" />
-                <xsl:when test="$form = 'Operettenfilm'" />
-                <xsl:when test="$form = 'Politisch-geogr._Film'" />
-                <xsl:when test="$form = 'Militärfilm'" />
-                <xsl:when test="$form = 'Satire'" />
-                <xsl:when test="$form = 'Länderfilm'" />
-                <xsl:when test="$form = 'Autorenfilm'" />
-                <xsl:when test="$form = 'Heimatfilm'" />
-                <xsl:when test="$form = 'Dokumentarfilm'" />
-                <xsl:when test="$form = 'Land-/Forstwirtschaftsfilm'" />
-                <xsl:when test="$form = 'Kriegsfilm'" />
-                <xsl:when test="$form = 'Historischer_Film'" />
-                <xsl:when test="$form = 'Biologischer_Film'" />
-                <xsl:when test="$form = 'Gegenwartsfilm'" />
-                <xsl:when test="$form = 'Feuilleton'" />
-                <xsl:when test="$form = 'Kunstfilm'" />
-                <xsl:when test="$form = 'Verkehrsfilm'" />
-                <xsl:when test="$form = 'Ballettfilm'" />
-                <xsl:when test="$form = 'Märchenfilm'" />
-                <xsl:when test="$form = 'Philosophischer_Film'" />
-                <xsl:when test="$form = 'Hist._Ausstattungsfilm'" />
-                <xsl:when test="$form = 'Frauenfilm'" />
-                <xsl:when test="$form = 'Szenische_Dokumentation'" />
-                <xsl:when test="$form = 'Gangsterfilm'" />
-                <xsl:when test="$form = 'Spionagefilm'" />
-                <xsl:when test="$form = 'Arztfilm'" />
-                <xsl:when test="$form = 'Melodram'" />
-                <xsl:when test="$form = 'Opernfilm'" />
-                <xsl:when test="$form = 'Zirkusfilm'" />
-                <xsl:when test="$form = 'Horrorfilm'" />
-                <xsl:when test="$form = 'Politthriller'" />
-                <xsl:when test="$form = 'Fotofilm'" />
-                <xsl:when test="$form = 'Tragödie'" />
-                <xsl:when test="$form = 'Fersehspiel'" />
-                <xsl:when test="$form = 'Science_Fiction'" />
-                <xsl:when test="$form = 'Revuefilm'" />
-                <xsl:when test="$form = 'Parodie'" />
-                <xsl:when test="$form = 'Spielfilm'">
-                    <fiaf:hasForm rdf:resource="https://dev.fiafcore.org/FeatureFilm" />
-                </xsl:when>
-                <xsl:when test="$form = 'Serie'">
-                    <fiaf:hasForm rdf:resource="https://dev.fiafcore.org/Series" />
-                </xsl:when>
-                <xsl:when test="$form = 'Trailer'">
-                    <fiaf:hasForm rdf:resource="https://dev.fiafcore.org/Trailer" />
-                </xsl:when>
-                <xsl:when test="$form = 'Amateurfilm'">
-                    <fiaf:hasForm rdf:resource="https://dev.fiafcore.org/AmateurFilm" />
-                </xsl:when>
-                <xsl:when test="$form = 'Kompilationsfilm'">
-                    <fiaf:hasForm rdf:resource="https://dev.fiafcore.org/CompilationFilm" />
-                </xsl:when>
-                <xsl:when test="$form = 'Kurzspielfilm'">
-                    <fiaf:hasForm rdf:resource="https://dev.fiafcore.org/ShortFilm" />
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:message terminate="yes">
-                        Error: Unexpected value "<xsl:value-of select="$form"/>".
-                    </xsl:message>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:for-each>
-    </xsl:if>
-
-    <!-- fiafcore:hasGenre -->
-
-    <xsl:if test="ba:Genre">
-        <xsl:for-each select="ba:Genre">
-            <xsl:variable name="genre" select="translate(., ' ', '_')" />
-            <xsl:choose>
-                <xsl:when test="$genre = 'Wochenschau'" />
-                <xsl:when test="$genre = 'Wochenschau_(Segment/Sujet/Ausschnitt)'" />
-                <xsl:when test="$genre = 'Sach-_und_Ereignisdokument'" />
-                <xsl:when test="$genre = 'Trailer'" />
-                <xsl:when test="$genre = 'Trickart:_Puppentrick'" />
-                <xsl:when test="$genre = 'Reportage'" />
-                <xsl:when test="$genre = 'Amateurfilm'" />
-                <xsl:when test="$genre = 'Fernsehfilm'" />
-                <xsl:when test="$genre = 'Periodika'" />
-                <xsl:when test="$genre = 'Trickart:_Legetrick/Flachfigurenfilm'" />
-                <xsl:when test="$genre = 'Lustspiel'" />
-                <xsl:when test="$genre = 'Spot'" />
-                <xsl:when test="$genre = 'Privatfilm'" />
-                <xsl:when test="$genre = 'Trickart:_Silhouettentrick'" />
-                <xsl:when test="$genre = 'Trickart:_Sach-/Realtrick'" />
-                <xsl:when test="$genre = 'Portraitfilm'" />
-                <xsl:when test="$genre = 'Personendokument'" />
-                <xsl:when test="$genre = 'Monatsschau'" />
-                <xsl:when test="$genre = 'Historischer_Film'" />
-                <xsl:when test="$genre = 'Land-/Forstwirtschadtsfilm'" />
-                <xsl:when test="$genre = 'Wahlfilm'" />
-                <xsl:when test="$genre = 'Biografischer_Film'" />
-                <xsl:when test="$genre = 'Trickart:_Realaufnahmen_im_Trickfilm'" />
-                <xsl:when test="$genre = 'Expeditionsfilm'" />
-                <xsl:when test="$genre = 'Länderfilm'" />
-                <xsl:when test="$genre = 'Naturfilm'" />
-                <xsl:when test="$genre = 'Politisch-geogr._Film'" />
-                <xsl:when test="$genre = 'Medizinfilm'" />
-                <xsl:when test="$genre = 'Kompilationsfilm'" />
-                <xsl:when test="$genre = 'Gegenwartsfilm'" />
-                <xsl:when test="$genre = 'Dokumentarischer_Spielfilm'" />
-                <xsl:when test="$genre = 'Trickart:_Drahtfigurentrick'" />
-                <xsl:when test="$genre = 'Interview'" />
-                <xsl:when test="$genre = 'Kunstfilm'" />
-                <xsl:when test="$genre = 'Trickart:_Plasteline-/Knettrick/Claymation'" />
-                <xsl:when test="$genre = 'Melodram'" />
-                <xsl:when test="$genre = 'Szenische_Dokumentation'" />
-                <xsl:when test="$genre = 'Jugendfilm'" />
-                <xsl:when test="$genre = 'Abenteuerfilm'" />
-                <xsl:when test="$genre = 'Tanzfilm'" />
-                <xsl:when test="$genre = 'Ethnografischer_Film'" />
-                <xsl:when test="$genre = 'Trickart:_Computeranimation'" />
-                <xsl:when test="$genre = 'Religionsfilm'" />
-                <xsl:when test="$genre = 'Tragödie'" />
-                <xsl:when test="$genre = 'Verkehrsfilm'" />
-                <xsl:when test="$genre = 'Operettenfilm'" />
-                <xsl:when test="$genre = 'Umweltfilm'" />
-                <xsl:when test="$genre = 'Zirkusfilm'" />
-                <xsl:when test="$genre = 'Heimatfilm'" />
-                <xsl:when test="$genre = 'Detektivfilm'" />
-                <xsl:when test="$genre = 'Trickart:_Sonstige_Trickarten'" />
-                <xsl:when test="$genre = 'Western'" />
-                <xsl:when test="$genre = 'Slapstick'" />
-                <xsl:when test="$genre = 'Biologischer_Film'" />
-                <xsl:when test="$genre = 'Bergfilm'" />
-                <xsl:when test="$genre = 'Thriller'" />
-                <xsl:when test="$genre = 'Trickart:_Mischtrick'" />
-                <xsl:when test="$genre = 'Musicalfilm'" />
-                <xsl:when test="$genre = 'Ballettfilm'" />
-                <xsl:when test="$genre = 'Feuilleton'" />
-                <xsl:when test="$genre = 'Opernfilm'" />
-                <xsl:when test="$genre = 'Antikriegsfilm'" />
-                <xsl:when test="$genre = 'Fantasyfilm'" />
-                <xsl:when test="$genre = 'Trickart:_Fototrick'" />
-                <xsl:when test="$genre = 'Frauenfilm'" />
-                <xsl:when test="$genre = 'Arztfilm'" />
-                <xsl:when test="$genre = 'Experimentalfilm'" />
-                <xsl:when test="$genre = 'Forschungsfilm'" />
-                <xsl:when test="$genre = 'Trickart:_Reliefanimation/Zeichentrick'" />
-                <xsl:when test="$genre = 'Sensationsfilm'" />
-                <xsl:when test="$genre = 'Gerichtsfilm'" />
-                <xsl:when test="$genre = 'Parodie'" />
-                <xsl:when test="$genre = 'Trickart:_Collagentrick'" />
-                <xsl:when test="$genre = 'Spionagefilm'" />
-                <xsl:when test="$genre = 'Revuefilm'" />
-                <xsl:when test="$genre = 'Science_Fiction'" />
-                <xsl:when test="$genre = 'Tragikomödie'" />
-                <xsl:when test="$genre = 'Horrofilm'" />
-                <xsl:when test="$genre = 'Magazin'" />
-                <xsl:when test="$genre = 'Erotischer_Film'" />
-                <xsl:when test="$genre = 'Trickart:_Pixilation'" />
-                <xsl:when test="$genre = 'Fotofilm'" />
-                <xsl:when test="$genre = 'Hist._Ausstattungsfilm'" />
-                <xsl:when test="$genre = 'Polithriller'" />
-                <xsl:when test="$genre = 'Indianerfilm'" />
-                <xsl:when test="$genre = 'Phantastischer_Film'" />
-                <xsl:when test="$genre = 'Gangsterfilm'" />
-                <xsl:when test="$genre = 'Gefilmtes_Theater'" />
-                <xsl:when test="$genre = 'Marionettenfilm'" />
-                <xsl:when test="$genre = 'Unterrichtsfilm'" />
-                <xsl:when test="$genre = 'Trickart:_Sandanimation'" />
-                <xsl:when test="$genre = 'Mischfilm_(Kombination_aus_Real-_u._Trickfilm)'" />
-                <xsl:when test="$genre = 'Surrealistischer_Film'" />
-                <xsl:when test="$genre = 'Trickart:_Scherenschnitt'" />
-                <xsl:when test="$genre = 'Actionfilm'" />
-                <xsl:when test="$genre = 'Absoluter_Film'" />
-                <xsl:when test="$genre = 'Abstrakter_Film'" />
-                <xsl:when test="$genre = 'Singspiel'" />
-                <xsl:when test="$genre = 'Computerfilm'" />
-                <xsl:when test="$genre = 'Discofilm'" />
-                <xsl:when test="$genre = 'Trickart:_Nonkameratrick/Direct_Animation'" />
-                <xsl:when test="$genre = 'Trickart:_Modelltrick'" />
-                <xsl:when test="$genre = 'Revolutionsfilm'" />
-                <xsl:when test="$genre = 'Road_Movie'" />
-                <xsl:when test="$genre = 'Stabpuppenfilm'" />
-                <xsl:when test="$genre = 'Materialfilm'" />
-                <xsl:when test="$genre = 'Trickart:_Folienanimation'" />
-                <xsl:when test="$genre = 'Expressionistischer_Film'" />
-                <xsl:when test="$genre = 'Philosophischer_Film'" />
-                <xsl:when test="$genre = 'Fernsehspiel'" />
-                <xsl:when test="$genre = 'Partisanenfilm'" />
-                <xsl:when test="$genre = 'Trickart:_Zeichentrick'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Animation" />
-                </xsl:when>
-                <xsl:when test="$genre = 'Kinderfilm'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Childrens" />
-                </xsl:when>
-                <xsl:when test="$genre = 'Städte-_u._Landschaftsfilm'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/CityAndLandscape" />
-                </xsl:when>
-                <xsl:when test="$genre = 'Kulturfilm'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Cultural" />
-                </xsl:when>
-                <xsl:when test="$genre = 'Propagandafilm'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Propaganda" />
-                </xsl:when>
-                <xsl:when test="$genre = 'Literaturverfilmung'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/LiteraryAdaptation" />
-                </xsl:when>
-                <xsl:when test="$genre = 'Komödie'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Comedy" />
-                </xsl:when>
-                <xsl:when test="$genre = 'Industriefilm'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Industrial" />
-                </xsl:when>
-                <xsl:when test="$genre = 'Drama'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Drama" />
-                </xsl:when>
-                <xsl:when test="$genre = 'Tierfilm'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Animal" />
-                </xsl:when>
-                <xsl:when test="$genre = 'Satire'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Satire" />
-                </xsl:when>
-                <xsl:when test="$genre = 'Märchenfilm'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/FairyTale" />
-                </xsl:when>
-                <xsl:when test="$genre = 'Militärfilm'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Military" />
-                </xsl:when>
-                <xsl:when test="$genre = 'Kriegsfilm'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/War" />
-                </xsl:when>
-                <xsl:when test="$genre = 'Populärwissenschaftlicher_Film'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/PopularScience" />
-                </xsl:when>
-                <xsl:when test="$genre = 'Sportfilm'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Sports" />
-                </xsl:when>
-                <xsl:when test="$genre = 'Kriminalfilm'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Crime" />
-                </xsl:when>
-                <xsl:when test="$genre = 'Handpuppenfilm'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/HandPuppet" />
-                </xsl:when>
-                <xsl:when test="$genre = 'Technikfilm'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Technical" />
-                </xsl:when>
-                <xsl:when test="$genre = 'Aufklärungsfilm'">
-                    <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Educational" />
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:message terminate="yes">
-                        Error: Unexpected value "<xsl:value-of select="$genre"/>".
-                    </xsl:message>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:for-each>
-    </xsl:if>
-
-    <!-- fiafcore:hasIdentifier -->
-
-    <!-- <fiaf:hasIdentifier>
-                <rdf:Description rdf:about="bundesarchiv://identifier/work/{@uuid}">
-                    <rdf:type rdf:resource="bundesarchiv://ontology/identifier" />
-                    <fiaf:hasIdentifierValue>
-                        <xsl:value-of select="@uuid" />
-                    </fiaf:hasIdentifierValue>
-                    <fiaf:hasIdentifierAuthority rdf:resource="bundesarchiv://ontology/authority/bundesarchiv" />
-                </rdf:Description>
-            </fiaf:hasIdentifier> -->
-
-    <!-- fiafcore:hasLanguageUsage -->
-
-        <!-- fiafcore:hasManifestation -->
-
-        <xsl:for-each select="ba:Manifestation">
-            <fiaf:hasManifestation>
-                <rdf:Description rdf:about="bundesarchiv://resource/manifestation/{@uuid}" />
-            </fiaf:hasManifestation>
-        </xsl:for-each>
-
-    <!-- fiafcore:hasSubject -->
-
-    <!-- fiafcore:hasTitle -->
-
-    <!-- <xsl:for-each select="ba:IDTitel">
+            <xsl:for-each select="ba:IDTitel">
                 <fiaf:hasTitle>
                     <rdf:Description>
-                        <rdf:type rdf:resource="https://ontology.fiafcore.org/IdentifiyingTitle" />
+                        <rdf:type rdf:resource="https://dev.fiafcore.org/IdentifiyingTitle" />
                         <fiaf:hasTitleValue>
                             <xsl:value-of select="." />
                         </fiaf:hasTitleValue>
                     </rdf:Description>
                 </fiaf:hasTitle>
-            </xsl:for-each> -->
+            </xsl:for-each>
 
         </rdf:Description>
     </xsl:template>
@@ -1088,8 +1084,109 @@
 
     <!-- fiaf:hasSoundCharacteristic -->
 
-    <!-- fiaf:hasTitle -->
+            <!-- fiaf:hasTitle -->
 
+            <xsl:if test="ba:Filmtitel">
+                <xsl:for-each select="ba:Filmtitel">
+                    <fiaf:hasTitle>
+                        <rdf:Description>
+                            <xsl:choose>
+                                <xsl:when test="not(@typ) or @typ = ''">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Originaltitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/TitleProper" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Übernahmetitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/AcquisitionTitle" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Sonstige Titel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Arbeitstitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/WorkingTitle" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Archivtitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Zusatztitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'fremdsprachiger Originaltitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Untertitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'unbekannt'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'weiterer Originaltitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Serientitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/SeriesTitle" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Deutscher Verleihtitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'fremdsprachiger Verleihtitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Episodentitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Kopientitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Interim Record'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Büchsentitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Übersetzungstitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/TranslatedTitle" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Titel der Abgebenden Stelle'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Interim Title'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Erster Zwischentitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Verifizierter Titel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Übergeordneter Serientitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Schreibvariante'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/SearchTitle" />
+                                </xsl:when>
+                                <xsl:when test="@typ = 'Zensurtitel'">
+                                    <rdf:type rdf:resource="https://dev.fiafcore.org/Title" />
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:message terminate="yes">
+                                        Error: Unexpected value "<xsl:value-of select="@typ"/>".
+                                    </xsl:message>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <xsl:choose>
+                                <xsl:when test="not(@titel) or @titel = ''" />
+                                <xsl:otherwise>
+                                    <fiaf:hasTitleValue>
+                                        <xsl:value-of select="@titel" />
+                                    </fiaf:hasTitleValue>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </rdf:Description>
+                    </fiaf:hasTitle>
+                </xsl:for-each>
+            </xsl:if>
         </rdf:Description>
     </xsl:template>
 
