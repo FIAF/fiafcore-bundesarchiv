@@ -35,15 +35,10 @@ def authority(graph, df, types):
 
     local_ids = list()
     for t in types:
-        t = rdflib.URIRef(str(t).replace('ontology', 'dev'))
+        t = rdflib.URIRef(str(t))
         local_ids += [
             str(s) for s, p, o in graph.triples((None, rdflib.RDF.type, t))
         ]
-
-
-    # for x in local_ids:
-    #     if '0055b857' in str(x):
-    #         raise Exception('@@@')
 
     authority = dict()
     for x in local_ids:
@@ -74,12 +69,11 @@ def main():
     # gather resource types.
 
     resource_types = list()
-    resource_types += subclasses('https://ontology.fiafcore.org/Agent')
-    resource_types += subclasses('https://ontology.fiafcore.org/Work')
-    resource_types += subclasses('https://ontology.fiafcore.org/Manifestation')
-    resource_types += subclasses('https://ontology.fiafcore.org/Item')
-    resource_types += subclasses('https://ontology.fiafcore.org/Carrier')
-
+    resource_types += subclasses('https://dev.fiafcore.org/Agent')
+    resource_types += subclasses('https://dev.fiafcore.org/Work')
+    resource_types += subclasses('https://dev.fiafcore.org/Manifestation')
+    resource_types += subclasses('https://dev.fiafcore.org/Item')
+    resource_types += subclasses('https://dev.fiafcore.org/Carrier')
 
     # top level graph.
 
