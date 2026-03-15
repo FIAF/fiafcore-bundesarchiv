@@ -388,68 +388,632 @@
 
             <!-- fiafcore:hasEvent -->
 
-            <!-- <fiaf:hasEvent>
-                        <rdf:Description>
-                            <rdf:type rdf:resource="bundesarchiv://ontology/event/production_event"/>
-                            <xsl:if test="ba:ProdJahrVon">
-                                <fiaf:hasEventDate>
-                                    <xsl:value-of select="ba:ProdJahrVon"/>
-                                </fiaf:hasEventDate>
-                            </xsl:if>
-                            <xsl:for-each select="ba:Credit/ba:Koerperschaft">
-                                <fiaf:hasActivity>
-                                    <rdf:Description>
-                                        <xsl:variable name="funk1" select="translate(ba:Funktion/@Funktion, ' ', '')"/>
-                                        <xsl:variable name="funk2" select="translate($funk1, '/', '')"/>
-                                        <rdf:type rdf:resource="bundesarchiv://ontology/activity/{$funk2}"/>
-                                        <fiaf:hasAgent>
-                                            <rdf:Description rdf:about="bundesarchiv://resource/agent/{@uuid}">
-                                                <rdf:type rdf:resource="bundesarchiv://ontology/agent/organisation"/>
-                                                <rdfs:label>
-                                                    <xsl:value-of select="@Koerperschaftsname"/>
-                                                </rdfs:label>
-                                                <fiaf:hasIdentifier>
-                                                    <rdf:Description rdf:about="bundesarchiv://identifier/agent/{@uuid}">
-                                                        <rdf:type rdf:resource="bundesarchiv://ontology/identifier"/>
-                                                        <fiaf:hasIdentifierValue>
-                                                            <xsl:value-of select="@uuid"/>
-                                                        </fiaf:hasIdentifierValue>
-                                                        <fiaf:hasIdentifierAuthority rdf:resource="bundesarchiv://ontology/authority/bundesarchiv"/>
+            <fiaf:hasEvent>
+                <rdf:Description>
+                    <rdf:type rdf:resource="https://dev.fiafcore.org/ProductionEvent"/>
+                    <xsl:if test="ba:ProdJahrVon">
+                        <fiaf:hasEventDate>
+                            <xsl:value-of select="ba:ProdJahrVon"/>
+                        </fiaf:hasEventDate>
+                    </xsl:if>
+                    <xsl:for-each select="ba:Credit/ba:Koerperschaft">
+                        <fiaf:hasActivity>
+                            <rdf:Description>
+                                <xsl:variable name="funktion" select="ba:Funktion/@Funktion"/>
+                                <xsl:choose>
+                                    <xsl:when test="$funktion = 'Produktionsfirma / Produktion'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/ProductionCompany" />
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Produzent'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Producer" />
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Verleih'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Distributor"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Herkunft'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Auftraggeber'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Filmverleih'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Distributor"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Zensurantragsteller'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Co-Produktionsfirma / Produktion'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Verleih (Erstverleih)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Orchester / Chor / Ensemble'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Filmförderung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Herstellung / Herstellungsleitung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'In Zusammenarbeit mit'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Produktionsleitung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/ProductionManager"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Synchronstudio / Synchronisation'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Synchrontext (Deutscher Text)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Verleih (weitere Verleiher)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Tonsystem'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Vertrieb'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Co-Produzent'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Regie / Spielleitung / Realisation'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Unbekannt'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Kamera/Bild/Bildgestaltung/Fotografie'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Ton/Tonmeister'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Weitere Mitarbeit'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Darsteller'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Verleih (letzter bekannter Verleih)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Gesamtgestaltung / -ausstattung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Fachberatung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Drehbuch'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Schnitt/Montage'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Trick (im Realfilm)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/SpecialEffects" />
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Produktion'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Musik (Filmkomponist)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Produktionstechnik (allgemein)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Synchronregie'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Tonmischung/Mischton'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Redaktion'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Animation'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Animator"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Mitwirkung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Aufnahmeleitung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/ProductionManager"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Kostüme'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/CostumeDesigner"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Gestaltung (Trickfilm)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Gesamtleitung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Ton-Bearbeitung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Geräusche'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Atelier'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Spezialkamera / Trickkamera'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Idee'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Sprecher/in (allgemein)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Narrator"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Zeichnungen'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Gesamtdrehstab'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Künstlerische Leitung / Oberleitung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Literarische Vorlage (Autor)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/SourceMaterial"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Requisite'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Tanzsolist'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Musikbearbeitung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/MusicEditor"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Medienhersteller'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:message terminate="yes">
+                                            Error: Unexpected value "<xsl:value-of select="$funktion"/>".
+                                        </xsl:message>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                                <fiaf:hasAgent>
+                                    <rdf:Description rdf:about="bundesarchiv://resource/agent/{@uuid}">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Organisation"/>
+                                        <rdfs:label>
+                                            <xsl:value-of select="@Koerperschaftsname"/>
+                                        </rdfs:label>
+                                        <fiaf:hasIdentifier>
+                                            <rdf:Description rdf:about="bundesarchiv://identifier/agent/{@uuid}">
+                                                <rdf:type rdf:resource="https://dev.fiafcore.org/Identifier" />
+                                                <fiaf:hasIdentifierValue>
+                                                    <xsl:value-of select="@uuid" />
+                                                </fiaf:hasIdentifierValue>
+                                                <fiaf:hasIdentifierAuthority>
+                                                    <rdf:Description rdf:about="bundesarchiv://resource/agent/bundesarchiv">
+                                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Organisation" />
                                                     </rdf:Description>
-                                                </fiaf:hasIdentifier>
+                                                </fiaf:hasIdentifierAuthority>
                                             </rdf:Description>
-                                        </fiaf:hasAgent>
+                                        </fiaf:hasIdentifier>
                                     </rdf:Description>
-                                </fiaf:hasActivity>
-                            </xsl:for-each>
-                            <xsl:for-each select="ba:Credit/ba:Person">
-                                <fiaf:hasActivity>
-                                    <rdf:Description>
-                                        <xsl:variable name="funk1" select="translate(ba:Funktion/@Funktion, ' ', '')"/>
-                                        <xsl:variable name="funk2" select="translate($funk1, '/', '')"/>
-                                        <rdf:type rdf:resource="bundesarchiv://ontology/activity/{$funk2}"/>
-                                        <fiaf:hasAgent>
-                                            <rdf:Description rdf:about="bundesarchiv://resource/agent/{@uuid}">
-                                                <rdf:type rdf:resource="bundesarchiv://ontology/agent/person"/>
-                                                <rdfs:label>
-                                                    <xsl:value-of select="concat(@Vorname, ' ', @Nachname)"/>
-                                                </rdfs:label>
-                                                <fiaf:hasIdentifier>
-                                                    <rdf:Description rdf:about="bundesarchiv://identifier/agent/{@uuid}">
-                                                        <rdf:type rdf:resource="bundesarchiv://ontology/identifier"/>
-                                                        <fiaf:hasIdentifierValue>
-                                                            <xsl:value-of select="@uuid"/>
-                                                        </fiaf:hasIdentifierValue>
-                                                        <fiaf:hasIdentifierAuthority rdf:resource="bundesarchiv://ontology/authority/bundesarchiv"/>
+                                </fiaf:hasAgent>
+                            </rdf:Description>
+                        </fiaf:hasActivity>
+                    </xsl:for-each>
+                    <xsl:for-each select="ba:Credit/ba:Person">
+                        <fiaf:hasActivity>
+                            <rdf:Description>
+                                <xsl:variable name="funktion" select="ba:Funktion/@Funktion"/>
+                                <xsl:choose>
+                                    <xsl:when test="$funktion = 'Darsteller'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/CastMember"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Kamera/Bild/Bildgestaltung/Fotografie'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Cinematographer"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Regie / Spielleitung / Realisation'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Director"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Drehbuch'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Writer"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Kameraführung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Cinematographer"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Schnitt / Montage'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/FilmEditor"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Musik'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Composer"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Ton'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Produktionsleitung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/ProductionManager"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Produzent'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Sprecher/in (allgemein)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Narrator"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Dramaturgie'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Aufnahmeleitung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/ProductionManager"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Produktionsfirma / Produktion'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Dialoge / Text'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Writer"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Szenarium'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Writer"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Mitwirkung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Fachberatung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Maske'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/MakeUpArtist"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Animation'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Animator"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Weitere Mitarbeit'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Literarische Vorlage (Autor)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/SourceMaterial"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Regie-Assistenz'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/AssistantDirector"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Kamera-Assistenz'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/CameraAssistant"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Kostüme'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/CostumeDesigner"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Musikbearbeitung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/MusicEditor"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Trick (im Realfilm)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/SpecialEffects" />
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Redaktion'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Bauausführung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Gestaltung (Trickfilm)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Standfotograf'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Co-Produzent'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Synchronsprecher'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Puppengestaltung / -figuren'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Auftraggeber'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Requisite'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Puppenführung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Idee'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Szenenbild (Filmarchitekt / Bühnenbildner)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Musik (Filmkomponist)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Puppenspiel'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Gesamtgestaltung / -ausstattung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Gesangssolist'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Dekoration'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Musikalische Leitung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Zensurantragsteller'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Spezialkamera / Trickkamera'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Graphik / Design'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Hintergrundgestaltung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Herstellung / Herstellungsleitung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Musik-, Lied-, Balletttitel (Autor)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Kommentarsprecher / Berichterstatter / Korrespondent'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Übernommene Musik'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Gesamtleitung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Manuskript'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Gewandmeister'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Choreographie'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Geräusche'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Synchronmitwirkende'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Musikberatung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Scherenschnitt'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Co-Produktionsfirma / Produktion'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Zeichnungen'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Ausstattung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Ton-Mischung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Licht / Beleuchtung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Instrumentalsolist'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Filmverleih'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Distributor"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Erzählender / Vortragender'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Assistenz-Regie'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Exposé / Treatment'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Unbekannt'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Storyboard'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Set Design / Szenenausstattung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Musik-, Lied-, Balletttitel (Komponist)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Produktionstechnik (allgemein)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Spezialeffekte'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Tanzsolist'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Künstlerische Leitung / Oberleitung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Synchronschnitt'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Co-Regie'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'In Zusammenarbeit mit'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Orchester / Chor / Ensemble'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Gesamtdrehstab'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Zweite Kamera'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'weitere Darsteller'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Künstlerische Mitarbeiter'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Musikzusammenstellung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Kinderdarsteller'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Synchronregie'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Musikalische Vorlage (Autor)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Dialogregie / Tonregie'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Wissenschaftliche Leitung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Garderobier'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Sonstige Solisten'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Synchrontext (Deutscher Text)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Schnitt-Assistenz'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Sonstige Assistenten'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Entwürfe (Puppen und Figuren)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Titel'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Verleih (Erstverleih)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Musikredaktion'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Interviewer'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Script / Continuity'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Zweite Regie'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Drehbuch-Mitarbeit'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Recherche'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Stunts und Doubles'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Expeditionsleitung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Ballettmeister'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Übersetzer'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Filmförderung'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Tonsystem'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Deutsche Synchronsprecher'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Verleih (letzter bekannter Verleih)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Verleih (weitere Verleiher)'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Verleih'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Distributor"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Treatment'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Executive Producer'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Synchronton'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Laiendarsteller'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Titelgrafik'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Zwischentitel'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:when test="$funktion = 'Synchronstudio / Synchronisation'">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Activity"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:message terminate="yes">
+                                            Error: Unexpected value "<xsl:value-of select="$funktion"/>".
+                                        </xsl:message>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                                <fiaf:hasAgent>
+                                    <rdf:Description rdf:about="bundesarchiv://resource/agent/{@uuid}">
+                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Person"/>
+                                        <rdfs:label>
+                                            <xsl:value-of select="concat(@Vorname, ' ', @Nachname)"/>
+                                        </rdfs:label>
+                                        <fiaf:hasIdentifier>
+                                            <rdf:Description rdf:about="bundesarchiv://identifier/agent/{@uuid}">
+                                                <rdf:type rdf:resource="https://dev.fiafcore.org/Identifier" />
+                                                <fiaf:hasIdentifierValue>
+                                                    <xsl:value-of select="@uuid" />
+                                                </fiaf:hasIdentifierValue>
+                                                <fiaf:hasIdentifierAuthority>
+                                                    <rdf:Description rdf:about="bundesarchiv://resource/agent/bundesarchiv">
+                                                        <rdf:type rdf:resource="https://dev.fiafcore.org/Organisation" />
                                                     </rdf:Description>
-                                                </fiaf:hasIdentifier>
+                                                </fiaf:hasIdentifierAuthority>
                                             </rdf:Description>
-                                        </fiaf:hasAgent>
+                                        </fiaf:hasIdentifier>
                                     </rdf:Description>
-                                </fiaf:hasActivity>
-                            </xsl:for-each>
-                        </rdf:Description>
-                    </fiaf:hasEvent> -->
+                                </fiaf:hasAgent>
+                            </rdf:Description>
+                        </fiaf:hasActivity>
+                    </xsl:for-each>
+                </rdf:Description>
+            </fiaf:hasEvent>
 
             <!-- fiafcore:hasForm -->
 
