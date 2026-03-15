@@ -825,20 +825,33 @@
                 <!-- <xsl:value-of select="'Example Manifestation'"/> -->
             <!-- </rdfs:label> -->
 
-            <!-- fiaf:hasEvent -->
-
             <!-- fiaf:hasExtent -->
 
-            <!-- <xsl:if test="ba:Gesamtlaenge">
-                        <fiaf:hasExtent>
-                            <rdf:Description>
-                                <rdf:type rdf:resource="bundesarchiv://ontology/extent/metres"/>
-                                <fiaf:hasExtentValue>
-                                    <xsl:value-of select="ba:Gesamtlaenge"/>
-                                </fiaf:hasExtentValue>
-                            </rdf:Description>
-                        </fiaf:hasExtent>
-                    </xsl:if> -->
+            <xsl:if test="ba:Laufzeit">
+                <xsl:for-each select="ba:Laufzeit">
+                    <fiaf:hasExtent>
+                        <rdf:Description>
+                            <rdf:type rdf:resource="https://dev.fiafcore.org/Minute" />
+                            <fiaf:hasExtentValue>
+                                <xsl:value-of select="." />
+                            </fiaf:hasExtentValue>
+                        </rdf:Description>
+                    </fiaf:hasExtent>
+                </xsl:for-each>
+            </xsl:if>
+
+            <xsl:if test="ba:Gesamtlaenge">
+                <xsl:for-each select="ba:Gesamtlaenge">
+                    <fiaf:hasExtent>
+                        <rdf:Description>
+                            <rdf:type rdf:resource="https://dev.fiafcore.org/Metre" />
+                            <fiaf:hasExtentValue>
+                                <xsl:value-of select="." />
+                            </fiaf:hasExtentValue>
+                        </rdf:Description>
+                    </fiaf:hasExtent>
+                </xsl:for-each>
+            </xsl:if>
 
             <!-- fiafcore:hasIdentifier -->
 
@@ -1356,9 +1369,20 @@
                 </xsl:choose>
             </xsl:if>
 
-            <!-- fiaf:hasEvent  -->
-
             <!-- fiaf:hasExtent  -->
+
+            <xsl:if test="ba:Laenge">
+                <xsl:for-each select="ba:Laenge">
+                    <fiaf:hasExtent>
+                        <rdf:Description>
+                            <rdf:type rdf:resource="https://dev.fiafcore.org/Metre" />
+                            <fiaf:hasExtentValue>
+                                <xsl:value-of select="." />
+                            </fiaf:hasExtentValue>
+                        </rdf:Description>
+                    </fiaf:hasExtent>
+                </xsl:for-each>
+            </xsl:if>
 
             <!-- fiaf:hasFormat  -->
 
