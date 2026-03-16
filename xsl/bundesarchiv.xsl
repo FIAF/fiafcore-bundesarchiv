@@ -1240,64 +1240,64 @@
                         <xsl:when test="$genre = 'Fernsehspiel'" />
                         <xsl:when test="$genre = 'Partisanenfilm'" />
                         <xsl:when test="$genre = 'Trickart:_Zeichentrick'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Animation" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/AnimationFilm" />
                         </xsl:when>
                         <xsl:when test="$genre = 'Kinderfilm'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Childrens" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/ChildrensFilm" />
                         </xsl:when>
                         <xsl:when test="$genre = 'Städte-_u._Landschaftsfilm'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/CityAndLandscape" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/CityAndLandscapeFilm" />
                         </xsl:when>
                         <xsl:when test="$genre = 'Kulturfilm'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Cultural" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/CulturalFilm" />
                         </xsl:when>
                         <xsl:when test="$genre = 'Propagandafilm'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Propaganda" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/PropagandaFilm" />
                         </xsl:when>
                         <xsl:when test="$genre = 'Literaturverfilmung'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/LiteraryAdaptation" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/LiteraryAdaptationFilm" />
                         </xsl:when>
                         <xsl:when test="$genre = 'Komödie'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Comedy" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/ComedyFilm" />
                         </xsl:when>
                         <xsl:when test="$genre = 'Industriefilm'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Industrial" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/IndustrialFilm" />
                         </xsl:when>
                         <xsl:when test="$genre = 'Drama'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Drama" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/DramaFilm" />
                         </xsl:when>
                         <xsl:when test="$genre = 'Tierfilm'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Animal" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/AnimalFilm" />
                         </xsl:when>
                         <xsl:when test="$genre = 'Satire'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Satire" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/SatireFilm" />
                         </xsl:when>
                         <xsl:when test="$genre = 'Märchenfilm'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/FairyTale" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/FairyTaleFilm" />
                         </xsl:when>
                         <xsl:when test="$genre = 'Militärfilm'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Military" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/MilitaryFilm" />
                         </xsl:when>
                         <xsl:when test="$genre = 'Kriegsfilm'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/War" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/WarFilm" />
                         </xsl:when>
                         <xsl:when test="$genre = 'Populärwissenschaftlicher_Film'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/PopularScience" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/PopularScienceFilm" />
                         </xsl:when>
                         <xsl:when test="$genre = 'Sportfilm'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Sports" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/SportsFilm" />
                         </xsl:when>
                         <xsl:when test="$genre = 'Kriminalfilm'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Crime" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/CrimeFilm" />
                         </xsl:when>
                         <xsl:when test="$genre = 'Handpuppenfilm'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/HandPuppet" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/HandPuppetFilm" />
                         </xsl:when>
                         <xsl:when test="$genre = 'Technikfilm'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Technical" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/TechnicalFilm" />
                         </xsl:when>
                         <xsl:when test="$genre = 'Aufklärungsfilm'">
-                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/Educational" />
+                            <fiaf:hasGenre rdf:resource="https://dev.fiafcore.org/EducationalFilm" />
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:message terminate="yes">
@@ -1783,16 +1783,16 @@
                     <xsl:when test="$base = 'Polycarbonat'" />
                     <xsl:when test="$base = 'Langzeitspeicher'" />
                     <xsl:when test="$base = 'Triazetatzellulose'">
-                        <fiaf:hasBase rdf:resource="https://dev.fiafcore.org/Acetate" />
+                        <fiaf:hasBase rdf:resource="https://dev.fiafcore.org/AcetateBase" />
                     </xsl:when>
                     <xsl:when test="$base = 'Polyethylenterephtalat_(Polyester)'">
-                        <fiaf:hasBase rdf:resource="https://dev.fiafcore.org/Polyester" />
+                        <fiaf:hasBase rdf:resource="https://dev.fiafcore.org/PolyesterBase" />
                     </xsl:when>
                     <xsl:when test="$base = 'Zellulosenitrat'">
-                        <fiaf:hasBase rdf:resource="https://dev.fiafcore.org/Nitrate" />
+                        <fiaf:hasBase rdf:resource="https://dev.fiafcore.org/NitrateBase" />
                     </xsl:when>
                     <xsl:when test="$base = 'Acetatcellulose'">
-                        <fiaf:hasBase rdf:resource="https://dev.fiafcore.org/Acetate" />
+                        <fiaf:hasBase rdf:resource="https://dev.fiafcore.org/AcetateBase" />
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:message terminate="yes">
