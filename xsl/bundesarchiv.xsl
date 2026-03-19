@@ -588,7 +588,7 @@
                                             <xsl:value-of select="@Koerperschaftsname"/>
                                         </rdfs:label>
                                         <fiaf:hasIdentifier>
-                                            <rdf:Description rdf:about="bundesarchiv://identifier/agent/{@uuid}">
+                                            <rdf:Description>
                                                 <rdf:type rdf:resource="https://dev.fiafcore.org/Identifier" />
                                                 <fiaf:hasIdentifierValue>
                                                     <xsl:value-of select="@uuid" />
@@ -995,7 +995,7 @@
                                             <xsl:value-of select="concat(@Vorname, ' ', @Nachname)"/>
                                         </rdfs:label>
                                         <fiaf:hasIdentifier>
-                                            <rdf:Description rdf:about="bundesarchiv://identifier/agent/{@uuid}">
+                                            <rdf:Description>
                                                 <rdf:type rdf:resource="https://dev.fiafcore.org/Identifier" />
                                                 <fiaf:hasIdentifierValue>
                                                     <xsl:value-of select="@uuid" />
@@ -1311,7 +1311,7 @@
             <!-- fiafcore:hasIdentifier -->
 
             <fiaf:hasIdentifier>
-                <rdf:Description rdf:about="bundesarchiv://identifier/work/{@uuid}">
+                <rdf:Description>
                     <rdf:type rdf:resource="https://dev.fiafcore.org/Identifier" />
                     <fiaf:hasIdentifierValue>
                         <xsl:value-of select="@uuid" />
@@ -1420,7 +1420,7 @@
             <!-- fiafcore:hasIdentifier -->
 
             <fiaf:hasIdentifier>
-                <rdf:Description rdf:about="bundesarchiv://identifier/manifestation/{@uuid}">
+                <rdf:Description>
                     <rdf:type rdf:resource="https://dev.fiafcore.org/Identifier" />
                     <fiaf:hasIdentifierValue>
                         <xsl:value-of select="@uuid" />
@@ -2048,13 +2048,14 @@
             <fiaf:hasHoldingInstitution>
                 <rdf:Description rdf:about="bundesarchiv://resource/agent/bundesarchiv">
                     <rdf:type rdf:resource="https://dev.fiafcore.org/Organisation" />
+                    <rdfs:label>Bundesarchiv</rdfs:label>
                 </rdf:Description>
             </fiaf:hasHoldingInstitution>
 
             <!-- fiafcore:hasIdentifier -->
 
             <fiaf:hasIdentifier>
-                <rdf:Description rdf:about="bundesarchiv://identifier/item/{@uuid}">
+                <rdf:Description>
                     <rdf:type rdf:resource="https://dev.fiafcore.org/Identifier" />
                     <fiaf:hasIdentifierValue>
                         <xsl:value-of select="@uuid" />
@@ -2585,7 +2586,7 @@
             <!-- fiafcore:hasIdentifier -->
 
             <fiaf:hasIdentifier>
-                <rdf:Description rdf:about="bundesarchiv://identifier/carrier/{@uuid}">
+                <rdf:Description>
                     <rdf:type rdf:resource="https://dev.fiafcore.org/Identifier" />
                     <fiaf:hasIdentifierValue>
                         <xsl:value-of select="@uuid" />

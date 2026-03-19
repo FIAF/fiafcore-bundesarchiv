@@ -134,6 +134,7 @@ def main():
     xml_path = pathlib.Path.cwd() / "xml"
     xml = [x for x in xml_path.iterdir()]
     xml = [x for x in xml if x.suffix == ".xml"]
+    xml = [x for x in xml][:100] # testing restriction for medium sized dataset.
     # xml = [x for x in xml if "example" in x.name] # testing restriction.
 
     for x in tqdm.tqdm(sorted(xml)):
