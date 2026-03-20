@@ -122,7 +122,6 @@ def labelling(gr):
 
     works = list()
     for work_type in work_types:
-       print(work_type)
        for s,p,o in gr.triples((None, rdflib.RDF.type, rdflib.URIRef(work_type))):
            works.append(s)
 
@@ -219,7 +218,7 @@ def main():
 
         authority(g, auth_df, resource_types)
 
-        # validate entities.
+        # validate properties and entities.
 
         validate(g)
 
