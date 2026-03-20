@@ -103,6 +103,75 @@ def validate(g):
         if x not in fiafcore_entities:
             raise Exception(f'{x} not found in fiafcore.')
 
+    return g
+
+def labelling(gr):
+
+    print(type(gr))
+
+
+
+    # print(len(gr))
+    # first detect all works.
+    #
+
+    work_types = subclasses('https://dev.fiafcore.org/Work')
+
+    works = list()
+    for work_type in work_types:
+       print(work_type)
+       for s,p,o in gr.triples((None, rdflib.RDF.type, rdflib.URIRef(work_type))):
+           works.append(s)
+
+    title_prop1 = rdflib.URIRef('https://dev.fiafcore.org/hasTitle')
+    title_prop2 = rdflib.URIRef('https://dev.fiafcore.org/hasTitleValue')
+    for work in works:
+        titles = list()
+        for s,p,o in gr.triples((None, title_prop1, None)):
+            for a,b,c in gr.triples((None, title_prop2, None)):
+                titles.append(c)
+
+        if not len(titles):
+            raise Exception('No titles found.')
+
+        # TODO: Space here to have some more elaborate logic for title selection.
+
+        title = titles[0]
+        gr.add((work, rdflib.RDFS.label, rdflib.Literal(f'{title}')))
+
+        events = list()
+        event_prop = rdflib.URIRef('https://dev.fiafcore.org/hasEvent')
+        for a,b,event in gr.triples((work, event_prop, None)):
+            events.append(event)
+        for event in events:
+            gr.add((event, rdflib.RDFS.label, rdflib.Literal(f'{title} Event')))
+
+        manifestations = list()
+        manifestation_prop = rdflib.URIRef('https://dev.fiafcore.org/hasManifestation')
+        for a,b,manifestation in gr.triples((work, manifestation_prop, None)):
+            manifestations.append(manifestation)
+        for manifestation in manifestations:
+            gr.add((manifestation, rdflib.RDFS.label, rdflib.Literal(f'{title} Manifestation')))
+
+        items = list()
+        item_prop = rdflib.URIRef('https://dev.fiafcore.org/hasItem')
+        for manifestation in manifestations:
+            for a,b,item in gr.triples((manifestation, item_prop, None)):
+                items.append(item)
+        for item in items:
+            gr.add((item, rdflib.RDFS.label, rdflib.Literal(f'{title} Item')))
+
+        carriers = list()
+        carrier_prop = rdflib.URIRef('https://dev.fiafcore.org/hasCarrier')
+        for item in items:
+            for a,b,carrier in gr.triples((item, carrier_prop, None)):
+                carriers.append(carrier)
+        for carrier in carriers:
+            gr.add((carrier, rdflib.RDFS.label, rdflib.Literal(f'{title} Carrier')))
+
+    return gr
+
+
 def main():
 
     auth_path = pathlib.Path.cwd() / "auth.parquet"
@@ -134,8 +203,8 @@ def main():
     xml_path = pathlib.Path.cwd() / "xml"
     xml = [x for x in xml_path.iterdir()]
     xml = [x for x in xml if x.suffix == ".xml"]
-    xml = [x for x in xml][:100] # testing restriction for medium sized dataset.
-    # xml = [x for x in xml if "example" in x.name] # testing restriction.
+    # xml = [x for x in xml][:100] # testing restriction for medium sized dataset.
+    xml = [x for x in xml if "example" in x.name] # testing restriction.
 
     for x in tqdm.tqdm(sorted(xml)):
 
@@ -145,11 +214,17 @@ def main():
 
         # fiafcore authority ids for entities.
 
-        g = authority(g, auth_df, resource_types)
+        authority(g, auth_df, resource_types)
 
         # validate entities.
 
+        # TODO valiate properties !!!!
+
         validate(g)
+
+        # postprocessing, pull title and apply cooked labels to all has manifeestations, items carriers and events.
+
+        labelling(g)
 
         # aggregate output.
 

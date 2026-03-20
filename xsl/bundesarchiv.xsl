@@ -1385,10 +1385,6 @@
                 </xsl:choose>
             </xsl:if>
 
-            <!-- <rdfs:label> -->
-                <!-- <xsl:value-of select="'Example Manifestation'"/> -->
-            <!-- </rdfs:label> -->
-
             <!-- fiaf:hasExtent -->
 
             <xsl:if test="ba:Laufzeit">
