@@ -392,9 +392,9 @@
                 <rdf:Description>
                     <rdf:type rdf:resource="https://dev.fiafcore.org/ProductionEvent"/>
                     <xsl:if test="ba:ProdJahrVon">
-                        <fiaf:hasEventDate>
+                        <fiaf:hasDate>
                             <xsl:value-of select="ba:ProdJahrVon"/>
-                        </fiaf:hasEventDate>
+                        </fiaf:hasDate>
                     </xsl:if>
                     <xsl:for-each select="ba:Credit/ba:Koerperschaft">
                         <fiaf:hasActivity>

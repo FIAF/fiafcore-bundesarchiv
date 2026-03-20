@@ -46,13 +46,13 @@ def transform(xml):
 
     return rdflib.Graph().parse(data=str(result), format="xml")
 
-def authority(graph, df, types):
+def authority(gr, df, types):
 
     local_ids = list()
     for t in types:
         t = rdflib.URIRef(str(t))
         local_ids += [
-            str(s) for s, p, o in graph.triples((None, rdflib.RDF.type, t))
+            str(s) for s, p, o in gr.triples((None, rdflib.RDF.type, t))
         ]
 
     authority = dict()
@@ -67,13 +67,13 @@ def authority(graph, df, types):
         else:
             authority[x] = match.iloc[0]["fiafcore"]
 
-    turtle_string = graph.serialize(format="turtle")
+    turtle_string = gr.serialize(format="turtle")
     for k, v in authority.items():
         turtle_string = turtle_string.replace(f"<{k}>", f"<{v}>")
 
     return rdflib.Graph().parse(data=turtle_string, format="turtle")
 
-def validate(g):
+def validate(gr):
 
     fiafcore_path = pathlib.Path.cwd() / 'fiafcore.ttl'
     if not fiafcore_path.exists():
@@ -87,15 +87,13 @@ def validate(g):
             fiafcore_entities.append(o)
 
     fiafcore_entities = [x for x in pydash.uniq(fiafcore_entities) if 'fiafcore' in str(x)]
-
     graph_entities = list()
-    for s,p,o in g:
+    for s,p,o in gr:
         graph_entities.append(s)
         if type(o) is type(rdflib.URIRef('')):
             graph_entities.append(o)
 
     graph_entities = [x for x in pydash.uniq(graph_entities) if 'fiafcore' in str(x)]
-
     for x in graph_entities:
         if len(pathlib.Path(x).name) == 36:
             continue
@@ -103,17 +101,22 @@ def validate(g):
         if x not in fiafcore_entities:
             raise Exception(f'{x} not found in fiafcore.')
 
-    return g
+    fiafcore_properties = list()
+    fiafcore_properties += [s for s,p,o in fiafcore.triples((None, rdflib.RDF.type, rdflib.OWL.ObjectProperty))]
+    fiafcore_properties += [s for s,p,o in fiafcore.triples((None, rdflib.RDF.type, rdflib.OWL.DatatypeProperty))]
+    for s,p,o in gr:
+        if p in fiafcore_properties:
+            continue
+        elif p in [
+            rdflib.RDF.type,
+            rdflib.RDFS.label]:
+            continue
+        else:
+            raise Exception(f'{p} not found in fiafcore.')
+
+    return gr
 
 def labelling(gr):
-
-    print(type(gr))
-
-
-
-    # print(len(gr))
-    # first detect all works.
-    #
 
     work_types = subclasses('https://dev.fiafcore.org/Work')
 
@@ -217,8 +220,6 @@ def main():
         authority(g, auth_df, resource_types)
 
         # validate entities.
-
-        # TODO valiate properties !!!!
 
         validate(g)
 
