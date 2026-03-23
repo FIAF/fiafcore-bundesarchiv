@@ -585,7 +585,7 @@
                                     <rdf:Description rdf:about="bundesarchiv://resource/agent/{@uuid}">
                                         <rdf:type rdf:resource="https://dev.fiafcore.org/Organisation"/>
                                         <rdfs:label>
-                                            <xsl:value-of select="@Koerperschaftsname"/>
+                                            <xsl:value-of select="normalize-space(@Koerperschaftsname)"/>
                                         </rdfs:label>
                                         <fiaf:hasIdentifier>
                                             <rdf:Description>
@@ -992,7 +992,7 @@
                                     <rdf:Description rdf:about="bundesarchiv://resource/agent/{@uuid}">
                                         <rdf:type rdf:resource="https://dev.fiafcore.org/Person"/>
                                         <rdfs:label>
-                                            <xsl:value-of select="concat(@Vorname, ' ', @Nachname)"/>
+                                            <xsl:value-of select="normalize-space(concat(@Vorname, ' ', @Nachname))"/>
                                         </rdfs:label>
                                         <fiaf:hasIdentifier>
                                             <rdf:Description>

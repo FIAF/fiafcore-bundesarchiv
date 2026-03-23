@@ -129,8 +129,8 @@ def labelling(gr):
     title_prop2 = rdflib.URIRef('https://dev.fiafcore.org/hasTitleValue')
     for work in works:
         titles = list()
-        for s,p,o in gr.triples((None, title_prop1, None)):
-            for a,b,c in gr.triples((None, title_prop2, None)):
+        for s,p,o in gr.triples((work, title_prop1, None)):
+            for a,b,c in gr.triples((o, title_prop2, None)):
                 titles.append(c)
 
         if not len(titles):
@@ -206,7 +206,7 @@ def main():
     xml = [x for x in xml_path.iterdir()]
     xml = [x for x in xml if x.suffix == ".xml"]
     # xml = [x for x in xml][:100] # testing restriction for medium sized dataset.
-    xml = [x for x in xml if "example" in x.name] # testing restriction.
+    # xml = [x for x in xml if "example" in x.name] # testing restriction.
 
     for x in tqdm.tqdm(sorted(xml)):
 
@@ -216,7 +216,7 @@ def main():
 
         # fiafcore authority ids for entities.
 
-        authority(g, auth_df, resource_types)
+        g = authority(g, auth_df, resource_types)
 
         # validate properties and entities.
 
