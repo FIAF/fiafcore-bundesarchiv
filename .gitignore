@@ -3,3 +3,4 @@ xml_full/
 .env
 fiafcore.ttl
 fiafcore_bundesarchiv.ttl
+temp.py
