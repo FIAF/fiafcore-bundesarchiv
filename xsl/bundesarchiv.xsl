@@ -1311,7 +1311,7 @@
             <!-- fiafcore:hasIdentifier -->
 
             <fiaf:hasIdentifier>
-                <rdf:Description>
+                <rdf:Description rdf:about="bundesarchiv://identifier/work/{@uuid}">
                     <rdf:type rdf:resource="https://dev.fiafcore.org/Identifier" />
                     <fiaf:hasIdentifierValue>
                         <xsl:value-of select="@uuid" />
@@ -1416,7 +1416,7 @@
             <!-- fiafcore:hasIdentifier -->
 
             <fiaf:hasIdentifier>
-                <rdf:Description>
+                <rdf:Description rdf:about="bundesarchiv://identifier/manifestation/{@uuid}">
                     <rdf:type rdf:resource="https://dev.fiafcore.org/Identifier" />
                     <fiaf:hasIdentifierValue>
                         <xsl:value-of select="@uuid" />
@@ -2051,7 +2051,7 @@
             <!-- fiafcore:hasIdentifier -->
 
             <fiaf:hasIdentifier>
-                <rdf:Description>
+                <rdf:Description rdf:about="bundesarchiv://identifier/item/{@uuid}">
                     <rdf:type rdf:resource="https://dev.fiafcore.org/Identifier" />
                     <fiaf:hasIdentifierValue>
                         <xsl:value-of select="@uuid" />
@@ -2582,7 +2582,7 @@
             <!-- fiafcore:hasIdentifier -->
 
             <fiaf:hasIdentifier>
-                <rdf:Description>
+                <rdf:Description rdf:about="bundesarchiv://identifier/carrier/{@uuid}">
                     <rdf:type rdf:resource="https://dev.fiafcore.org/Identifier" />
                     <fiaf:hasIdentifierValue>
                         <xsl:value-of select="@uuid" />
