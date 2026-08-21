@@ -588,7 +588,7 @@
                                             <xsl:value-of select="normalize-space(@Koerperschaftsname)"/>
                                         </rdfs:label>
                                         <fiaf:hasIdentifier>
-                                            <rdf:Description>
+                                            <rdf:Description rdf:about="bundesarchiv://identifier/agent/{@uuid}">
                                                 <rdf:type rdf:resource="https://dev.fiafcore.org/Identifier" />
                                                 <fiaf:hasIdentifierValue>
                                                     <xsl:value-of select="@uuid" />
@@ -995,7 +995,7 @@
                                             <xsl:value-of select="normalize-space(concat(@Vorname, ' ', @Nachname))"/>
                                         </rdfs:label>
                                         <fiaf:hasIdentifier>
-                                            <rdf:Description>
+                                            <rdf:Description rdf:about="bundesarchiv://identifier/agent/{@uuid}">
                                                 <rdf:type rdf:resource="https://dev.fiafcore.org/Identifier" />
                                                 <fiaf:hasIdentifierValue>
                                                     <xsl:value-of select="@uuid" />
